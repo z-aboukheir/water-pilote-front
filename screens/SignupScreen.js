@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View, Button, Text, StyleSheet, Image } from 'react-native';
+import { View, Button, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import InputForm from '../components/InputForm';
 import { useFonts } from 'expo-font';
 
 
 const SignupScreen = () => {
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -32,25 +33,28 @@ const SignupScreen = () => {
         <Image source={require('../assets/robot.png')} style={styles.imageRobot} />
         <Text style={styles.welcomeText}>Je m'appelle Groot et toi ?</Text>
         <InputForm
-        icon = 'user'
+          icon='user'
           placeholder="Username"
-          onChangeText={text => setEmail(text)}
-          value={email}
+          onChangeText={text => setUsername(text)}
+          value={username}
         />
-         <InputForm
-         icon = 'user'
+        <InputForm
+          icon='user'
           placeholder="Email"
           onChangeText={text => setEmail(text)}
           value={email}
         />
-        <InputForm
-        icon = 'lock'
+          <InputForm
+          icon='lock'
           placeholder="Password"
           onChangeText={text => setPassword(text)}
           value={password}
           secureTextEntry
         />
-        <Button title="Sign Up" onPress={handleSignUp} />
+
+        <TouchableOpacity style={styles.button} onPress={handleSignUp}>
+          <Text style={styles.buttonText}>Register</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -59,7 +63,6 @@ const SignupScreen = () => {
 const styles = StyleSheet.create({
   container: {
     padding: 40,
-
   },
   containerTextSign: {
     justifyContent: "flex-end",
@@ -86,7 +89,7 @@ const styles = StyleSheet.create({
   },
 
   containerForm: {
-    gap: 20,
+    gap: 30,
     alignItems: 'center',
   },
 
@@ -100,6 +103,25 @@ const styles = StyleSheet.create({
     fontFamily: 'MyFont',
     fontSize: 20,
     color: '#7A7272',
+  },
+  button: {
+    backgroundColor: '#25CEDE',
+    borderRadius: 36,
+    shadowColor: '#9f9f9f',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 1,
+    shadowRadius: 24,
+    elevation: 5,
+    padding: 10,
+    flexDirection: 'row',
+    marginTop: 25
+  }, 
+  buttonText: {
+    fontFamily: 'MyFont',
+    fontSize: 18,
+    color: '#fff',
+    textAlign: "center",
+    flex :1
   }
 });
 
