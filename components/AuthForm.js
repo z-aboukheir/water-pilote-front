@@ -1,4 +1,4 @@
-import React, { Children, useState } from 'react';
+import React from 'react';
 import { View, Button, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 
