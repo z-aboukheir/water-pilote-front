@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { View, Button, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import InputForm from '../components/InputForm';
 import AuthForm from '../components/AuthForm';
 
@@ -16,7 +15,7 @@ const SigninScreen = () => {
 
 
     return (
-        <AuthForm textAuth="Sign In" welcomeText="Heureux de vous revoir" handleSubmit={handleSignIn} textBouton="Sign In">
+        <AuthForm textAuth="Sign Up" welcomeText="Heureux de vous revoir" handleSubmit={handleSignIn} textBouton="Sign In">
             <InputForm
                 icon='user'
                 placeholder="Email"

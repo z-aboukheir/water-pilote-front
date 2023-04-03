@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 Icon.loadFont();
 
-const InputForm = ({ icon, placeholder, onChangeText, value, secureTextEntry }) => {
+const InputForm = ({ icon, placeholder, onChangeText, value, secureTextEntry, onBlur }) => {
     return (
         <View
             style={styles.container}>
@@ -16,6 +16,7 @@ const InputForm = ({ icon, placeholder, onChangeText, value, secureTextEntry }) 
                 value={value}
                 secureTextEntry={secureTextEntry}
                 style={styles.textInput}
+                onBlur={onBlur}
             />
         </View>
     );
@@ -35,7 +36,6 @@ const styles = StyleSheet.create({
     },
     icon: {
         marginRight: 10,
-        verticalAlign: "middle",
         opacity: 0.40
     }
     ,
