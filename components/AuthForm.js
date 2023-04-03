@@ -1,37 +1,24 @@
-import React from 'react';
-import { View, Button, Text, StyleSheet, Image } from 'react-native';
+import React, { Children, useState } from 'react';
+import { View, Button, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
-const AuthForm = () => {
-return (
+
+const AuthForm = ({textAuth, welcomeText, children, handleSubmit, textBouton}) => {
+
+  return (
     <View style={styles.container}>
-      <View style={styles.containerTextSign}>
-        <Text style={styles.textSign}>
-          Sign In
+      <View style={styles.containerTextAuth}>
+        <Text style={styles.textAuth}>
+          {textAuth}
         </Text>
         <Image source={require('../assets/On.png')} style={styles.imageOn} />
       </View >
       <View style={styles.containerForm}>
         <Image source={require('../assets/robot.png')} style={styles.imageRobot} />
-        <InputForm
-          imagePath="../assets/user.png"
-          placeholder="Username"
-          onChangeText={text => setEmail(text)}
-          value={email}
-        />
-         <InputForm
-          imagePath='../assets/user.png'
-          placeholder="Email"
-          onChangeText={text => setEmail(text)}
-          value={email}
-        />
-        <InputForm
-        imagePath='../assets/lock.png'
-          placeholder="Password"
-          onChangeText={text => setPassword(text)}
-          value={password}
-          secureTextEntry
-        />
-        <Button title="Sign Up" onPress={handleSignUp} />
+        <Text style={styles.welcomeText}>{welcomeText}</Text>
+        {children}
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+          <Text style={styles.buttonText}>{textBouton}</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -40,15 +27,13 @@ return (
 const styles = StyleSheet.create({
   container: {
     padding: 40,
-
   },
-  containerTextSign: {
+  containerTextAuth: {
     justifyContent: "flex-end",
     marginBottom: 50,
     flexDirection: 'row'
   },
-  textSign: {
-    fontFamily: 'MyFont',
+  textAuth: {
     textDecorationLine: 'underline',
     fontSize: 25,
     color: '#7A7272',
@@ -67,7 +52,7 @@ const styles = StyleSheet.create({
   },
 
   containerForm: {
-    gap: 20,
+    gap: 30,
     alignItems: 'center',
   },
 
@@ -76,6 +61,29 @@ const styles = StyleSheet.create({
     width: 140,
     height: 140,
   },
+
+  welcomeText: {
+    fontSize: 20,
+    color: '#7A7272',
+  },
+  button: {
+    backgroundColor: '#25CEDE',
+    borderRadius: 36,
+    shadowColor: '#9f9f9f',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 1,
+    shadowRadius: 24,
+    elevation: 5,
+    padding: 15,
+    flexDirection: 'row',
+    marginTop: 25
+  }, 
+  buttonText: {
+    fontSize: 18,
+    color: '#fff',
+    textAlign: "center",
+    flex :1
+  }
 });
 
 export default AuthForm;
