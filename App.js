@@ -3,6 +3,8 @@ import React from 'react';
 import Navigation from './components/Navigation';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import SignupScreen from './screens/SignupScreen';
+import ForgotPasswordScreen from './screens/ForgotPasswordScreen';
+import SigninScreen from './screens/SigninScreen';
 import { useFonts } from 'expo-font';
 import { AppLoading } from "expo-app-loading";
 
@@ -24,13 +26,14 @@ export default function App() {
     },
   };
   
-  // if (!fontLoaded) {
-  //   return <Text>Loading...</Text>;
-  // }
+  if (!fontLoaded) {
+    return <Text>Loading...</Text>;
+  }
   return (
+    
     // <NavigationContainer theme={customTheme}>
     //   <Navigation />
     // </NavigationContainer>
-    <SignupScreen/>
+    <ForgotPasswordScreen/>
   );
 }

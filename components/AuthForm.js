@@ -1,10 +1,8 @@
 import React, { Children, useState } from 'react';
 import { View, Button, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import InputForm from '../components/InputForm';
-import { useFonts } from 'expo-font';
 
 
-const AuthForm = ({textAuth, children, handleSubmit, textBouton}) => {
+const AuthForm = ({textAuth, welcomeText, children, handleSubmit, textBouton}) => {
 
   return (
     <View style={styles.container}>
@@ -16,7 +14,7 @@ const AuthForm = ({textAuth, children, handleSubmit, textBouton}) => {
       </View >
       <View style={styles.containerForm}>
         <Image source={require('../assets/robot.png')} style={styles.imageRobot} />
-        <Text style={styles.welcomeText}>Je m'appelle Groot et toi ?</Text>
+        <Text style={styles.welcomeText}>{welcomeText}</Text>
         {children}
         <TouchableOpacity style={styles.button} onPress={handleSubmit}>
           <Text style={styles.buttonText}>{textBouton}</Text>
@@ -30,13 +28,12 @@ const styles = StyleSheet.create({
   container: {
     padding: 40,
   },
-  containerTextSign: {
+  containerTextAuth: {
     justifyContent: "flex-end",
     marginBottom: 50,
     flexDirection: 'row'
   },
-  textSign: {
-    fontFamily: 'MyFont',
+  textAuth: {
     textDecorationLine: 'underline',
     fontSize: 25,
     color: '#7A7272',
@@ -66,7 +63,6 @@ const styles = StyleSheet.create({
   },
 
   welcomeText: {
-    fontFamily: 'MyFont',
     fontSize: 20,
     color: '#7A7272',
   },
@@ -78,12 +74,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     shadowRadius: 24,
     elevation: 5,
-    padding: 10,
+    padding: 15,
     flexDirection: 'row',
     marginTop: 25
   }, 
   buttonText: {
-    fontFamily: 'MyFont',
     fontSize: 18,
     color: '#fff',
     textAlign: "center",
