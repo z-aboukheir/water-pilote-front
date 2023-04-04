@@ -6,6 +6,7 @@ import SignupScreen from './screens/SignupScreen';
 import ForgotPasswordScreen from './screens/ForgotPasswordScreen';
 import ResetPasswordSreen from './screens/ResetPasswordSreen';
 import SigninScreen from './screens/SigninScreen';
+import ErrorScreen from './screens/ErrorScreen';
 import { useFonts } from 'expo-font';
 import { AppLoading } from "expo-app-loading";
 

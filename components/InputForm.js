@@ -1,10 +1,17 @@
-import React from 'react';
-import { View, TextInput, Image, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, TextInput, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 Icon.loadFont();
 
-const InputForm = ({ icon, placeholder, onChangeText, value, secureTextEntry, onBlur }) => {
+const InputForm = ({ icon, placeholder, onChangeText, value, onBlur, secureText }) => {
+
+    const [secureTextEntry, setSecureTextEntry] = useState(false);
+
+    const toggleSecureTextEntry = () => {
+        setSecureTextEntry(!secureTextEntry);
+    };
+
     return (
         <View
             style={styles.container}>
@@ -14,10 +21,13 @@ const InputForm = ({ icon, placeholder, onChangeText, value, secureTextEntry, on
                 placeholderTextColor={"#D9D9D9"}
                 onChangeText={onChangeText}
                 value={value}
-                secureTextEntry={secureTextEntry}
                 style={styles.textInput}
                 onBlur={onBlur}
+                secureTextEntry={secureTextEntry}
             />
+            {secureText && <TouchableOpacity onPress={toggleSecureTextEntry} style={styles.button}>
+                {secureTextEntry ? <Text>👁️‍🗨️</Text> : <Text>👁️</Text>}
+            </TouchableOpacity>}
         </View>
     );
 };

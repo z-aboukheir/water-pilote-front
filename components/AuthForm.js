@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
   containerForm: {
     gap: 30,
     alignItems: 'center',
+    
   },
 
   imageRobot: {

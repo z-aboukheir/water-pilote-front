@@ -1,17 +1,22 @@
 import React, { useState } from 'react';
 import InputForm from '../components/InputForm';
 import AuthForm from '../components/AuthForm';
+import { Text, View } from 'react-native';
+
 
 
 const SignupScreen = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState("");
   const [password, setPassword] = useState('');
+  const [passwordError, setPasswordError] = useState('');
   const [city, setCity] = useState('');
   const [longitude, setLongitude] = useState('');
   const [latitude, setLatitude] = useState('');
 
- 
+
+
   const handleBlur = async () => {
     const url = `https://nominatim.openstreetmap.org/search?q=${city}&format=json`;
     try {
@@ -26,10 +31,11 @@ const SignupScreen = () => {
         setLongitude(lon.toLowerCase());
         setLatitude(lat.toLowerCase());
         console.log(longitude, latitude);
-       
+        // sinon erreur localisation
+        // ( aucun des champs doit etre vide  avec renvoi à true ou false sur chaque fonction )
       }
     } catch (error) {
-      console.error(error);
+      console.error(error); // erruer serveur
     }
   }
 
@@ -45,21 +51,45 @@ const SignupScreen = () => {
           email,
           password,
           city,
-          zipCode,
           longitude,
           latitude
         })
       });
       // handle successful registration
-      navigation.navigate('HomeScreen');
+      navigation.navigate('SigninScreen');
     } catch (error) {
       console.log(error);
     }
   };
 
+  const validatePassword = (password) => {
+    const regex = /^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])\S{8,}$/
+    if (!regex.test(password)) {
+      setPasswordError('Le mot de passe doit contenir au moins 8 caractères, une majuscule, un caractère spécial, et pas d\'espace');
+      return false;
+    }
+    setPasswordError('');
+    return true;
+  };
+
+  const validateEmail = (email) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!regex.test(email)) {
+      setEmailError("Veuillez rentrer une adresse mail correct");
+      console.log(emailError)
+      return false;
+    }
+    setEmailError('');
+    console.log(emailError)
+    return true;
+  };
+
 
 
   return (
+    <>
+  { console.log(emailError)}
+
     <AuthForm textAuth="Sign In" welcomeText="Je m'appelle Groot et toi" handleSubmit={handleSignUp} textBouton="Register">
       <InputForm
         icon='user'
@@ -67,12 +97,18 @@ const SignupScreen = () => {
         onChangeText={text => setUsername(text)}
         value={username}
       />
+     
       <InputForm
         icon='user'
         placeholder="Email"
-        onChangeText={text => setEmail(text)}
+        onChangeText={text => {
+          setEmail(text);
+          validateEmail(text);
+        }} 
         value={email}
       />
+      {emailError ? <Text style={{ color: 'red', marginTop: -20 }}>{emailError}</Text> : null}
+
       <InputForm
         icon='user'
         placeholder="Ville"
@@ -80,14 +116,21 @@ const SignupScreen = () => {
         value={city}
         onBlur={handleBlur}
       />
+
       <InputForm
         icon='lock'
         placeholder="Password"
-        onChangeText={text => setPassword(text)}
+        onChangeText={text => {
+          setPassword(text);
+          validatePassword(text);
+        }}
         value={password}
-        secureTextEntry
+        secureText
       />
+      {passwordError ? <Text style={{ color: 'red', marginTop: -20 }}>{passwordError}</Text> : null}
+
     </AuthForm>
+  </>
   )
 
 }
