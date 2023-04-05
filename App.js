@@ -9,6 +9,7 @@ import SigninScreen from './screens/SigninScreen';
 import ErrorScreen from './screens/ErrorScreen';
 import { useFonts } from 'expo-font';
 import { AppLoading } from "expo-app-loading";
+import LocationPicker from './screens/location';
 
 export default function App() {
   
@@ -32,11 +33,13 @@ export default function App() {
     return <Text>Loading...</Text>;
   }
   return (
-    <ScrollView>
+    <View style = {{justifyContent: 'center', alignContent:'center', flexDirection:'row', alignItems:'center', flex: 1}}>
+    <ScrollView >
     {/* <NavigationContainer theme={customTheme}>
       <Navigation />
      </NavigationContainer> */}
-    <SignupScreen/>
+    <LocationPicker/>
     </ScrollView>
+    </View>
   );
 }

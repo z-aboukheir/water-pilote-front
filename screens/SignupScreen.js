@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import InputForm from '../components/InputForm';
 import AuthForm from '../components/AuthForm';
-import { Text, View } from 'react-native';
+import {TextInput, View, Text, FlatList, TouchableOpacity } from 'react-native';
 
+  // ( aucun des champs doit etre vide  avec renvoi à true ou false sur chaque fonction )
 
 
 const SignupScreen = () => {
@@ -14,7 +15,7 @@ const SignupScreen = () => {
   const [city, setCity] = useState('');
   const [longitude, setLongitude] = useState('');
   const [latitude, setLatitude] = useState('');
-
+  
 
 
   const handleBlur = async () => {
@@ -32,7 +33,6 @@ const SignupScreen = () => {
         setLatitude(lat.toLowerCase());
         console.log(longitude, latitude);
         // sinon erreur localisation
-        // ( aucun des champs doit etre vide  avec renvoi à true ou false sur chaque fonction )
       }
     } catch (error) {
       console.error(error); // erruer serveur
@@ -55,7 +55,6 @@ const SignupScreen = () => {
           latitude
         })
       });
-      // handle successful registration
       navigation.navigate('SigninScreen');
     } catch (error) {
       console.log(error);
