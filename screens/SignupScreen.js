@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import InputForm from '../components/InputForm';
 import AuthForm from '../components/AuthForm';
+import LocationPicker from '../components/LocationPicker';
 import {TextInput, View, Text, FlatList, TouchableOpacity } from 'react-native';
 
   // ( aucun des champs doit etre vide  avec renvoi à true ou false sur chaque fonction )
@@ -108,13 +109,8 @@ const SignupScreen = () => {
       />
       {emailError ? <Text style={{ color: 'red', marginTop: -20 }}>{emailError}</Text> : null}
 
-      <InputForm
-        icon='user'
-        placeholder="Ville"
-        onChangeText={text => setCity(text)}
-        value={city}
-        onBlur={handleBlur}
-      />
+     
+      <LocationPicker/>
 
       <InputForm
         icon='lock'

@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 Icon.loadFont();
 
-const InputForm = ({ icon, placeholder, onChangeText, value, onBlur, secureText }) => {
+const InputForm = ({ icon, placeholder, onChangeText, onFocus, value, onBlur, secureText }) => {
 
     const [secureTextEntry, setSecureTextEntry] = useState(false);
 
@@ -15,7 +15,7 @@ const InputForm = ({ icon, placeholder, onChangeText, value, onBlur, secureText 
     return (
         <View
             style={styles.container}>
-            <Icon name={icon} size={20} color="#E8E8E8" style={styles.icon} />
+            <Icon name={icon} size={25} color="#D9D9D9" style={styles.icon} />
             <TextInput
                 placeholder={placeholder}
                 placeholderTextColor={"#D9D9D9"}
@@ -24,6 +24,7 @@ const InputForm = ({ icon, placeholder, onChangeText, value, onBlur, secureText 
                 style={styles.textInput}
                 onBlur={onBlur}
                 secureTextEntry={secureTextEntry}
+                onFocus={onFocus}
             />
             {secureText && <TouchableOpacity onPress={toggleSecureTextEntry} style={styles.button}>
                 {secureTextEntry ? <Text>👁️‍🗨️</Text> : <Text>👁️</Text>}
@@ -43,6 +44,7 @@ const styles = StyleSheet.create({
         elevation: 5,
         padding: 15,
         flexDirection: 'row',
+        alignItems: 'center '   
     },
     icon: {
         marginRight: 10,
@@ -50,9 +52,12 @@ const styles = StyleSheet.create({
     }
     ,
     textInput: {
-        flex: 1,
         fontSize: 20,
-    }
+        flex: 1,
+  
+       
+    },
+   
 
 });
 
