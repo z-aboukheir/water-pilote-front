@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { View, Button, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import InputForm from '../components/InputForm';
 import AuthForm from '../components/AuthForm';
-
+import { loginUser, isLoggedIn} from '../services/authService';
 
 const SigninScreen = () => {
     const [email, setEmail] = useState('');
@@ -10,13 +9,26 @@ const SigninScreen = () => {
 
 
 
-    const handleSignIn = () => {
-        // Handle sign up logic here
+    const handleSignIn = async () => {
+        try {
+            await loginUser({ email, password });
+            const isConnected = isLoggedIn()
+            if (isConnected) {
+                // L'utilisateur est connecté, effectuer les actions nécessaires
+                // ...
+            } else {
+                // L'utilisateur n'est pas connecté, gérer l'erreur
+                setError('Failed to log in');
+            }
+          } catch (error) {
+            setError(error.message);
+          }
     };
 
 
     return (
-        <AuthForm textAuth="Sign In" welcomeText="Heureux de vous revoir" handleSubmit={handleSignIn} textBouton="Sign In">
+        // {error && <Text>{error}</Text>}
+        <AuthForm textAuth="Sign Up" welcomeText="Heureux de vous revoir" handleSubmit={handleSignIn} textBouton="Sign In">
             <InputForm
                 icon='user'
                 placeholder="Email"
