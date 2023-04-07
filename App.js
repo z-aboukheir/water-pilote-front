@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Settings } from 'react-native';
 import React from 'react';
 import Navigation from './navigator/Navigation'
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
@@ -9,6 +9,7 @@ import ErrorScreen from './screens/ErrorScreen';
 import { useFonts } from 'expo-font';
 import { AppLoading } from "expo-app-loading";
 import LocationPicker from './components/LocationPicker';
+import Setting from './screens/Settings';
 
 export default function App() {
 
@@ -41,7 +42,7 @@ export default function App() {
     {/* <NavigationContainer theme={customTheme}>
       <Navigation />
      </NavigationContainer> */}
-    <SignupScreen/>
+    <Settings/>
     </ScrollView>
     // </View>
   );

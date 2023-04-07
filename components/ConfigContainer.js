@@ -29,14 +29,14 @@ const ConfigContainer = ({
       <Image
         style={[styles.vectorIcon, styles.vectorIconLayout]}
         resizeMode="cover"
-        source={require("../assets/vector.png")}
+        source={require("../assets/iconetime.png")}
       />
       <View style={[styles.rectangleView, styles.configChild1ShadowBox]} />
       <Pressable style={styles.iconetime} onPress={onIconetimePress}>
         <Image
           style={styles.icon}
           resizeMode="cover"
-          source={require("../assets/iconetime.png")}
+          source={require("../assets/vector@3x.png")}
         />
       </Pressable>
       <View style={[styles.configChild1, styles.configChild1ShadowBox]} />
