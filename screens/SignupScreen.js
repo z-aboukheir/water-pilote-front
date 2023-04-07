@@ -90,7 +90,7 @@ const SignupScreen = () => {
     <>
   { console.log(emailError)}
 
-    <AuthForm textAuth="Sign In" welcomeText="Je m'appelle Groot et toi"  textBouton="Register">
+    <AuthForm textAuth="Sign In" welcomeText="Je s'appelle Groot et toi"  textBouton="Register">
       <InputForm
         icon='user'
         placeholder="Username"

@@ -11,26 +11,30 @@ import { AppLoading } from "expo-app-loading";
 import LocationPicker from './components/LocationPicker';
 
 export default function App() {
-  
-  // const [fontLoaded] = useFonts({
-  //   'custom-font': require('./assets/fonts/Poppins-Regular.ttf'),
-  // });
 
-  // const customTheme = {
-  //   ...DefaultTheme,
-  //   colors: {
-  //     ...DefaultTheme.colors,
-  //     background: 'linear-gradient(158.53deg, #EEF0F5 14.11%, #E2E4EA 85.89%)', 
-  //   },
-  //   text: {
-  //     ...DefaultTheme.text,
-  //     fontFamily: 'custom-font', 
-  //   },
-  // };
+  const [fontsLoaded, error] = useFonts({
+    Poppins_regular: require("./assets/fonts/Poppins_regular.ttf"),
+    Poppins_medium: require("./assets/fonts/Poppins_medium.ttf"),
+    Poppins_bold: require("./assets/fonts/Poppins_bold.ttf"),
+    Rubik_medium: require("./assets/fonts/Rubik_medium.ttf"),
+    Raleway_medium: require("./assets/fonts/Raleway_medium.ttf"),
+  });
+
+  const customTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: 'linear-gradient(158.53deg, #EEF0F5 14.11%, #E2E4EA 85.89%)', 
+    },
+    text: {
+      ...DefaultTheme.text,
+      fontFamily: 'custom-font', 
+    },
+  };
   
-  // if (!fontLoaded) {
-  //   return <Text>Loading...</Text>;
-  // }
+  if (!fontsLoaded) {
+    return <Text>Loading...</Text>;
+  }
   return (
     // <View style = {{justifyContent: 'center', alignContent:'center', alignItems:'center', flex: 1}}>
     <ScrollView >
