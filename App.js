@@ -1,10 +1,9 @@
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import React from 'react';
-import Navigation from './components/Navigation';
+import Navigation from './navigator/Navigation'
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import SignupScreen from './screens/SignupScreen';
-import ForgotPasswordScreen from './screens/ForgotPasswordScreen';
-import ResetPasswordSreen from './screens/ResetPasswordSreen';
+
 import SigninScreen from './screens/SigninScreen';
 import ErrorScreen from './screens/ErrorScreen';
 import { useFonts } from 'expo-font';
