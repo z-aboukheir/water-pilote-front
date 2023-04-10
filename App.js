@@ -36,13 +36,13 @@ export default function App() {
     return <Text>Loading...</Text>;
   }
   return (
-    // <View style = {{justifyContent: 'center', alignContent:'center', alignItems:'center', flex: 1}}>
-    <ScrollView >
+    <View>
+     <ScrollView >
     {/* <NavigationContainer theme={customTheme}>
       <Navigation />
      </NavigationContainer> */}
     <SignupScreen/>
     </ScrollView>
-    // </View>
+     </View>
   );
 }

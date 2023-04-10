@@ -6,66 +6,31 @@ import {
   FlatList,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  Keyboard, ScrollView
 } from "react-native";
 import InputForm from "./InputForm";
-import { ScrollView } from "react-native-web";
+import { fetchLocations } from "../services/locationServices";
 
 
-const apiKey = "69e51d74a685081fc23e5d1188d95a16"
-
-
-
-const LocationPicker = () => {
+const LocationPicker = ({ selectedLocation, setSelectedLocation }) => {
   const [query, setQuery] = useState("");
   const [locations, setLocations] = useState([]);
-  const [selectedLocation, setSelectedLocation] = useState(null);
   const [showResults, setShowResults] = useState(false);
 
-  useEffect(() => {
-    const fetchLocations = async () => {
-      if (query) {
-        const url = `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(
-          query
-        )},fr&limit=5&appid=${apiKey}`;
-        try {
-          const response = await fetch(url);
-          const data = await response.json();
-          const locations = [];
-          const seen = new Set();
-          data.forEach((result) => {
-            const { name, state, lat, lon } = result;
-            const fullName = `${name}, ${state}`;
-            if (!seen.has(fullName)) {
-              locations.push({
-                name,
-                region: state || "",
-                latitude: lat,
-                longitude: lon,
-              });
-              seen.add(fullName);
-            }
-          });
-          setLocations(locations);
-          setShowResults(true);
-        } catch (error) {
-          console.error(error);
-        }
-      } else {
-        setLocations([]);
-      }
-    };
-    fetchLocations();
-  }, [query]);
 
-  const handleQueryChange = (text) => {
+
+  const handleQueryChange = async (text) => {
     setQuery(text);
     setSelectedLocation(null);
+    const fetchedLocations = await fetchLocations(text);
+    setLocations(fetchedLocations);
+    setShowResults(fetchedLocations.length > 0);
   };
 
   const handleLocationSelect = (location) => {
     setSelectedLocation(location);
     setShowResults(false);
-  };
+ };
 
   const renderLocation = ({ item }) => (
     <TouchableOpacity
@@ -79,8 +44,9 @@ const LocationPicker = () => {
     </TouchableOpacity>
   );
 
+
   return (
-<View>
+    <View>
       <InputForm
         icon="globe"
         placeholder="Entrez une ville"
@@ -93,17 +59,28 @@ const LocationPicker = () => {
         onFocus={() => setShowResults(true)}
       />
       {showResults && locations.length > 0 && (
-        <FlatList
-          data={locations}
-          renderItem={renderLocation}
-          keyExtractor={(item, index) => index.toString()}
-          style={{
-            marginLeft: 45,
-            marginRight: 20,
-            paddingLeft: 10,
-            backgroundColor: "#E8E8E8",
-          }}
-        />
+          <FlatList
+            data={locations}
+            renderItem={renderLocation}
+            keyExtractor={(item, index) => index.toString()}
+            style={{            
+        backgroundColor: '#fff',
+        borderBottomLeftRadius: 36,
+        borderBottomRightRadius: 36,
+        marginTop: -30,
+        shadowColor: '#9f9f9f',
+        shadowOffset: { width: 0, height: 0 },
+        shadowOpacity: 1,
+        shadowRadius: 10,
+        elevation: 5,
+        padding: 15,
+        paddingTop:45,
+        zIndex: -2      
+            }}
+           keyboardShouldPersistTaps="handled"
+
+          />
+          
       )}
     </View>
   );

@@ -6,28 +6,31 @@ import { loginUser, isLoggedIn} from '../services/authService';
 const SigninScreen = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
-
+    const [error, setError] = useState('');
 
     const handleSignIn = async () => {
         try {
-            await loginUser({ email, password });
+            // await loginUser({ email, password });
+            await loginUser({ email :email, password: password});
             const isConnected = isLoggedIn()
             if (isConnected) {
-                // L'utilisateur est connecté, effectuer les actions nécessaires
-                // ...
+                // L'utilisateur est connecté
+                console.log("connected")
             } else {
-                // L'utilisateur n'est pas connecté, gérer l'erreur
+                // L'utilisateur n'est pas connecté
                 setError('Failed to log in');
+                console.log("bad")
             }
           } catch (error) {
+            console.log(error.message)
             setError(error.message);
           }
     };
 
 
     return (
-        // {error && <Text>{error}</Text>}
+        <>
+        {error && <Text>{error}</Text>}
         <AuthForm textAuth="Sign Up" welcomeText="Heureux de vous revoir" handleSubmit={handleSignIn} textBouton="Sign In">
             <InputForm
                 icon='user'
@@ -42,6 +45,7 @@ const SigninScreen = () => {
                 value={password}
                 secureTextEntry
             /></AuthForm>
+            </>
     )
 }
 
