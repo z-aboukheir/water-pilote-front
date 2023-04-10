@@ -1,74 +1,90 @@
-import React, { useState, useEffect } from 'react';
-import InputForm from '../components/InputForm';
-import AuthForm from '../components/AuthForm';
-// import LocationPicker from '../components/LocationPicker';
-import {TextInput, View, Text, FlatList, TouchableOpacity } from 'react-native';
-
-  // ( aucun des champs doit etre vide  avec renvoi à true ou false sur chaque fonction )
-
+import React, { useState, useEffect } from "react";
+import InputForm from "../components/InputForm";
+import AuthForm from "../components/AuthForm";
+import LocationPicker from "../components/LocationPicker";
+import {
+  TextInput,
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
+import { registerUser } from "../services/authService";
 
 const SignupScreen = () => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
-  const [password, setPassword] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [city, setCity] = useState('');
-  const [longitude, setLongitude] = useState('');
-  const [latitude, setLatitude] = useState('');
-  
-
-
-  const handleBlur = async () => {
-    const url = `https://nominatim.openstreetmap.org/search?q=${city}&format=json`;
-    try {
-      const response = await fetch(url, {
-        headers: {
-          'User-Agent': 'waterPilot/1.0'
-        }
-      });
-      const data = await response.json();
-      if (data.length > 0) {
-        const { lat, lon } = data[0];
-        setLongitude(lon.toLowerCase());
-        setLatitude(lat.toLowerCase());
-        console.log(longitude, latitude);
-        // sinon erreur localisation
-      }
-    } catch (error) {
-      console.error(error); // erruer serveur
-    }
-  }
+  const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [selectedLocationError, setSelectedLocationError] = useState("");
+  const [usernameError, setUsernameError] = useState("");
+  const [error, setError] = useState("");
 
   const handleSignUp = async () => {
-    try {
-      await fetch('http://localhost:3000/sign-up', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          password,
-          city,
-          longitude,
-          latitude
-        })
-      });
-      // navigation.navigate('SigninScreen');
-    } catch (error) {
-      console.log(error);
+    if (
+      !usernameError &&
+      !emailError &&
+      !passwordError &&
+      !selectedLocationError &&
+      areAllFieldsFilled()
+    ) {
+      try {
+        await registerUser({
+          password: password,
+          name: username,
+          email: email,
+          city: selectedLocation.name,
+          longitude: selectedLocation.longitude,
+          latitude: selectedLocation.latitude,
+        });
+
+        // navigation.navigate("SigninScreen");
+      } catch (error) {
+        console.log(error);
+        setError(error.message);
+      }
+    } else {
+      validateUsername(username);
+      validatePassword(password);
+      validateEmail(email);
+      validateSelectedLocation(selectedLocation);
+      setError("Veuillez remplir tous les champs pour vous inscrire.");
     }
   };
 
-  const validatePassword = (password) => {
-    const regex = /^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])\S{8,}$/
-    if (!regex.test(password)) {
-      setPasswordError('Le mot de passe doit contenir au moins 8 caractères, une majuscule, un caractère spécial, et pas d\'espace');
+  const areAllFieldsFilled = () => {
+    return username && email && password && selectedLocation;
+  };
+
+  const validateSelectedLocation = (location) => {
+    if (!location) {
+      setSelectedLocationError("Veuillez sélectionner une localisation");
       return false;
     }
-    setPasswordError('');
+    setSelectedLocationError("");
+    return true;
+  };
+
+  const validateUsername = (username) => {
+    if (!username) {
+      setUsernameError("Veuillez entrer un nom d'utilisateur");
+      return false;
+    }
+    setUsernameError("");
+    return true;
+  };
+
+  const validatePassword = (password) => {
+    const regex = /^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])\S{8,}$/;
+    if (!regex.test(password)) {
+      setPasswordError(
+        "Le mot de passe doit contenir au moins 8 caractères, une majuscule, un caractère spécial, et pas d'espace"
+      );
+      return false;
+    }
+    setPasswordError("");
     return true;
   };
 
@@ -76,58 +92,84 @@ const SignupScreen = () => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!regex.test(email)) {
       setEmailError("Veuillez rentrer une adresse mail correct");
-      console.log(emailError)
+      console.log(emailError);
       return false;
     }
-    setEmailError('');
-    console.log(emailError)
+    setEmailError("");
+    console.log(emailError);
     return true;
   };
 
-
-
   return (
     <>
-  { console.log(emailError)}
+      {error && <Text>{error}</Text>}
+      <AuthForm
+        textAuth="Sign In"
+        welcomeText="Je m'appelle Groot et toi"
+        handleSubmit={handleSignUp}
+        textBouton="Register"
+      >
+        <InputForm
+          icon="user"
+          placeholder="Username"
+          onChangeText={(text) => {
+            setUsername(text);
+            validateUsername(text);
+          }}
+          value={username}
+        />
+        {usernameError ? (
+          <Text style={{ color: "red", marginTop: -20, marginLeft: 10 }}>
+            {usernameError}
+          </Text>
+        ) : null}
 
-    <AuthForm textAuth="Sign In" welcomeText="Je s'appelle Groot et toi"  textBouton="Register">
-      <InputForm
-        icon='user'
-        placeholder="Username"
-        onChangeText={text => setUsername(text)}
-        value={username}
-      />
-     
-      <InputForm
-        icon='user'
-        placeholder="Email"
-        onChangeText={text => {
-          setEmail(text);
-          validateEmail(text);
-        }} 
-        value={email}
-      />
-      {emailError ? <Text style={{ color: 'red', marginTop: -20 }}>{emailError}</Text> : null}
+        <InputForm
+          icon="user"
+          placeholder="Email"
+          onChangeText={(text) => {
+            setEmail(text);
+            validateEmail(text);
+          }}
+          value={email}
+        />
+        {emailError ? (
+          <Text style={{ color: "red", marginTop: -20, marginLeft: 10 }}>
+            {emailError}
+          </Text>
+        ) : null}
 
-     
-      {/* <LocationPicker/> */}
+        <LocationPicker
+          selectedLocation={selectedLocation}
+          setSelectedLocation={(location) => {
+            setSelectedLocation(location);
+            validateSelectedLocation(location);
+          }}
+        />
+        {selectedLocationError ? (
+          <Text style={{ color: "red", marginTop: -20, marginLeft: 10 }}>
+            {selectedLocationError}
+          </Text>
+        ) : null}
 
-      <InputForm
-        icon='lock'
-        placeholder="Password"
-        onChangeText={text => {
-          setPassword(text);
-          validatePassword(text);
-        }}
-        value={password}
-        secureText
-      />
-      {passwordError ? <Text style={{ color: 'red', marginTop: -20 }}>{passwordError}</Text> : null}
-
-    </AuthForm>
-  </>
-  )
-
-}
+        <InputForm
+          icon="lock"
+          placeholder="Password"
+          onChangeText={(text) => {
+            setPassword(text);
+            validatePassword(text);
+          }}
+          value={password}
+          secureText
+        />
+        {passwordError ? (
+          <Text style={{ color: "red", marginTop: -20, marginLeft: 10 }}>
+            {passwordError}
+          </Text>
+        ) : null}
+      </AuthForm>
+    </>
+  );
+};
 
 export default SignupScreen;
