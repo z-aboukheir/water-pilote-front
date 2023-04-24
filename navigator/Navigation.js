@@ -1,37 +1,17 @@
-{/* <Stack.Navigator screenOptions={{ headerShown: false }}>
-    <Stack.Screen
-    name="Setting"
-    component={Setting}
-    options={{ headerShown: false }}
-    />
-    <Stack.Screen
-    name="Inscription"
-    component={Inscription}
-    options={{ headerShown: false }}
-    />
-    <Stack.Screen
-    name="Conexion"
-    component={Conexion}
-    options={{ headerShown: false }}
-    />
-    <Stack.Screen
-    name="Home"
-    component={Home}
-    options={{ headerShown: false }}
-    />
-    <Stack.Screen
-    name="Time"
-    component={Time}
-    options={{ headerShown: false }}
-    />
-    <Stack.Screen
-    name="Seuil"
-    component={Seuil}
-    options={{ headerShown: false }}
-    />
-    <Stack.Screen
-    name="State"
-    component={State}
-    options={{ headerShown: false }}
-    />
-</Stack.Navigator> */}
+import React, {useEffect} from 'react';
+import { NavigationContainer, useNavigation, CommonActions } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
+import { Image } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
+
+import SignupScreen from '../screens/SignupScreen';
+import SigninScreen from '../screens/SigninScreen';
+import SchedulesSettingScreen from '../screens/SchedulesSettingScreen';
+import SettingsScreen from '../screens/SettingsScreen';
+import statisticsScreen from '../screens/statisticsScreen';
+import WateringSettingScreen from '../screens/WateringSettingScreen';
+import HomeScreen from '../screens/HomeScreen';
+
+
+const Navigation = () => {}

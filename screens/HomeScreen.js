@@ -8,7 +8,7 @@ const Home = () => {
       <Image
         style={styles.tabNavIcon}
         resizeMode="cover"
-        source={require("../assets/tab-nav1.png")}
+        source={require("../assets/tab-nav.png")}
       />
       <View style={styles.arrosage}>
         <View style={[styles.rectangle, styles.rectangleLayout2]} />
@@ -20,7 +20,7 @@ const Home = () => {
         <Image
           style={[styles.vectorIcon, styles.vectorIconLayout]}
           resizeMode="cover"
-          source={require("../assets/vector1.png")}
+          source={require("../assets/vector.png")}
         />
       </View>
       <View style={[styles.humidit, styles.rectangleLayout]}>
@@ -33,7 +33,7 @@ const Home = () => {
         <Image
           style={[styles.vectorIcon1, styles.vectorIconLayout]}
           resizeMode="cover"
-          source={require("../assets/vector2.png")}
+          source={require("../assets/vector1.png")}
         />
       </View>
       <View style={[styles.apercu, styles.apercuLayout]}>
