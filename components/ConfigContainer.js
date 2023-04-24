@@ -36,7 +36,7 @@ const ConfigContainer = ({
         <Image
           style={styles.icon}
           resizeMode="cover"
-          source={require("../assets/vector@3x.png")}
+          source={require("../assets/icon-splash.png")}
         />
       </Pressable>
       <View style={[styles.configChild1, styles.configChild1ShadowBox]} />
