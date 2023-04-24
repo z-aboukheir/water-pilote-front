@@ -1,17 +1,23 @@
-import { StyleSheet, Text, View, ScrollView, Settings } from 'react-native';
-import React from 'react';
-import Navigation from './navigator/Navigation'
-import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
-import SignupScreen from './screens/SignupScreen';
-
-import SigninScreen from './screens/SigninScreen';
-import ErrorScreen from './screens/ErrorScreen';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import React, {
+  useState
+} from 'react';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { AppLoading } from "expo-app-loading";
-import LocationPicker from './components/LocationPicker';
-import Setting from './screens/Settings';
+import {
+  createStackNavigator
+} from "@react-navigation/stack";
+import AuthStack
+  from "./navigator/AuthStack";
+import MainStack
+  from "./navigator/MainStack";
+import {LinearGradient} from "expo-linear-gradient";
 
 export default function App() {
+
+  const Stack = createStackNavigator();
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   const [fontsLoaded, error] = useFonts({
     Poppins_regular: require("./assets/fonts/Poppins_regular.ttf"),
@@ -25,25 +31,24 @@ export default function App() {
     ...DefaultTheme,
     colors: {
       ...DefaultTheme.colors,
-      background: 'linear-gradient(158.53deg, #EEF0F5 14.11%, #E2E4EA 85.89%)', 
+      background: 'linear-gradient(158.53deg, #EEF0F5 14.11%, #E2E4EA 85.89%)',
     },
     text: {
       ...DefaultTheme.text,
-      fontFamily: 'custom-font', 
+      fontFamily: 'custom-font',
     },
   };
-  
+
   if (!fontsLoaded) {
     return <Text>Loading...</Text>;
   }
   return (
-    <View>
-     <ScrollView >
-    {/* <NavigationContainer theme={customTheme}>
-      <Navigation />
-     </NavigationContainer> */}
-    <Settings/>
-    </ScrollView>
-     </View>
+      <NavigationContainer>
+        {isLoggedIn ? (
+            <MainStack />
+        ) : (
+            <AuthStack setIsLoggedIn={setIsLoggedIn} />
+        )}
+      </NavigationContainer>
   );
 }

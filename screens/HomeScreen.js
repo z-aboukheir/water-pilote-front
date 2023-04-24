@@ -2,7 +2,8 @@ import * as React from "react";
 import { View, Image, StyleSheet, Text } from "react-native";
 import { Color, Border, FontFamily, FontSize } from "../GlobalStyles";
 
-const Home = () => {
+
+/*const Home = () => {
   return (
     <View style={styles.home}>
       <Image
@@ -45,12 +46,30 @@ const Home = () => {
         style={styles.roundSocialNotifications}
         resizeMode="cover"
         source={require("../assets/-round--social--notifications-none.png")}
-      />
+      />*/
+
+import CurrentWeather
+  from "../components/CurrentWeather";
+
+const HomeScreen = () => {
+  return (
+    <View style={styles.mainContainer}>
+      <CurrentWeather />
+      <View style={styles.infoContainer}>
+        <Text style={styles.infoOne}>Humidité au sol</Text>
+        <Text style={styles.infoTwo}>1%</Text>
+      </View>
+      <View style={styles.infoContainer}>
+        <Text style={styles.infoOne}>Prochain arrosage</Text>
+        <Text style={styles.infoTwo}>19h00</Text>
+      </View>
+
     </View>
   );
 };
 
-const styles = StyleSheet.create({
+
+/*const styles = StyleSheet.create({
   rectangleLayout2: {
     height: 56,
     position: "absolute",
@@ -246,4 +265,37 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default Home;*/
+
+export default HomeScreen;
+
+const styles = StyleSheet.create({
+    mainContainer: {
+      paddingTop: 100,
+        paddingHorizontal: "10%",
+        alignContent: "center",
+    },
+  infoContainer: {
+    flexDirection: 'row',
+    height: 40,
+    marginBottom: 30,
+  },
+  infoOne: {
+    width: '75%',
+    backgroundColor: 'rgba(255, 255, 255, 0.55)',
+    justifyContent: 'center',
+    textAlign: 'center',
+    borderRadius: 10,
+    paddingTop: 10,
+  },
+  infoTwo: {
+    width: '20%',
+    backgroundColor: 'rgba(255, 255, 255, 0.55)',
+    marginLeft: "5%",
+    justifyContent: 'center',
+    textAlign: 'center',
+    borderRadius: 10,
+    paddingTop: 10,
+  }
+})
+

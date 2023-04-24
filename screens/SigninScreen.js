@@ -6,7 +6,9 @@ import { loginUser, isLoggedIn} from '../services/authService';
 const SigninScreen = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
     const [error, setError] = useState('');
+
 
     const handleSignIn = async () => {
         try {
