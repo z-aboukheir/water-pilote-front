@@ -7,8 +7,6 @@ const SigninScreen = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-
-
     const handleSignIn = async () => {
         try {
             await loginUser({ email, password });

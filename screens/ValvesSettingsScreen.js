@@ -1,15 +1,15 @@
 import * as React from "react";
 import { Image, StyleSheet, Text, Pressable, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import ConfigContainer from "../components/ConfigContainer";
+// import ConfigContainer from "../components/ConfigContainer";
 import { FontSize, Color, FontFamily } from "../GlobalStyles";
 
-const Setting = () => {
+const ValvesSettingsScreen = () => {
   const navigation = useNavigation();
 
   return (
     <View style={styles.setting}>
-      <Image
+{/*      <Image
         style={[styles.plante1Icon, styles.backPosition]}
         resizeMode="cover"
         source={require("../assets/plante-1.png")}
@@ -42,7 +42,7 @@ const Setting = () => {
           source={require("../assets/back.png")}
         />
       </Pressable>
-      <Text style={styles.paramtrage}>Paramétrage</Text>
+      <Text style={styles.paramtrage}>Paramétrage</Text>*/}
     </View>
   );
 };
@@ -131,4 +131,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Setting;
+export default ValvesSettingsScreen;
