@@ -14,11 +14,15 @@ const AuthForm = ({
   children,
   handleSubmit,
   textBouton,
+  navigation,
+  redirectScreen,
 }) => {
   return (
     <View style={styles.container}>
       <View style={styles.containerTextAuth}>
+      <TouchableOpacity onPress={() => navigation.navigate(redirectScreen)}>
         <Text style={styles.textAuth}>{textAuth}</Text>
+        </TouchableOpacity>
         <Image source={require("../assets/On.png")} style={styles.imageOn} />
       </View>
       <Image
