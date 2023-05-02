@@ -14,14 +14,14 @@ export const getToken = async () => {
   return credentials && credentials.password ? credentials.password : null;
 };
 
-export const getUserFromToken = async () => {
-  const token = await getToken();
-  if (!token) return null;
-  try {
-    const decodedToken = jwtDecode(token);
-    return decodedToken;
-  } catch (error) {
-    console.log('Error decoding token:', error);
-    return null;
-  }
-};
+// export const getUserFromToken = async () => {
+//   const token = await getToken();
+//   if (!token) return null;
+//   try {
+//     const decodedToken = jwtDecode(token);
+//     return decodedToken;
+//   } catch (error) {
+//     console.log('Error decoding token:', error);
+//     return null;
+//   }
+// };

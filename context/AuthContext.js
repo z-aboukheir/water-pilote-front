@@ -26,12 +26,19 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  const signUp = async (email, password) => {
-    const response = await register(email, password);
-    if (response && response.token) {
-      await storeToken(response.token);
-      setIsAuthenticated(true);
-    } else {
+  // const signUp = async (userData) => {
+  //   const response = await register(userData);
+  //   if (response && response.token) {
+  //     await storeToken(response.token);
+  //     setIsAuthenticated(true);
+  //   } else {
+  //     throw new Error('Registration failed');
+  //   }
+  // };
+
+  const signUp = async (userData) => {
+    const response = await register(userData);
+    if (!response) {
       throw new Error('Registration failed');
     }
   };
