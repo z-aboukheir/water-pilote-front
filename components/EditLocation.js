@@ -24,7 +24,7 @@ const EditLocation = () => {
 
   return (
     <View>
-      <Text>Bonjour {user.username}!</Text>
+      <Text>bonjour {user.username}!</Text>
       <Text>Votre ville sélectionnée est: {location.name}</Text>
       <LocationPicker
         selectedLocation={selectedLocation}
