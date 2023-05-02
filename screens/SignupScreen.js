@@ -1,15 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import InputForm from "../components/InputForm";
 import AuthForm from "../components/AuthForm";
 import LocationPicker from "../components/LocationPicker";
+
 import {
+  StyleSheet,
   TextInput,
   View,
   Text,
   FlatList,
   TouchableOpacity,
+  ScrollView
 } from "react-native";
-import { registerUser } from "../services/authService";
+import { AuthContext } from '../context/AuthContext';
+import { useNavigation } from '@react-navigation/native';
+
 
 const SignupScreen = () => {
   const [username, setUsername] = useState("");
@@ -22,6 +27,9 @@ const SignupScreen = () => {
   const [usernameError, setUsernameError] = useState("");
   const [error, setError] = useState("");
 
+  const navigation = useNavigation();
+  const { signUp } = useContext(AuthContext);
+
   const handleSignUp = async () => {
     if (
       !usernameError &&
@@ -31,7 +39,7 @@ const SignupScreen = () => {
       areAllFieldsFilled()
     ) {
       try {
-        await registerUser({
+        await signUp({
           password: password,
           name: username,
           email: email,
@@ -40,7 +48,7 @@ const SignupScreen = () => {
           latitude: selectedLocation.latitude,
         });
 
-        // navigation.navigate("SigninScreen");
+        navigation.navigate("SigninScreen");
       } catch (error) {
         console.log(error);
         setError(error.message);
@@ -56,24 +64,6 @@ const SignupScreen = () => {
 
   const areAllFieldsFilled = () => {
     return username && email && password && selectedLocation;
-  };
-
-  const validateSelectedLocation = (location) => {
-    if (!location) {
-      setSelectedLocationError("Veuillez sélectionner une localisation");
-      return false;
-    }
-    setSelectedLocationError("");
-    return true;
-  };
-
-  const validateUsername = (username) => {
-    if (!username) {
-      setUsernameError("Veuillez entrer un nom d'utilisateur");
-      return false;
-    }
-    setUsernameError("");
-    return true;
   };
 
   const validatePassword = (password) => {
@@ -99,15 +89,34 @@ const SignupScreen = () => {
     console.log(emailError);
     return true;
   };
+  
+  const validateSelectedLocation = (location) => {
+    if (!location) {
+      setSelectedLocationError("Veuillez sélectionner une localisation");
+      return false;
+    }
+    setSelectedLocationError("");
+    return true;
+  };
+
+  const validateUsername = (username) => {
+    if (!username) {
+      setUsernameError("Veuillez entrer un nom d'utilisateur");
+      return false;
+    }
+    setUsernameError("");
+    return true;
+  };
 
   return (
-    <>
-      {error && <Text>{error}</Text>}
+    <ScrollView>
       <AuthForm
         textAuth="Sign In"
         welcomeText="Je m'appelle Groot et toi"
         handleSubmit={handleSignUp}
         textBouton="Register"
+        navigation ={navigation}
+  redirectScreen ="SignIn"
       >
         <InputForm
           icon="user"
@@ -168,8 +177,9 @@ const SignupScreen = () => {
           </Text>
         ) : null}
       </AuthForm>
-    </>
-  );
+      {error && <Text style={{ color: "red", textAlign : 'center' , marginTop: 20 }}>{error}</Text>}
+      </ScrollView>
+        );
 };
 
 export default SignupScreen;

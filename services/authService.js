@@ -1,6 +1,30 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import HomeScreen from '../screens/HomeScreen';
+
 const API_URL = "http://localhost:3000/user";
 
-async function registerUser(userData) {
+const login = async (password, email) => {
+  try {
+    const response = await fetch(API_URL + "/login", {
+      method: "POST",
+      body: JSON.stringify({password, email }),
+      headers: { "Content-Type": "application/json" },
+    });
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(
+        errorData.message ||
+          "Une erreur est survenue lors de l'inscription"
+      );
+    }
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    throw error
+  }
+}
+
+ const register = async (userData) => {
   try {
     const response = await fetch(API_URL + "/sign-up", {
       method: "POST",
@@ -11,59 +35,18 @@ async function registerUser(userData) {
       const errorData = await response.json();
       throw new Error(
         errorData.message ||
-          "Une erreur est survenue lors de l'enregistrement de l'utilisateur"
+          "Une erreur est survenue lors de la connexion"
       );
     }
     const responseData = await response.json();
-    return responseData;
-  } catch (error) {
-    throw new Error(
-      "Un problème de connexion réseau est survenu"
-    );
-  }
-}
 
-async function loginUser(userData) {
-  try {
-    const response = await fetch(API_URL + "/login", {
-      method: "POST",
-      body: JSON.stringify(userData),
-      headers: { "Content-Type": "application/json" },
-    });
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(
-        errorData.message ||
-          "Une erreur est survenue lors de la connexion de l'utilisateur"
-      );
-    }
-    const responseData = await response.json();
-    const accessToken = responseData.accessToken;
-    if (accessToken) {
-    document.cookie = `accessToken=${responseData.accessToken}; expires=${new Date(
-        responseData.expiresIn
-    )}; secure;`;
-    }
     return responseData;
   } catch (error) {
-    throw new Error("un problème de connexion réseau est survenu");
+    throw error;
   }
 }
 
 
- const isLoggedIn = () => {
-    // Obtention de tous les cookies de l'application
-    const cookies = document.cookie.split(';');
-    
-    // Recherche du cookie contenant le token d'accès
-    const accessTokenCookie = cookies.find(cookie => cookie.trim().startsWith('accessToken='));
-  
-    // Si le cookie du token d'accès est trouvé, cela signifie que l'utilisateur est connecté
-    if (accessTokenCookie) {
-      return true;
-    } else {
-      return false;
-    }
-  };
 
-export { registerUser, loginUser, isLoggedIn };
+
+export { login, register};

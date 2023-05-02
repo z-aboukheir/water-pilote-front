@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
-import React, {
-  useState
-} from 'react';
+import React, { useState, useContext } from 'react';
+
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { AppLoading } from "expo-app-loading";
@@ -14,10 +13,13 @@ import MainStack
   from "./navigator/MainStack";
 import {LinearGradient} from "expo-linear-gradient";
 
+import { AuthProvider, AuthContext } from './context/AuthContext';
+
+
+
 export default function App() {
 
   const Stack = createStackNavigator();
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   const [fontsLoaded, error] = useFonts({
     Poppins_regular: require("./assets/fonts/Poppins_regular.ttf"),
@@ -39,16 +41,20 @@ export default function App() {
     },
   };
 
-  if (!fontsLoaded) {
-    return <Text>Loading...</Text>;
-  }
+  // if (!fontsLoaded) {
+  //   return <Text>Loading...</Text>;
+  // }
+
+  const MainApp = () => {
+    const { isAuthenticated } = useContext(AuthContext);
+    return isAuthenticated ? <MainStack /> : <AuthStack />;
+  };
+
   return (
-      <NavigationContainer>
-        {isLoggedIn ? (
-            <MainStack />
-        ) : (
-            <AuthStack setIsLoggedIn={setIsLoggedIn} />
-        )}
-      </NavigationContainer>
+    <AuthProvider>
+    <NavigationContainer>
+      <MainApp />
+    </NavigationContainer>
+  </AuthProvider>
   );
 }
