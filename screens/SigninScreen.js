@@ -1,3 +1,4 @@
+
 import React, { useState, useContext } from "react";
 import InputForm from "../components/InputForm";
 import AuthForm from "../components/AuthForm";
@@ -7,6 +8,7 @@ import {  ScrollView, Text
 
 import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from '../context/AuthContext';
+
 
 const SigninScreen = () => {
   const [email, setEmail] = useState("");

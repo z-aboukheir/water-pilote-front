@@ -4,7 +4,6 @@ import HomeScreen from '../screens/HomeScreen';
 import StatsScreen from '../screens/StatsScreen';
 import ValvesSettingsScreen from '../screens/ValvesSettingsScreen';
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import WateringSettingsScreen from "../screens/WateringSettingsScreen";
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -44,7 +43,7 @@ const MainTab = () => {
                         </TouchableOpacity>
                     )
                 }} />
-                <Tab.Screen name="Valve Settings" component={WateringSettingsScreen} options={{
+                <Tab.Screen name="Valve Settings" component={ValvesSettingsScreen} options={{
                     headerShown: false,
                     tabBarLabel: "",
                     tabBarIcon: ({ focused }) => (

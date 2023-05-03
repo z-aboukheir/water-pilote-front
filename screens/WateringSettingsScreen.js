@@ -6,6 +6,8 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import SettingSlider from '../components/SettingSlider';
+import BackButton
+    from "../components/BackButton";
 
 const WateringSettingsScreen = () => {
     // Valeurs par défaut pour chaque slider
@@ -23,49 +25,51 @@ const WateringSettingsScreen = () => {
     };
 
     return (
-        <View style={styles.mainContainer}>
-            <Text style={{ fontSize: 30, paddingBottom: 100 }}>Paramètres d'arrosage</Text>
 
-            <SettingSlider
-                name="Débit d'arrosage"
-                value={settings.wateringRate}
-                unit="%"
-                setValue={(newValue) =>
-                    setSettings({...settings, wateringRate: newValue})
-                }
-            />
+        <View>
+            <BackButton screenTitle={"Paramètres"}/>
+            <View style={styles.mainContainer}>
+                <SettingSlider
+                    name="Débit d'arrosage"
+                    value={settings.wateringRate}
+                    unit="%"
+                    setValue={(newValue) =>
+                        setSettings({...settings, wateringRate: newValue})
+                    }
+                />
 
-            <SettingSlider
-                name="Durée d'arrosage"
-                value={settings.wateringDuration}
-                unit="min"
-                setValue={(newValue) =>
-                    setSettings({...settings, wateringDuration: newValue})
-                }
-            />
+                <SettingSlider
+                    name="Durée d'arrosage"
+                    value={settings.wateringDuration}
+                    unit="min"
+                    setValue={(newValue) =>
+                        setSettings({...settings, wateringDuration: newValue})
+                    }
+                />
 
-            <SettingSlider
-                name="Seuil d'humidité"
-                value={settings.humidityThreshold}
-                unit="%"
-                setValue={(newValue) =>
-                    setSettings({...settings, humidityThreshold: newValue})
-                }
-            />
+                <SettingSlider
+                    name="Seuil d'humidité"
+                    value={settings.humidityThreshold}
+                    unit="%"
+                    setValue={(newValue) =>
+                        setSettings({...settings, humidityThreshold: newValue})
+                    }
+                />
 
-            <SettingSlider
-                name="Probabilité de pluie"
-                value={settings.rainProbability}
-                unit="%"
-                setValue={(newValue) =>
-                    setSettings({...settings, rainProbability: newValue})
-                }
-            />
+                <SettingSlider
+                    name="Probabilité de pluie"
+                    value={settings.rainProbability}
+                    unit="%"
+                    setValue={(newValue) =>
+                        setSettings({...settings, rainProbability: newValue})
+                    }
+                />
 
-            <TouchableOpacity style={[styles.button, styles.buttonContainer]} onPress={saveSettings}>
-                <Text style={styles.buttonText}>Enregistrer</Text>
-            </TouchableOpacity>
+                <TouchableOpacity style={[styles.button, styles.buttonContainer]} onPress={saveSettings}>
+                    <Text style={styles.buttonText}>Enregistrer</Text>
+                </TouchableOpacity>
 
+            </View>
         </View>
     );
 };
