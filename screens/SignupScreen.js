@@ -4,12 +4,7 @@ import AuthForm from "../components/AuthForm";
 import LocationPicker from "../components/LocationPicker";
 
 import {
-  StyleSheet,
-  TextInput,
-  View,
   Text,
-  FlatList,
-  TouchableOpacity,
   ScrollView
 } from "react-native";
 import { AuthContext } from '../context/AuthContext';
