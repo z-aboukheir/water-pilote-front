@@ -14,7 +14,7 @@ const SchedulesSettingsScreen = () => {
   const [schedules, setSchedules] = useState({
     1: {
       id: 1,
-      days: [1, 3, 5],
+      days: [1, 4, 5],
       hourStart: 8,
       hourEnd: 10,
       idSettings: 1,
