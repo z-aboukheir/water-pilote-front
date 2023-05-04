@@ -56,7 +56,6 @@ const MainTab = () => {
                     )
                 }} />
             </Tab.Navigator>
-
         </View>
     );
 };

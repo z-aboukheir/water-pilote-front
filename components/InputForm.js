@@ -12,6 +12,13 @@ const InputForm = ({ icon, placeholder, onChangeText, onFocus, value, onBlur, se
         setSecureTextEntry(!secureTextEntry);
     };
 
+    const handleFocus = () => {
+        if (secureText) {
+            setSecureTextEntry(true);
+        }
+       //onFocus();
+    };
+
     return (
         <View
             style={styles.container}>
@@ -24,10 +31,10 @@ const InputForm = ({ icon, placeholder, onChangeText, onFocus, value, onBlur, se
                 style={styles.textInput}
                 onBlur={onBlur}
                 secureTextEntry={secureTextEntry}
-                onFocus={onFocus}
+                onFocus={handleFocus}
             />
             {secureText && <TouchableOpacity onPress={toggleSecureTextEntry} style={styles.button}>
-                {secureTextEntry ? <Text>👁️‍🗨️</Text> : <Text>👁️</Text>}
+                {secureTextEntry ? <Text>👁️</Text> : <Text>👁️‍🗨️</Text> }
             </TouchableOpacity>}
         </View>
     );

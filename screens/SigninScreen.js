@@ -25,7 +25,7 @@ const SigninScreen = () => {
       
     } catch (error) {
       console.log(error.message);
-      setError(error.message);
+      setError("Erreur d'autentification");
     }
   };
 
