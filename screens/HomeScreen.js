@@ -50,10 +50,16 @@ import { Color, Border, FontFamily, FontSize } from "../GlobalStyles";
 
 import CurrentWeather
   from "../components/CurrentWeather";
+import {
+  LogoutButton
+} from "../components/LogoutButton";
 
 const HomeScreen = () => {
   return (
     <View style={styles.mainContainer}>
+      <View>
+        <LogoutButton />
+      </View>
       <CurrentWeather />
       <View style={styles.infoContainer}>
         <Text style={styles.infoOne}>Humidité au sol</Text>
@@ -271,7 +277,7 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
     mainContainer: {
-      paddingTop: 100,
+      paddingTop: 70,
         paddingHorizontal: "10%",
         alignContent: "center",
     },
