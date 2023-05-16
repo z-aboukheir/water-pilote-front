@@ -14,6 +14,15 @@ import MainStack
 import {LinearGradient} from "expo-linear-gradient";
 
 import { AuthProvider, AuthContext } from './context/AuthContext';
+import {
+  LogoutButton
+} from "./components/LogoutButton";
+import {
+  LogBox
+} from 'react-native';
+
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 
 
