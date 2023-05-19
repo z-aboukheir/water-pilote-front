@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { login, register } from '../services/authService'
-import { storeToken, removeToken, getToken } from '../utils/authHelpers';
+import { storeToken, removeToken, getToken } from '../services/tokenService';
 
 const AuthContext = createContext();
 

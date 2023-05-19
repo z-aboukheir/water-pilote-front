@@ -1,7 +1,7 @@
 import * as React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import DSwitch from "./DSwitch";
+//import DSwitch from "./DSwitch";
 import { FontFamily, FontSize, Color, Border } from "../GlobalStyles";
 
 const AlarmContainer = () => {
