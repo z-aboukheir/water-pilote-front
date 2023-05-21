@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import InputForm from "./InputForm";
 import { fetchLocations } from "../services/locationServices";
+import { Color } from "../GlobalStyles";
 
 
 const LocationPicker = ({ selectedLocation, setSelectedLocation }) => {
@@ -64,7 +65,7 @@ const LocationPicker = ({ selectedLocation, setSelectedLocation }) => {
             renderItem={renderLocation}
             keyExtractor={(item, index) => index.toString()}
             style={{            
-        backgroundColor: '#fff',
+        backgroundColor: Color.white,
         borderBottomLeftRadius: 36,
         borderBottomRightRadius: 36,
         marginTop: -30,
@@ -86,39 +87,6 @@ const LocationPicker = ({ selectedLocation, setSelectedLocation }) => {
   );
 };
 
-{/* <ScrollView 
-keyboardShouldPersistTaps="handled"
-style={{
-  backgroundColor: "#fff",
-  borderBottomLeftRadius: 36,
-  borderBottomRightRadius: 36,
-  marginTop: -30,
-  shadowColor: "#9f9f9f",
-  shadowOffset: { width: 0, height: 0 },
-  shadowOpacity: 1,
-  shadowRadius: 10,
-  elevation: 5,
-  padding: 15,
-  paddingTop: 45,
-  zIndex: -2,
-}}
->
-{locations.map((item, index) => (
-  <TouchableOpacity
-    key={index.toString()}
-    style={{ paddingVertical: 8 }}
-    onPress={() => handleLocationSelect(item)}
-  >
-    <Text>{item.name}</Text>
-    {item.region && item.name ? (
-      <Text style={{ color: "#666" }}>{item.region}</Text>
-    ) : null}
-  </TouchableOpacity>
-))}
-</ScrollView>
-)}
-</View>
-);
-};*/}
+
 
 export default LocationPicker;
