@@ -11,7 +11,7 @@ import {
   FontAwesome
 } from "@expo/vector-icons";
 import {
-  Color
+  Color, FontSize
 } from "../GlobalStyles";
 
 const LogoutButton = () => {
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: Color.darkGrey,
-    fontSize: 16,
+    fontSize: FontSize.size_base,
     fontWeight: 'bold',
   },
 });

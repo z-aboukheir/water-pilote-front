@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
+import { Color, FontSize } from "../GlobalStyles";
 
 const AuthForm = ({
   textAuth,
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
   textAuth: {
     textDecorationLine: "underline",
     fontSize: 25,
-    color: "#7A7272",
+    color: Color.dimgray_100,
     textShadowColor: "#00000040",
     textShadowOffset: {
       width: 0,
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   button: {
-    backgroundColor: "#25CEDE",
+    backgroundColor:Color.darkturquoise,
     borderRadius: 36,
     shadowColor: "#9f9f9f",
     shadowOffset: { width: 0, height: 2 },
@@ -99,8 +100,8 @@ const styles = StyleSheet.create({
     marginTop: 25,
   },
   buttonText: {
-    fontSize: 18,
-    color: "#fff",
+    fontSize: FontSize.size_lg,
+    color: Color.white,
     textAlign: "center",
     flex: 1,
   },
