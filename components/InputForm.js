@@ -1,23 +1,18 @@
 import React, { useState } from 'react';
 import { View, TextInput, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { Color } from '../GlobalStyles';
 
 Icon.loadFont();
 
-const InputForm = ({ icon, placeholder, onChangeText, onFocus, value, onBlur, secureText }) => {
+const InputForm = ({ icon, placeholder, onChangeText, value, onBlur, secureText }) => {
 
-    const [secureTextEntry, setSecureTextEntry] = useState(false);
+    const [secureTextEntry, setSecureTextEntry] = useState(secureText || false);
 
     const toggleSecureTextEntry = () => {
         setSecureTextEntry(!secureTextEntry);
     };
 
-    const handleFocus = () => {
-        if (secureText) {
-            setSecureTextEntry(true);
-        }
-       //onFocus();
-    };
 
     return (
         <View
@@ -31,10 +26,9 @@ const InputForm = ({ icon, placeholder, onChangeText, onFocus, value, onBlur, se
                 style={styles.textInput}
                 onBlur={onBlur}
                 secureTextEntry={secureTextEntry}
-                onFocus={handleFocus}
             />
             {secureText && <TouchableOpacity onPress={toggleSecureTextEntry} style={styles.button}>
-                {secureTextEntry ? <Text>👁️</Text> : <Text>👁️‍🗨️</Text> }
+                {secureTextEntry ? <Icon name="eye" size={20} color="#000" /> : <Icon name="eye-slash" size={20} color="#000" /> }
             </TouchableOpacity>}
         </View>
     );
@@ -42,7 +36,7 @@ const InputForm = ({ icon, placeholder, onChangeText, onFocus, value, onBlur, se
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#fff',
+        backgroundColor: Color.white,
         borderRadius: 36,
         shadowColor: '#9f9f9f',
         shadowOffset: { width: 0, height: 0 },
