@@ -5,7 +5,9 @@ import {
     View,
     Text,
     Pressable,
-    TextInput
+    TextInput,
+    Modal,
+    TouchableOpacity
 } from "react-native";
 import {
     LinearGradient
@@ -23,6 +25,10 @@ import {
     FontFamily,
     FontSize
 } from "../GlobalStyles";
+import Schedule
+    from "../components/Schedule";
+import Icon
+    from "react-native-vector-icons/FontAwesome";
 
 const SchedulesSettingsScreen = () => {
 
@@ -83,6 +89,26 @@ const SchedulesSettingsScreen = () => {
         }));
     };
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [newSchedule, setNewSchedule] = useState({});
+
+    const handleAddSchedule = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleModalClose = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleSaveSchedule = () => {
+        // Here you can add your code to save the new schedule
+        setIsModalOpen(false);
+    };
+
+    const handleInputChange = (name, value) => {
+        setNewSchedule({ ...newSchedule, [name]: value });
+    };
+
     const updateStartHour = (hour, schedule) => {
         const updatedSchedule = { ...schedule, hourStart: hour };
         setSchedules((prevSchedules) => ({
@@ -111,53 +137,56 @@ const SchedulesSettingsScreen = () => {
             </View>
             <View>
                 {Object.values(schedules).map((schedule) => (
-                    <View key={schedule.id}>
-                        <View style={styles.scheduleTitle}>
-                            <Text style={{ fontFamily: FontFamily.poppinsMedium, fontSize: 18, color: Color.darkGrey }}>
-                                Valve id: {schedule.valveId}
-                            </Text>
-                        </View>
-                        <LinearGradient style={styles.scheduleContainer} colors={['#EEF0F5', '#E6E9EF', '#E6E9EF']}>
-                            <View style={{ flexDirection: 'row', paddingHorizontal: 10 }}>
-                                <TextInput
-                                    style={styles.hourStyle}
-                                    value={String(schedule.hourStart)}
-                                    onChangeText={(text) => updateStartHour(Number(text), schedule)}
-                                />
-                                <Text style={{ fontSize: FontSize.size_lg, color: Color.darkGrey, marginRight: 10 }}> : 00 </Text>
-                                <TextInput
-                                    style={styles.hourStyle}
-                                    value={String(schedule.hourEnd)}
-                                    onChangeText={(text) => updateEndHour(Number(text), schedule)}
-                                />
-                                <Text style={{ fontSize: FontSize.size_lg, color: Color.darkGrey }}> : 00 </Text>
-                            </View>
-                            <View style={{ flexDirection: 'row', marginHorizontal: 10 }}>
-                                {daysAbbreviation.map((dayAbbreviation, dayIndex) => (
-                                    <Text
-                                        key={dayIndex}
-                                        style={{
-                                            color: isDayPresent(dayIndex, schedule.days) ? 'red' : Color.darkGrey,
-                                            fontSize: FontSize.size_xs,
-                                            paddingHorizontal: 3,
-                                            paddingTop: 3,
-                                        }}
-                                        onPress={() => handleDayPress(dayIndex, schedule)}
-                                    >
-                                        {dayAbbreviation}
-                                    </Text>
-                                ))}
-                            </View>
-                        </LinearGradient>
-                    </View>
+                    <Schedule
+                        key={schedule.id}
+                        schedule={schedule}
+                        updateStartHour={updateStartHour}
+                        updateEndHour={updateEndHour}
+                        handleDayPress={handleDayPress}
+                        isDayPresent={isDayPresent}
+                        daysAbbreviation={daysAbbreviation}
+                    />
+
                 ))}
                 <View style={styles.addSchedule}>
-                    <Pressable>
+                    <Pressable onPress={handleAddSchedule}>
                        <Text style={{paddingTop:5, color: Color.darkGrey}}>
                            +
                        </Text>
                     </Pressable>
                 </View>
+                <Modal visible={isModalOpen} onRequestClose={handleModalClose}>
+                    <View>
+                        <TouchableOpacity onPress={handleModalClose}>
+                            <Icon name="times" size={25} color={Color.darkGrey} style={{ position: 'absolute', top: 10, right: 10 }} />
+                        </TouchableOpacity>
+                        <Text>Add new schedule</Text>
+                        <TextInput
+                            placeholder="Valve id"
+                            value={newSchedule.valveId}
+                            onChangeText={(text) => handleInputChange('valveId', text)}
+                        />
+                        <TextInput
+                            placeholder="Start hour"
+                            value={newSchedule.hourStart}
+                            onChangeText={(text) => handleInputChange('hourStart', text)}
+                        />
+                        <TextInput
+                            placeholder="End hour"
+                            value={newSchedule.hourEnd}
+                            onChangeText={(text) => handleInputChange('hourEnd', text)}
+                        />
+                        <TextInput
+                            placeholder="Days"
+                            value={newSchedule.days}
+                            onChangeText={(text) => handleInputChange('days', text)}
+                        />
+                        <Pressable onPress={handleSaveSchedule}>
+                            <Text>Save</Text>
+                        </Pressable>
+                    </View>
+
+                </Modal>
 
             </View>
         </LinearGradient>
@@ -169,24 +198,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         paddingBottom: 80,
-    },
-    scheduleContainer: {
-        flexDirection: "row",
-        marginHorizontal: 20,
-        marginTop: 15,
-        marginBottom: 25,
-        borderRadius: 20,
-        padding: 25,
-        borderWidth: 1,
-        borderColor: Color.lightsteelblue,
-        fontFamily: FontFamily.poppinsMedium,
-    },
-    scheduleTitle: {
-        marginLeft: 20,
-    },
-    hourStyle: {
-        fontSize: FontSize.size_lg,
-        color: Color.darkGrey,
     },
     addSchedule: {
         width: 100,

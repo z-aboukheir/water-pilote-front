@@ -3,17 +3,45 @@ import { Image, StyleSheet, Text, Pressable, View, ImageBackground } from "react
 import { useNavigation } from "@react-navigation/native";
 import { FontSize, Color, FontFamily } from "../GlobalStyles";
 import ValveContainer from "../components/ValveContainer";
-import { useState } from "react";
+import {
+    useContext,
+    useEffect,
+    useState
+} from "react";
+import { fetchWithToken } from "../services/fetchService";
+import {
+    AuthContext
+} from "../context/AuthContext";
 
 const ValvesSettingsScreen = () => {
     const navigation = useNavigation();
 
-    const [sorties, setSorties] = useState({
-        sortie1: { id: 1, name: "Lettuce" },
-        sortie2: { id: 2, name: "Strawberry"},
-        sortie3: { id: 3, name: "Tomatoes"},
-    });
+       const { fetchWithToken } = useContext(AuthContext);
+       const [sorties, setSorties] = useState([]);
 
+       const fetchData = async () => {
+         try {
+           const response = await fetchWithToken('http://127.0.0.1:3000/electrovalve', {
+             method: 'GET',
+           });
+
+           if (response.ok) {
+             console.log("ok")
+               const responseData = await response.json();
+             setSorties(responseData);
+           } else {
+             console.log('Erreur lors de la requête');
+           }
+         } catch (error) {
+           console.log('Erreur de réseau:', error.message);
+         }
+       };
+
+       useEffect(() => {
+         fetchData();
+       }, [fetchWithToken]);
+       console.log("ici")
+    sorties && console.log(sorties)
     return (
         <ImageBackground
             source={require("../assets/plante-1.png")}

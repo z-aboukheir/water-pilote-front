@@ -25,9 +25,6 @@ import {
 import {
     useNavigation
 } from "@react-navigation/native";
-import {
-    LogoutButton
-} from "../components/LogoutButton";
 
 const StatsScreen = () => {
 
@@ -59,11 +56,12 @@ const StatsScreen = () => {
                     onPress={() => navigation.goBack()}>
                     <Image style={{ width: 95, height: 95 }} source={require("../assets/back.png")}/>
                 </Pressable>
-                <Text style={styles.title}>Paramétrage</Text>
+                <Text style={styles.title}>Statistiques</Text>
             </View>
-            {irrigationsData.length > 0 &&
-                <Chart
-                    data={irrigationsData} />}
+            {irrigationsData.length > 0 ?
+                <Chart data={irrigationsData} /> :
+                <Text>Pas de données disponibles pour les 14 derniers jours</Text>
+            }
             {console.log(irrigationsData)}
         </ScrollView>
     )

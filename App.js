@@ -15,9 +15,6 @@ import {LinearGradient} from "expo-linear-gradient";
 
 import { AuthProvider, AuthContext } from './context/AuthContext';
 import {
-  LogoutButton
-} from "./components/LogoutButton";
-import {
   LogBox
 } from 'react-native';
 

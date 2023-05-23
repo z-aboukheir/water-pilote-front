@@ -8,6 +8,9 @@ import {
 import SettingSlider from '../components/SettingSlider';
 import BackButton
     from "../components/BackButton";
+import {
+    fetchWithToken
+} from "../services/fetchService";
 
 const WateringSettingsScreen = () => {
     // Valeurs par défaut pour chaque slider
@@ -22,6 +25,7 @@ const WateringSettingsScreen = () => {
     const saveSettings = () => {
         // Ici, on peut envoyer les nouvelles valeurs via une API ou les stocker localement
         console.log('Settings saved', settings);
+        // fetchWithToken('http://localhost:3000/settings', 'POST', settings)
     };
 
     return (
