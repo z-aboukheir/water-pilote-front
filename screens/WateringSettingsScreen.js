@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, {
+    useEffect,
+    useState
+} from 'react';
 import {
     View,
     Text,
@@ -12,60 +15,100 @@ import {
     fetchWithToken
 } from "../services/fetchService";
 
-const WateringSettingsScreen = () => {
+const WateringSettingsScreen = ({route}) => {
+
+    const {id} = route.params;
     // Valeurs par défaut pour chaque slider
     const [settings, setSettings] = useState({
-        wateringRate: 50,
-        wateringDuration: 30,
-        humidityThreshold: 50,
-        rainProbability: 30,
+        wateringRate: null,
+        duration: null,
+        moistureThreshold: null,
+        rainThreshold: null,
     });
 
     // Fonction pour enregistrer les nouvelles valeurs
     const saveSettings = () => {
-        // Ici, on peut envoyer les nouvelles valeurs via une API ou les stocker localement
         console.log('Settings saved', settings);
-        // fetchWithToken('http://localhost:3000/settings', 'POST', settings)
+        // fonction pour envoyer les nouvelles valeurs au serveur
+        updateData();
     };
+
+    const updateData = async () => {
+        try {
+            const response = await fetchWithToken(`http://localhost:3000/electrovalve/${id}/valveSettings`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(settings)
+            });
+
+            if (response.ok) {
+                const responseData = await response.json();
+                setSettings([responseData]);
+                console.log(responseData)
+            } else {
+                console.log('Erreur lors de la requête', response.status, response.statusText);
+            }
+        }
+        catch (error) {
+            console.log('Erreur de réseau:', error.message);
+        }
+    }
+
+    const fetchData = async () => {
+        try {
+            const response = await fetchWithToken(`http://localhost:3000/electrovalve/${id}/valveSettings`, {
+                method: 'GET',
+            });
+
+            if (response.ok) {
+                const responseData = await response.json();
+                setSettings(responseData[0]);
+                console.log(responseData[0])
+            } else {
+                console.log('Erreur lors de la requête');
+            }
+        } catch (error) {
+            console.log('Erreur de réseau:', error.message);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, [fetchWithToken]);
+
 
     return (
 
         <View>
             <BackButton screenTitle={"Paramètres"}/>
             <View style={styles.mainContainer}>
-                <SettingSlider
-                    name="Débit d'arrosage"
-                    value={settings.wateringRate}
-                    unit="%"
-                    setValue={(newValue) =>
-                        setSettings({...settings, wateringRate: newValue})
-                    }
-                />
 
                 <SettingSlider
                     name="Durée d'arrosage"
-                    value={settings.wateringDuration}
+                    value={settings.duration}
                     unit="min"
                     setValue={(newValue) =>
-                        setSettings({...settings, wateringDuration: newValue})
+                        setSettings({...settings, duration: newValue})
                     }
                 />
 
                 <SettingSlider
                     name="Seuil d'humidité"
-                    value={settings.humidityThreshold}
+                    value={settings.moistureThreshold}
                     unit="%"
                     setValue={(newValue) =>
-                        setSettings({...settings, humidityThreshold: newValue})
+                        setSettings({...settings, moistureThreshold: newValue})
                     }
                 />
 
                 <SettingSlider
                     name="Probabilité de pluie"
-                    value={settings.rainProbability}
+                    value={settings.rainThreshold}
                     unit="%"
                     setValue={(newValue) =>
-                        setSettings({...settings, rainProbability: newValue})
+                        setSettings({...settings, rainThreshold: newValue})
                     }
                 />
 

@@ -24,9 +24,7 @@ const ValvesSettingsScreen = () => {
            const response = await fetchWithToken('http://127.0.0.1:3000/electrovalve', {
              method: 'GET',
            });
-
            if (response.ok) {
-             console.log("ok")
                const responseData = await response.json();
              setSorties(responseData);
            } else {
@@ -40,8 +38,6 @@ const ValvesSettingsScreen = () => {
        useEffect(() => {
          fetchData();
        }, [fetchWithToken]);
-       console.log("ici")
-    sorties && console.log(sorties)
     return (
         <ImageBackground
             source={require("../assets/plante-1.png")}

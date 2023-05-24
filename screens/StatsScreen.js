@@ -25,29 +25,36 @@ import {
 import {
     useNavigation
 } from "@react-navigation/native";
+import {
+    fetchWithToken
+} from "../services/fetchService";
 
 const StatsScreen = () => {
 
     const [irrigationsData, setIrrigationsData] = useState([]);
     const navigation = useNavigation();
 
-    const getIrrigationsData = async () => {
-        const response = await fetch('http://localhost:3000/stats/irrigations');
-        const data = await response.json();
-
-        const convertedData = [];
-
-        Object.entries(data).forEach(([electroValve, irrigationObj]) => {
-            Object.entries(irrigationObj).forEach(([date, value]) => {
-                convertedData.push({ electroValve, date, value });
+    const fetchData = async () => {
+        try {
+            const response = await fetchWithToken('http://127.0.0.1:3000/stats/irrigations', {
+                method: 'GET',
             });
-        });
-        data && setIrrigationsData(convertedData);
-    }
+
+            if (response.ok) {
+                console.log("ok")
+                const responseData = await response.json();
+                setIrrigationsData(responseData);
+            } else {
+                console.log('Erreur lors de la requête');
+            }
+        } catch (error) {
+            console.log('Erreur de réseau:', error.message);
+        }
+    };
 
     useEffect(() => {
-        getIrrigationsData();
-    }, []);
+        fetchData();
+    }, [fetchWithToken]);
 
     return (
         <ScrollView style={styles.mainContainer}>

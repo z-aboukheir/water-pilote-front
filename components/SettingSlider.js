@@ -30,7 +30,7 @@ const SettingSlider = (props) => {
                 <TextInput
                     style={styles.textInput}
                     onChangeText={(newValue) => setValue(parseInt(newValue) || 0)}
-                    value={value.toString()}
+                    value={value?.toString() ?? ''}
                     keyboardType="numeric"
                 />
                 <Text> {unit}</Text>
