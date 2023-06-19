@@ -29,7 +29,14 @@ const SettingSlider = (props) => {
             <View style={{flexDirection: "row", marginLeft:20}}>
                 <TextInput
                     style={styles.textInput}
-                    onChangeText={(newValue) => setValue(parseInt(newValue) || 0)}
+                    onChangeText={(newValue) => {
+                        const parsedValue = parseInt(newValue);
+                        if (!isNaN(parsedValue)) {
+                            setValue(parsedValue);
+                        } else {
+                            setValue(0);
+                        }
+                    }}
                     value={value?.toString() ?? ''}
                     keyboardType="numeric"
                 />

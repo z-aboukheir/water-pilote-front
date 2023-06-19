@@ -7,6 +7,7 @@ import {
     Image,
 } from "react-native";
 import {
+    useContext,
     useEffect,
     useState
 } from "react";
@@ -28,21 +29,24 @@ import {
 import {
     fetchWithToken
 } from "../services/fetchService";
+import {
+    AuthContext
+} from "../context/AuthContext";
 
 const StatsScreen = () => {
 
     const [irrigationsData, setIrrigationsData] = useState([]);
     const navigation = useNavigation();
+    const { fetchWithToken } = useContext(AuthContext);
 
     const fetchData = async () => {
         try {
             const response = await fetchWithToken('http://127.0.0.1:3000/stats/irrigations', {
                 method: 'GET',
             });
-
             if (response.ok) {
-                console.log("ok")
                 const responseData = await response.json();
+                console.log(responseData)
                 setIrrigationsData(responseData);
             } else {
                 console.log('Erreur lors de la requête');
@@ -65,11 +69,9 @@ const StatsScreen = () => {
                 </Pressable>
                 <Text style={styles.title}>Statistiques</Text>
             </View>
-            {irrigationsData.length > 0 ?
-                <Chart data={irrigationsData} /> :
-                <Text>Pas de données disponibles pour les 14 derniers jours</Text>
-            }
-            {console.log(irrigationsData)}
+            {irrigationsData  && (
+                <Chart data={irrigationsData} />
+            )}
         </ScrollView>
     )
 }

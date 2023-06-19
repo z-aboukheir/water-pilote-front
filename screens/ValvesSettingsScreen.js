@@ -14,7 +14,7 @@ import {
 } from "../context/AuthContext";
 
 const ValvesSettingsScreen = () => {
-    const navigation = useNavigation();
+        const navigation = useNavigation();
 
        const { fetchWithToken } = useContext(AuthContext);
        const [sorties, setSorties] = useState([]);
@@ -35,6 +35,21 @@ const ValvesSettingsScreen = () => {
          }
        };
 
+    const updateData = async () => {
+        try {
+            const response = await fetchWithToken(`http://localhost:3000/electrovalve/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(settings)
+            });
+        }
+        catch (error) {
+            console.log('Erreur de réseau:', error.message);
+        }
+    }
+
        useEffect(() => {
          fetchData();
        }, [fetchWithToken]);
@@ -51,12 +66,12 @@ const ValvesSettingsScreen = () => {
                     </Pressable>
                     <Text style={styles.title}>Paramétrage</Text>
                 </View>
-
                 <View style={styles.outputContainer}>
                     {Object.keys(sorties).map((sortie) => (
                         <ValveContainer
                             key={sorties[sortie].id}
                             name={sorties[sortie].name}
+                            isAutomatic={sorties[sortie].isAutomatic}
                             onPressWatering={() => navigation.navigate("WateringSettingsScreen",
                                 { id: sorties[sortie].id,})}
                             onPressSchedule={() => navigation.navigate("SchedulesSettingsScreen",

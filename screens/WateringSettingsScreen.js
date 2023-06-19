@@ -20,10 +20,10 @@ const WateringSettingsScreen = ({route}) => {
     const {id} = route.params;
     // Valeurs par défaut pour chaque slider
     const [settings, setSettings] = useState({
-        wateringRate: null,
-        duration: null,
-        moistureThreshold: null,
-        rainThreshold: null,
+        wateringRate: 0,
+        duration: 0,
+        moistureThreshold: 0,
+        rainThreshold: 0,
     });
 
     // Fonction pour enregistrer les nouvelles valeurs
@@ -42,14 +42,6 @@ const WateringSettingsScreen = ({route}) => {
                 },
                 body: JSON.stringify(settings)
             });
-
-            if (response.ok) {
-                const responseData = await response.json();
-                setSettings([responseData]);
-                console.log(responseData)
-            } else {
-                console.log('Erreur lors de la requête', response.status, response.statusText);
-            }
         }
         catch (error) {
             console.log('Erreur de réseau:', error.message);
@@ -65,7 +57,7 @@ const WateringSettingsScreen = ({route}) => {
             if (response.ok) {
                 const responseData = await response.json();
                 setSettings(responseData[0]);
-                console.log(responseData[0])
+                console.log(settings)
             } else {
                 console.log('Erreur lors de la requête');
             }

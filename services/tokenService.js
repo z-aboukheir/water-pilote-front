@@ -24,6 +24,7 @@ export const getToken = async () => {
   const token = await SecureStore.getItemAsync('token');
   // const token = await AsyncStorage.getItem('token');
   if (token && !isTokenExpired(token)) {
+    console.log("token", token)
     return token;
   } else {
     await removeToken(); // Supprime le token expiré
