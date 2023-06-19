@@ -14,7 +14,7 @@ const login = async (password, email) => {
       const errorData = await response.json();
       throw new Error(
         errorData.message ||
-          "Une erreur est survenue lors de l'inscription"
+          "Une erreur est survenue lors de l'identification"
       );
     }
     const responseData = await response.json();
@@ -23,7 +23,6 @@ const login = async (password, email) => {
     throw error
   }
 }
-
  const register = async (userData) => {
   try {
     const response = await fetch(API_URL + "/sign-up", {
@@ -35,7 +34,7 @@ const login = async (password, email) => {
       const errorData = await response.json();
       throw new Error(
         errorData.message ||
-          "Une erreur est survenue lors de la connexion"
+          "Une erreur est survenue lors de l'inscription'"
       );
     }
     const responseData = await response.json();
@@ -45,7 +44,6 @@ const login = async (password, email) => {
     throw error;
   }
 }
-
 
 
 

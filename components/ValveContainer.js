@@ -1,16 +1,27 @@
 import React, {
+    useEffect,
     useState
 } from 'react'
 import { Image, Pressable, View, Text, StyleSheet } from "react-native";
 import { Color, FontFamily, FontSize } from "../GlobalStyles";
 
 const ValveContainer = (props) => {
-    const {name, onPressWatering, onPressSchedule} = props;
-    const [mode, setMode] = useState('auto');
+    const {name, onPressWatering, onPressSchedule, isAutomatic} = props;
+    const [mode, setMode] = useState(isAutomatic ? 'auto' : 'manual');
 
     const handlePressAuto = () => setMode('auto');
     const handlePressManual = () => setMode('manual');
-  return (
+
+    // initialisation du mode auto ou manuel en fonction de la valeur de isAutomatic
+    useEffect(() => {
+        setMode(isAutomatic ? 'auto' : 'manual');
+    }, [isAutomatic]);
+
+    function onPressSplash() {
+        console.log('arrosage manuel en cours');
+    }
+
+    return (
       <View style={styles.container}>
 
           <Text style={styles.valveName}>{name}</Text>
@@ -24,9 +35,14 @@ const ValveContainer = (props) => {
                   <Image style={styles.icon} source={require("../assets/iconetime.png")}/>
               </Pressable>
 
-              <Pressable style={styles.button}>
-                  <Image style={styles.icon} source={require("../assets/icon-splash.png")}/>
+              <Pressable
+                  style={[styles.button, isAutomatic === 1 ? styles.disabledButton : null]}
+                  onPress={onPressSplash}
+                  disabled={isAutomatic === 1}
+              >
+                  <Image style={styles.icon} source={require("../assets/icon-splash.png")} />
               </Pressable>
+
 
               <View style={styles.switchMode}>
                   <Pressable style={mode === 'auto' ? styles.buttonActive : styles.buttonInactive} onPress={handlePressAuto}>
@@ -110,4 +126,9 @@ const styles = StyleSheet.create({
         fontFamily: FontFamily.poppinsMedium,
         fontSize: FontSize.size_base,
     },
+    disabledButton: {
+        backgroundColor: Color.steelblue_100,
+        opacity: 0.7,
+    },
+
 })

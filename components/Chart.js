@@ -22,34 +22,32 @@ const chartConfig = {
     labelFontSize: 9,
 };
 
-const createDataSets = (data) => {
-    const electroValves = [...new Set(data.map((item) => item.electroValve))];
+const createDataSets = (apiData) => {
+    const electroValves = Object.keys(apiData);
     const datasets = [];
-    const last14Days = data.slice(-14);
-    const labels = last14Days.map((item) => item.date);
+    const last14Days = Object.values(apiData).map(values => Object.entries(values).slice(-14));
+    const labels = last14Days[0].map(([date]) => date);
 
-    electroValves.forEach((electroValve) => {
-        const cropData = data.filter((item) => item.electroValve === electroValve);
+    electroValves.forEach((electroValve, index) => {
+        const cropData = last14Days[index];
 
         const dataset = {
-            data: [],
+            data: cropData.map(([, value]) => parseInt(value)),
             color: (opacity = 1) => `rgba(205, 214, 34, ${opacity})`,
             electroValve: electroValve,
         };
 
-        cropData.forEach((item) => {
-            dataset.data.push(parseInt(item.value));
-        });
-
         datasets.push(dataset);
     });
 
-    return {datasets, labels};
+    return { datasets, labels };
+
 };
 const Chart = ({ data }) => {
 
+    console.log(data)
+
     const {datasets, labels} = createDataSets(data);
-    console.log(datasets)
 
     return (
         <View style={styles.container}>

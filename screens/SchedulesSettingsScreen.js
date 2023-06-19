@@ -5,9 +5,6 @@ import {
     View,
     Text,
     Pressable,
-    TextInput,
-    Modal,
-    TouchableOpacity
 } from "react-native";
 import {
     LinearGradient
@@ -29,6 +26,8 @@ import Schedule
     from "../components/Schedule";
 import Icon
     from "react-native-vector-icons/FontAwesome";
+import ScheduleModal
+    from "../components/ScheduleModal";
 
 const SchedulesSettingsScreen = () => {
 
@@ -96,10 +95,6 @@ const SchedulesSettingsScreen = () => {
         setIsModalOpen(true);
     };
 
-    const handleModalClose = () => {
-        setIsModalOpen(false);
-    };
-
     const handleSaveSchedule = () => {
         // Here you can add your code to save the new schedule
         setIsModalOpen(false);
@@ -155,38 +150,13 @@ const SchedulesSettingsScreen = () => {
                        </Text>
                     </Pressable>
                 </View>
-                <Modal visible={isModalOpen} onRequestClose={handleModalClose}>
-                    <View>
-                        <TouchableOpacity onPress={handleModalClose}>
-                            <Icon name="times" size={25} color={Color.darkGrey} style={{ position: 'absolute', top: 10, right: 10 }} />
-                        </TouchableOpacity>
-                        <Text>Add new schedule</Text>
-                        <TextInput
-                            placeholder="Valve id"
-                            value={newSchedule.valveId}
-                            onChangeText={(text) => handleInputChange('valveId', text)}
-                        />
-                        <TextInput
-                            placeholder="Start hour"
-                            value={newSchedule.hourStart}
-                            onChangeText={(text) => handleInputChange('hourStart', text)}
-                        />
-                        <TextInput
-                            placeholder="End hour"
-                            value={newSchedule.hourEnd}
-                            onChangeText={(text) => handleInputChange('hourEnd', text)}
-                        />
-                        <TextInput
-                            placeholder="Days"
-                            value={newSchedule.days}
-                            onChangeText={(text) => handleInputChange('days', text)}
-                        />
-                        <Pressable onPress={handleSaveSchedule}>
-                            <Text>Save</Text>
-                        </Pressable>
-                    </View>
-
-                </Modal>
+                <ScheduleModal
+                    isModalOpen={isModalOpen}
+                    isVisible={isModalOpen}
+                    handleSave={handleSaveSchedule}
+                    handleInputChange={handleInputChange}
+                    newSchedule={newSchedule}
+                />
 
             </View>
         </LinearGradient>

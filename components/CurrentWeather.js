@@ -16,10 +16,11 @@ const CurrentWeather = () => {
     latitude: '45.750000',
     longitude: '4.850000'
   });
-  const API_KEY = "a1b37adc02b1b507b4f930f80d69524a"
 
-  const getCurrentWeather = async () => {
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=${API_KEY}&units=metric`);
+    const API_KEY = process.env.METEO_APP_API_KEY;
+    const API_URL = `https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=${API_KEY}&units=metric`;
+    const getCurrentWeather = async () => {
+    const response = await fetch(API_URL);
     const data = await response.json();
     data &&
     await setCurrentWeather(data);
@@ -28,7 +29,6 @@ const CurrentWeather = () => {
   useEffect(() => {
     getCurrentWeather();
     console.log(currentWeather);
-    console.log(`https://openweathermap.org/img/wn/${currentWeather.weather && currentWeather.weather[0].icon}@4x.png`)
   }, []);
 
   return (
