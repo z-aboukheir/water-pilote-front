@@ -26,7 +26,7 @@ const createDataSets = (apiData) => {
     const electroValves = Object.keys(apiData);
     const datasets = [];
     const last14Days = Object.values(apiData).map(values => Object.entries(values).slice(-14));
-    const labels = last14Days[0].map(([date]) => date);
+    const labels = last14Days.length > 0 ? last14Days[0].map(([date]) => date) : [];
 
     electroValves.forEach((electroValve, index) => {
         const cropData = last14Days[index];
@@ -36,19 +36,14 @@ const createDataSets = (apiData) => {
             color: (opacity = 1) => `rgba(205, 214, 34, ${opacity})`,
             electroValve: electroValve,
         };
-
         datasets.push(dataset);
     });
-
     return { datasets, labels };
 
 };
 const Chart = ({ data }) => {
 
-    console.log(data)
-
     const {datasets, labels} = createDataSets(data);
-
     return (
         <View style={styles.container}>
             {datasets.map((dataset, index) => (
