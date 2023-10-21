@@ -1,11 +1,14 @@
-const apiKey = "69e51d74a685081fc23e5d1188d95a16";
+import Constants from 'expo-constants';
 
 export const fetchLocations = async (query) => {
   if (!query) return [];
 
+  const API_KEY = Constants.manifest.extra.METEO_APP_API_KEY;
+  // const API_KEY = "69e51d74a685081fc23e5d1188d95a16"
+
   const url = `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(
     query
-  )},fr&limit=5&appid=${apiKey}`;
+  )},fr&limit=5&appid=${API_KEY}`;
 
   try {
     const response = await fetch(url);

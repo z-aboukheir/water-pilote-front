@@ -63,8 +63,9 @@ export default ValveContainer
 
 const styles = StyleSheet.create({
     container: {
-        alignSelf: "left",
+        // alignSelf: "left",
         paddingTop: 10,
+        paddingRight: 10
     },
     outputContainer: {
         flexDirection: "row",

@@ -69,9 +69,12 @@ const StatsScreen = () => {
                 </Pressable>
                 <Text style={styles.title}>Statistiques</Text>
             </View>
-            {irrigationsData  && (
-                <Chart data={irrigationsData} />
-            )}
+
+             {irrigationsData && irrigationsData.length > 0 ? (
+        <Chart data={irrigationsData} />
+    ) : (
+        <Text style={styles.noDataText}>Aucune statistique ces 14 derniers jours</Text>
+    )}
         </ScrollView>
     )
 }
@@ -95,5 +98,12 @@ const styles = StyleSheet.create({
         color: Color.darkGrey,
         fontFamily: FontFamily.poppinsMedium,
         marginTop: -20,
-    }
+    },
+    noDataText: {
+        fontSize: 16, 
+        // color: 'red', 
+        fontWeight: 'bold',
+        textAlign: 'center', 
+        marginTop: 20, 
+    },
 })

@@ -1,19 +1,19 @@
-// import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as SecureStore from 'expo-secure-store'; 
 import jwtDecode from 'jwt-decode';
 
 
 // Stocker le token dans le secure store
 export const storeToken = async (token) => {
-  await SecureStore.setItemAsync('token', token);
-  // await AsyncStorage.setItem('token', token);
+  // await SecureStore.setItemAsync('token', token);
+  await AsyncStorage.setItem('token', token);
 
 };
 
 // Supprimer le token du secure store
 export const removeToken = async () => {
-  await SecureStore.deleteItemAsync('token');
-  // await AsyncStorage.removeItem('token');
+  // await SecureStore.deleteItemAsync('token');
+  await AsyncStorage.removeItem('token');
 };
 
 
@@ -21,8 +21,8 @@ export const removeToken = async () => {
 
 // Récupérer le token depuis le secure store
 export const getToken = async () => {
-  const token = await SecureStore.getItemAsync('token');
-  // const token = await AsyncStorage.getItem('token');
+  // const token = await SecureStore.getItemAsync('token');
+  const token = await AsyncStorage.getItem('token');
   if (token && !isTokenExpired(token)) {
     console.log("token", token)
     return token;

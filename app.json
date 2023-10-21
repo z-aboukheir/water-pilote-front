@@ -1,6 +1,9 @@
 {
   "expo": {
     "name": "Waterpilot-app",
+    "extra": {
+      "METEO_APP_API_KEY": "69e51d74a685081fc23e5d1188d95a16"
+    },
     "slug": "Waterpilot-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -25,6 +28,7 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    }     
+    
   }
 }

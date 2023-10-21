@@ -15,6 +15,7 @@ import {
     fetchWithToken
 } from "../services/fetchService";
 
+
 const WateringSettingsScreen = ({route}) => {
 
     const {id} = route.params;
@@ -35,7 +36,7 @@ const WateringSettingsScreen = ({route}) => {
 
     const updateData = async () => {
         try {
-            const response = await fetchWithToken(`http://localhost:3000/electrovalve/${id}/valveSettings`, {
+           await fetchWithToken(`http://localhost:3000/electrovalve/${id}/valveSettings`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -63,6 +64,8 @@ const WateringSettingsScreen = ({route}) => {
             }
         } catch (error) {
             console.log('Erreur de réseau:', error.message);
+            // erreur pas de setting existant 
+            
         }
     };
 

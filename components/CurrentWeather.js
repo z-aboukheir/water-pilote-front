@@ -8,6 +8,9 @@ import {
   Image,
     StyleSheet
 } from "react-native";
+import Constants from 'expo-constants';
+
+
 
 const CurrentWeather = () => {
 
@@ -17,13 +20,12 @@ const CurrentWeather = () => {
     longitude: '4.850000'
   });
 
-    const API_KEY = process.env.METEO_APP_API_KEY;
-    const API_URL = `https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=${API_KEY}&units=metric`;
+   const API_KEY = Constants.manifest.extra.METEO_APP_API_KEY;
+   const API_URL = `https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=${API_KEY}&units=metric`;
     const getCurrentWeather = async () => {
     const response = await fetch(API_URL);
     const data = await response.json();
-    data &&
-    await setCurrentWeather(data);
+    data && setCurrentWeather(data);
   }
 
   useEffect(() => {
