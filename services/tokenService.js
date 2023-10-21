@@ -17,7 +17,7 @@ export const removeToken = async () => {
 };
 
 
-// a chaque fois que je fais une requete comment je met le authentifiation a false si le token supprimer sans action de l'utilisateur ??? c'est en fait lors de la requete si token expire je met a false 
+
 
 // Récupérer le token depuis le secure store
 export const getToken = async () => {
