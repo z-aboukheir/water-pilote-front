@@ -27,7 +27,7 @@ const InputForm = ({ icon, placeholder, onChangeText, value, onBlur, secureText 
                 onBlur={onBlur}
                 secureTextEntry={secureTextEntry}
             />
-            {secureText && <TouchableOpacity onPress={toggleSecureTextEntry} style={styles.button}>
+            {secureText && <TouchableOpacity onPress={ () =>toggleSecureTextEntry()} style={styles.button}>
                 {secureTextEntry ? <Icon name="eye" size={20} color="#000" /> : <Icon name="eye-slash" size={20} color="#000" /> }
             </TouchableOpacity>}
         </View>

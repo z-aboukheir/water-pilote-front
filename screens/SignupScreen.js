@@ -43,7 +43,7 @@ const SignupScreen = () => {
           latitude: selectedLocation.latitude,
         });
 
-        navigation.navigate("SigninScreen");
+        navigation.navigate("SignIn");
       } catch (error) {
         console.log(error);
         setError(error.message);
@@ -77,11 +77,9 @@ const SignupScreen = () => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!regex.test(email)) {
       setEmailError("Veuillez rentrer une adresse mail correct");
-      console.log(emailError);
       return false;
     }
     setEmailError("");
-    console.log(emailError);
     return true;
   };
   
@@ -108,7 +106,7 @@ const SignupScreen = () => {
       <AuthForm
         textAuth="Sign In"
         welcomeText="Je m'appelle Groot et toi"
-        handleSubmit={handleSignUp}
+        handleSubmit={()=>handleSignUp()}
         textBouton="Register"
         navigation ={navigation}
   redirectScreen ="SignIn"
@@ -172,7 +170,7 @@ const SignupScreen = () => {
           </Text>
         ) : null}
       </AuthForm>
-      {error && <Text style={{ color: "red", textAlign : 'center' , marginTop: 20 }}>{error}</Text>}
+      {error ? (<Text style={{ color: "red", textAlign : 'center' , marginTop: 20 }}>{error}</Text>) : null}
       </ScrollView>
         );
 };

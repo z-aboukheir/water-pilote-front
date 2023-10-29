@@ -14,11 +14,14 @@ import BackButton
 import {
     fetchWithToken
 } from "../services/fetchService";
+import {
+    useNavigation
+} from "@react-navigation/native";
 
 
 const WateringSettingsScreen = ({route}) => {
-
-    const {id} = route.params;
+    const navigation = useNavigation();
+    const {idValve} = route.params;
     // Valeurs par défaut pour chaque slider
     const [settings, setSettings] = useState({
         wateringRate: 0,
@@ -29,14 +32,14 @@ const WateringSettingsScreen = ({route}) => {
 
     // Fonction pour enregistrer les nouvelles valeurs
     const saveSettings = () => {
-        console.log('Settings saved', settings);
+        // console.log('Settings saved', settings);
         // fonction pour envoyer les nouvelles valeurs au serveur
         updateData();
     };
 
     const updateData = async () => {
         try {
-           await fetchWithToken(`http://localhost:3000/electrovalve/${id}/valveSettings`, {
+           await fetchWithToken(`http://localhost:3000/electrovalve/${idValve}/valveSettings`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -51,14 +54,13 @@ const WateringSettingsScreen = ({route}) => {
 
     const fetchData = async () => {
         try {
-            const response = await fetchWithToken(`http://localhost:3000/electrovalve/${id}/valveSettings`, {
+            const response = await fetchWithToken(`http://localhost:3000/electrovalve/${idValve}/valveSettings`, {
                 method: 'GET',
             });
 
             if (response.ok) {
                 const responseData = await response.json();
                 setSettings(responseData[0]);
-                console.log(settings)
             } else {
                 console.log('Erreur lors de la requête');
             }
@@ -71,7 +73,10 @@ const WateringSettingsScreen = ({route}) => {
 
     useEffect(() => {
         fetchData();
-    }, [fetchWithToken]);
+    }, 
+    // [fetchWithToken]
+    [idValve]
+    );
 
 
     return (
@@ -107,7 +112,7 @@ const WateringSettingsScreen = ({route}) => {
                     }
                 />
 
-                <TouchableOpacity style={[styles.button, styles.buttonContainer]} onPress={saveSettings}>
+                <TouchableOpacity style={[styles.button, styles.buttonContainer]} onPress={() => {navigation.goBack() , saveSettings()}} >
                     <Text style={styles.buttonText}>Enregistrer</Text>
                 </TouchableOpacity>
 
@@ -118,9 +123,11 @@ const WateringSettingsScreen = ({route}) => {
 
 const styles = StyleSheet.create({
     mainContainer: {
-        paddingTop: 100,
+        paddingTop: 60,
         paddingHorizontal: '10%',
-        alignContent: 'center',
+        // alignContent: 'center',
+        // width : '100%',
+        // alignItems:'center'
     },
     buttonText: {
         color: '#fff',

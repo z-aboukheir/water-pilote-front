@@ -72,13 +72,10 @@ const styles = StyleSheet.create({
     },
     valveName: {
         fontSize: FontSize.size_lg,
-        textAlign: "left",
         color: Color.darkGrey,
         fontFamily: FontFamily.poppinsMedium,
         fontWeight: "500",
-        paddingTop: 35,
-        paddingBottom: 20,
-        marginLeft: 6,
+        marginVertical: 20,
     },
     button: {
         borderWidth: 2,
@@ -128,7 +125,7 @@ const styles = StyleSheet.create({
         fontSize: FontSize.size_base,
     },
     disabledButton: {
-        backgroundColor: Color.steelblue_100,
+        backgroundColor: Color.darkGrey,
         opacity: 0.7,
     },
 

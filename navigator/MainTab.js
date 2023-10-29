@@ -25,7 +25,7 @@ const MainTab = () => {
                             name={focused ? "stats-chart" : "stats-chart-outline"}
                             size={30}
                             color={focused ? "#BCC604" : "#C5C5C5"}
-                            style={{ marginBottom: -45 }}
+                            // style={{ marginBottom: -45 }}
                         />
                     )
                 }} />
@@ -51,7 +51,7 @@ const MainTab = () => {
                             name={focused ? "settings" : "settings-outline"}
                             size={30}
                             color={focused ? "#BCC604" : "#C5C5C5"}
-                            style={{ marginBottom: -45 }}
+                            // style={{ marginBottom: -45 }}
                         />
                     )
                 }} />
@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
         bottom: 15,
         borderStyle: 'solid',
         borderWidth: 3,
+
     },
     gradient: {
         width: 60,

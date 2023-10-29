@@ -9,7 +9,7 @@ import {
     useEffect,
     useState
 } from "react";
-import { fetchWithToken } from "../services/fetchService";
+// import { fetchWithToken } from "../services/fetchService";
 import {
     AuthContext
 } from "../context/AuthContext";
@@ -46,7 +46,7 @@ const ValvesSettingsScreen = () => {
             }
             
             try {
-                const response = await fetchWithToken('http://localhost:3000/electrovalve', {
+                const responseVavle = await fetchWithToken('http://localhost:3000/electrovalve', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -55,11 +55,11 @@ const ValvesSettingsScreen = () => {
                   
                 });
             
-                if (response.ok) {
-                    const data =  await response.json()
+                if (responseVavle.ok) {
+                    const dataValve =  await responseVavle.json()
                     Alert.alert("La valve a été ajoutée avec succès!");
-                    await fetchData()
-                     await fetchWithToken(`http://localhost:3000/electrovalve/${data.id}/valveSettings`, {
+                  
+                   await fetchWithToken(`http://localhost:3000/electrovalve/${dataValve.id}/valveSettings`, {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json'
@@ -69,8 +69,8 @@ const ValvesSettingsScreen = () => {
                                     moistureThreshold: 0,
                                     rainThreshold: 0})
                             });
-                    // valve creer meme lorsquil y a une erreur exmple pin deja existant           
-                   
+                            await fetchData()        
+                              
                 } else {
                     Alert.alert("Une erreur est survenue. Veuillez réessayer.");
                 }
@@ -94,6 +94,7 @@ const ValvesSettingsScreen = () => {
             } else {
                 console.log('Erreur lors de la requête');
             }
+            
         } catch (error) {
             console.log('Erreur de réseau:', error.message);
         }
@@ -128,10 +129,6 @@ const ValvesSettingsScreen = () => {
             <ScrollView>
  
                 <View style={styles.titleContainer}>
-                    <Pressable
-                        onPress={() => navigation.goBack()}>
-                        <Image style={{ width: 95, height: 95 }} source={require("../assets/back.png")} />
-                    </Pressable>
                     <Text style={styles.title}>Paramétrage</Text>
                 </View>
                 <View style={styles.outputContainer}>
@@ -141,9 +138,9 @@ const ValvesSettingsScreen = () => {
                             name={sorties[sortie].name}
                             isAutomatic={sorties[sortie].isAutomatic}
                             onPressWatering={() => navigation.navigate("WateringSettingsScreen",
-                                { id: sorties[sortie].id, })}
+                                { idValve: sorties[sortie].id, })}
                             onPressSchedule={() => navigation.navigate("SchedulesSettingsScreen",
-                                { id: sorties[sortie].id, })}
+                                { idValve: sorties[sortie].id, nameValve: sorties[sortie].name,})}
                         />
                     ))}
                 </View>
@@ -172,6 +169,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         paddingTop: 45,
+        marginLeft : 25
     },
     title: {
         fontSize: FontSize.size_13xl,

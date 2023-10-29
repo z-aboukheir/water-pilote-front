@@ -30,7 +30,7 @@ const CurrentWeather = () => {
 
   useEffect(() => {
     getCurrentWeather();
-    console.log(currentWeather);
+    // console.log(currentWeather);
   }, []);
 
   return (

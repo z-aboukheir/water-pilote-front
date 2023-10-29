@@ -1,14 +1,10 @@
-
 import React, { useState, useContext } from "react";
 import InputForm from "../components/InputForm";
 import AuthForm from "../components/AuthForm";
-import {  ScrollView, Text
-} from "react-native"
-
+import { ScrollView, Text } from "react-native";
 
 import { useNavigation } from "@react-navigation/native";
-import { AuthContext } from '../context/AuthContext';
-
+import { AuthContext } from "../context/AuthContext";
 
 const SigninScreen = () => {
   const [email, setEmail] = useState("");
@@ -19,10 +15,8 @@ const SigninScreen = () => {
   const { signIn } = useContext(AuthContext);
 
   const handleSignIn = async () => {
-    console.log(password)
     try {
-       await signIn(password, email);
-      
+      await signIn(password, email);
     } catch (error) {
       console.log(error.message);
       setError("Erreur d'autentification");
@@ -34,10 +28,10 @@ const SigninScreen = () => {
       <AuthForm
         textAuth="Sign Up"
         welcomeText="Heureux de vous revoir"
-        handleSubmit={handleSignIn}
+        handleSubmit={() => handleSignIn()}
         textBouton="Sign In"
-        navigation ={navigation}
-        redirectScreen ="SignUp"
+        navigation={navigation}
+        redirectScreen="SignUp"
       >
         <InputForm
           icon="user"
@@ -53,12 +47,13 @@ const SigninScreen = () => {
           secureText
         />
       </AuthForm>
-      {error && (
-        <Text style={{ color: "red", textAlign: "center", marginTop: 20 }}>
-          {error}
-        </Text>
-      )}
-   </ScrollView>
+      {error ? (
+     <Text style={{ color: "red", textAlign: "center", marginTop: 20 }}>
+       {error}
+     </Text>
+   ) : null}
+
+    </ScrollView>
   );
 };
 

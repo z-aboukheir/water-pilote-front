@@ -3,8 +3,6 @@ import { getToken } from "./tokenService";
 async function fetchWithToken(url, options, setIsAuthenticated) {
   // Récupérez le token depuis le secure store
   const token = await getToken();
-  console.log("Calling fetchWithToken function");
-
   if (!token) {
     setIsAuthenticated(false); // Met à jour la valeur de isAuthenticated à false dans le contexte
     throw new Error("Token expired or not available");

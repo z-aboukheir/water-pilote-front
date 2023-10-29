@@ -46,7 +46,6 @@ const StatsScreen = () => {
             });
             if (response.ok) {
                 const responseData = await response.json();
-                console.log(responseData)
                 setIrrigationsData(responseData);
             } else {
                 console.log('Erreur lors de la requête');
@@ -63,10 +62,10 @@ const StatsScreen = () => {
     return (
         <ScrollView style={styles.mainContainer}>
             <View style={styles.titleContainer}>
-                <Pressable
+                {/* <Pressable
                     onPress={() => navigation.goBack()}>
                     <Image style={{ width: 95, height: 95 }} source={require("../assets/back.png")}/>
-                </Pressable>
+                </Pressable> */}
                 <Text style={styles.title}>Statistiques</Text>
             </View>
 
@@ -91,7 +90,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         paddingTop: 45,
         paddingBottom: 60,
-        marginLeft: '-10%',
+        // marginLeft: '-10%',
     },
     title: {
         fontSize: FontSize.size_13xl,

@@ -17,9 +17,13 @@ const ScheduleModal = ({ isVisible, handleSave, handleInputChange, newSchedule }
     };
 
     return (
-        <Modal visible={isVisible} onRequestClose={handleClose}>
+        <Modal visible={isVisible}
+        //  onRequestClose={handleClose}
+         >
             <View>
-                <TouchableOpacity onPress={handleClose}>
+                <TouchableOpacity 
+                // onPress={handleClose}
+                >
                     <Icon
                         name="times"
                         size={25}
