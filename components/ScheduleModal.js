@@ -4,7 +4,6 @@ import {
     Text,
     TextInput,
     Modal,
-    TouchableOpacity,
     Pressable,
 } from "react-native";
 import { Color } from "../GlobalStyles";
@@ -21,7 +20,7 @@ const ScheduleModal = ({ isVisible, handleSave, handleInputChange, newSchedule }
         //  onRequestClose={handleClose}
          >
             <View>
-                <TouchableOpacity 
+                <Pressable 
                 // onPress={handleClose}
                 >
                     <Icon
@@ -30,7 +29,7 @@ const ScheduleModal = ({ isVisible, handleSave, handleInputChange, newSchedule }
                         color={Color.darkGrey}
                         style={{ position: "absolute", top: 10, right: 10 }}
                     />
-                </TouchableOpacity>
+                </Pressable>
                 <Text>Add new schedule</Text>
                 <TextInput
                     placeholder="Valve id"

@@ -5,7 +5,7 @@ import {
   Text,
   StyleSheet,
   Image,
-  TouchableOpacity,
+  Pressable,
 } from "react-native";
 import { Color, FontSize } from "../GlobalStyles";
 
@@ -21,9 +21,9 @@ const AuthForm = ({
   return (
     <View style={styles.container}>
       <View style={styles.containerTextAuth}>
-      <TouchableOpacity onPress={() => navigation.navigate(redirectScreen)}>
+      <Pressable onPress={() => navigation.navigate(redirectScreen)}>
         <Text style={styles.textAuth}>{textAuth}</Text>
-        </TouchableOpacity>
+        </Pressable>
         <Image source={require("../assets/On.png")} style={styles.imageOn} />
       </View>
       <Image
@@ -33,9 +33,9 @@ const AuthForm = ({
       <Text style={styles.welcomeText}>{welcomeText}</Text>
       <View style={styles.containerForm}>
         {children}
-        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+        <Pressable style={styles.button} onPress={handleSubmit}>
           <Text style={styles.buttonText}>{textBouton}</Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </View>
   );

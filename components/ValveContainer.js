@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Image, Pressable, View, Text, StyleSheet } from "react-native";
+import { Image, Pressable, View, Text, StyleSheet, TextInput } from "react-native";
 import { Color, FontFamily, FontSize } from "../GlobalStyles";
 
 const ValveContainer = (props) => {
-  const { name, onPressWatering, onPressSchedule, isAutomatic, onDelete, onPressUpdate } =
+  const { name, onPressWatering, onPressSchedule, isAutomatic, onDelete, updateValve, valveId} =
     props;
   const [mode, setMode] = useState(isAutomatic ? "auto" : "manual");
 
   const handlePressAuto = () => setMode("auto");
   const handlePressManual = () => setMode("manual");
+
+  // État pour savoir si le nom est en cours de modification
+  const [isEditingName, setIsEditingName] = useState(false);
+
+  // État pour stocker la valeur temporaire du nom pendant la modification
+  const [tempName, setTempName] = useState(name);
 
   // initialisation du mode auto ou manuel en fonction de la valeur de isAutomatic
   useEffect(() => {
@@ -19,10 +25,39 @@ const ValveContainer = (props) => {
     console.log("arrosage manuel en cours");
   }
 
+
+  // Fonction pour gérer le début de la modification du nom
+  const handleEditName = () => {
+    setIsEditingName(true);
+  };
+
+  // Fonction pour gérer la validation de la modification du nom
+  const handleValidateName = () => {
+    setIsEditingName(false);
+    //  mettre à jour la nom dans votre base de données 
+    updateValve(valveId, tempName)
+ };
+
+
   return (
     <View style={styles.container}>
-      <Text style={styles.valveName}>{name}</Text>
-
+<View style={{flexDirection: 'row', alignItems: 'center'}}>
+       {isEditingName ? (
+        <TextInput 
+          style={[styles.valveName, {   borderWidth: 1, borderRadius: 5, borderColor: '#ccc' }]}
+          value={tempName}
+          onChangeText={setTempName}
+        />
+      ) : (
+        <Text style={styles.valveName}>{name}</Text>
+      )}
+      <Pressable style={styles.updateButton} onPress={isEditingName ? handleValidateName : handleEditName}>
+        <Image
+          source={require(isEditingName ? "../assets/validate.png" : "../assets/crayon.png")}
+          style={styles.updateButtonText}
+        />
+      </Pressable>
+      </View>
       <View style={styles.outputContainer}>
         <Pressable style={styles.button} onPress={onPressWatering}>
           <Image
@@ -57,7 +92,7 @@ const ValveContainer = (props) => {
             style={
               mode === "auto" ? styles.buttonActive : styles.buttonInactive
             }
-            onPress={handlePressAuto}
+            onPress={() => handlePressAuto}
           >
             <Text
               style={
@@ -72,7 +107,7 @@ const ValveContainer = (props) => {
             style={
               mode === "manual" ? styles.buttonActive : styles.buttonInactive
             }
-            onPress={handlePressManual}
+            onPress= {() => handlePressManual}
           >
             <Text
               style={
@@ -85,12 +120,6 @@ const ValveContainer = (props) => {
             </Text>
           </Pressable>
         </View>
-        <Pressable style={styles.updateButton} onPress={onPressUpdate}>
-          <Image
-            source={require("../assets/crayon.png")}
-            // style={styles.updateButtonText}
-          />
-        </Pressable>
         <Pressable
           style={[styles.button, styles.deleteButton]}
           onPress={onDelete}
@@ -198,30 +227,33 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.poppinsMedium,
     fontWeight: "bold",
   },
-//   updateButton: {
-//     borderWidth: 2,
-//     borderRadius: 25,
-//     borderColor: Color.lightslategray,
-//     padding: 8,
-//     width: 100, // Modifiez selon vos besoins
-//     height: 50,
-//     marginHorizontal: 5,
-//     backgroundColor: Color.blue, // Par exemple
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     shadowColor: "#000",
-//     shadowOffset: {
-//         width: 0,
-//         height: 3,
-//     },
-//     shadowOpacity: 0.29,
-//     shadowRadius: 4.65,
-//     elevation: 7,
-// },
-// updateButtonText: {
-//     color: Color.white,
-//     fontSize: FontSize.size_base,
-//     fontFamily: FontFamily.poppinsMedium,
-// }
+  updateButton: {
+    borderWidth: 2,
+    borderRadius: 25,
+    borderColor: Color.lightslategray,
+    padding: 8,
+    width: 30, 
+    height: 30,
+    marginHorizontal: 5,
+    backgroundColor: Color.whitesmoke_100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: "#000",
+    shadowOffset: {
+        width: 0,
+        height: 3,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 4.65,
+    elevation: 7,
+    marginLeft : 15
+},
+updateButtonText: {
+    color: Color.white,
+    fontSize: FontSize.size_base,
+    fontFamily: FontFamily.poppinsMedium,
+    width : 15,
+    height: 15
+}
 
 });

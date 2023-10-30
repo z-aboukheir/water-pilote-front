@@ -6,7 +6,7 @@ import {
     View,
     Text,
     StyleSheet,
-    TouchableOpacity,
+    Pressable,
 } from 'react-native';
 import SettingSlider from '../components/SettingSlider';
 import BackButton
@@ -112,9 +112,9 @@ const WateringSettingsScreen = ({route}) => {
                     }
                 />
 
-                <TouchableOpacity style={[styles.button, styles.buttonContainer]} onPress={() => {navigation.goBack() , saveSettings()}} >
+                <Pressable style={[styles.button, styles.buttonContainer]} onPress={() => {navigation.goBack() , saveSettings()}} >
                     <Text style={styles.buttonText}>Enregistrer</Text>
-                </TouchableOpacity>
+                </Pressable>
 
             </View>
         </View>

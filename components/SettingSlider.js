@@ -38,7 +38,7 @@ const SettingSlider = (props) => {
                         }
                     }}
                     value={value?.toString() ?? ''}
-                    keyboardType="numeric"
+                    inputMode="numeric"
                 />
                 <Text> {unit}</Text>
             </View>

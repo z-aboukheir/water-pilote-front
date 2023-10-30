@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, TextInput, Image, StyleSheet, Text, Pressable } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Color } from '../GlobalStyles';
 
@@ -27,9 +27,9 @@ const InputForm = ({ icon, placeholder, onChangeText, value, onBlur, secureText 
                 onBlur={onBlur}
                 secureTextEntry={secureTextEntry}
             />
-            {secureText && <TouchableOpacity onPress={ () =>toggleSecureTextEntry()} style={styles.button}>
+            {secureText && <Pressable onPress={ () =>toggleSecureTextEntry()} style={styles.button}>
                 {secureTextEntry ? <Icon name="eye" size={20} color="#000" /> : <Icon name="eye-slash" size={20} color="#000" /> }
-            </TouchableOpacity>}
+            </Pressable>}
         </View>
     );
 };

@@ -5,7 +5,6 @@ import {
   View,
   Text,
   Pressable,
-  TouchableOpacity,
   Picker,
   Button,
   FlatList,
@@ -327,12 +326,12 @@ const SchedulesSettingsScreen = ({ route }) => {
                     );
                   })}
                 </View>
-                <TouchableOpacity
+                <Pressable
                   style={styles.buttonDelete}
                   onPress={() => deletePlanning(item.id)}
                 >
                   <Text style={styles.textDelete}>✖</Text>
-                </TouchableOpacity>
+                </Pressable>
               </View>
             )}
           />
@@ -379,7 +378,7 @@ const SchedulesSettingsScreen = ({ route }) => {
             {/* Boutons pour sélectionner les jours */}
             <View style={styles.daySelectionContainer}>
               {Object.keys(dayMapping).map((day) => (
-                <TouchableOpacity
+                <Pressable
                   key={day}
                   style={[
                     styles.dayButton,
@@ -388,7 +387,7 @@ const SchedulesSettingsScreen = ({ route }) => {
                   onPress={() => toggleDaySelection(day)}
                 >
                   <Text>{day}</Text>
-                </TouchableOpacity>
+                </Pressable>
               ))}
             </View>
             <View style={{flexDirection : "row", gap: 5}}>

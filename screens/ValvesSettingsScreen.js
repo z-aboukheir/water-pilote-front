@@ -26,8 +26,6 @@ const ValvesSettingsScreen = () => {
     const [valvePinPosition, setValvePinPosition] = useState('');
 
     const [sorties, setSorties] = useState([]);
-    const [currentValveId, setCurrentValveId] = useState(null); //  pour gérer l'ID de la valve actuelle
-    const [mode, setMode] = useState('add'); //  pour gérer le mode (ajout ou mise à jour)
 
     useEffect(() => {
         if (modalVisible) {
@@ -39,18 +37,18 @@ const ValvesSettingsScreen = () => {
 
    
 
-    const updateValve = async () => {
-        if (valveName === '' || valvePinPosition === '') {
+    const updateValve = async (id , valveName) => {
+        if (valveName === '') {
             Alert.alert("Veuillez remplir les deux champs");
+
         } else {
             const updatedValve = {
                 name: valveName,
-                pinPosition: valvePinPosition,
             }
             
             try {
-                const response = await fetchWithToken(`http://localhost:3000/electrovalve/${currentValveId}`, {
-                    method: 'PUT', 
+                const response = await fetchWithToken(`http://localhost:3000/electrovalve/${id}`, {
+                    method: 'PATCH', 
                     headers: {
                         'Content-Type': 'application/json'
                     },
@@ -59,14 +57,14 @@ const ValvesSettingsScreen = () => {
                 
                 if (response.ok) {
                     Alert.alert("La valve a été mise à jour avec succès!");
-                    // fetchData();  
+                    fetchData();  
                 } else {
                     Alert.alert("Une erreur est survenue. Veuillez réessayer.");
                 }
             } catch (error) {
                 console.error('Erreur:', error);
             }
-            setModalVisible(false);
+            // setModalVisible(false);
         }
     };
     
@@ -104,7 +102,8 @@ const ValvesSettingsScreen = () => {
                                     moistureThreshold: 0,
                                     rainThreshold: 0})
                             });
-                            // setSorties(dataValve);      
+                            // setSorties(dataValve);
+                            fetchData();       
                               
                 } else {
                     Alert.alert("Une erreur est survenue. Veuillez réessayer.");
@@ -112,7 +111,7 @@ const ValvesSettingsScreen = () => {
             } catch (error) {
                 console.error('Erreur:', error);
             }
-            setModalVisible(false);
+            // setModalVisible(false);
         }
     };
 
@@ -145,7 +144,8 @@ const ValvesSettingsScreen = () => {
             if (response.ok) {
                 const responseData = response.json()
                 Alert.alert("La valve a été supprimée avec succès!");
-                setSorties(responseData);
+                // setSorties(responseData);
+                fetchData();       
             } else {
                 Alert.alert("Une erreur est survenue. Veuillez réessayer.");
             }
@@ -154,13 +154,17 @@ const ValvesSettingsScreen = () => {
         }
     };
     
-       
+ 
 
     useEffect(() => {
         fetchData();
     }
     // , [fetchWithToken]
     );
+
+    // console.log(sorties.map(sortie => sortie.id));
+
+
     return (
         <ImageBackground
             source={require("../assets/plante-1.png")}
@@ -182,6 +186,9 @@ const ValvesSettingsScreen = () => {
                             onPressSchedule={() => navigation.navigate("SchedulesSettingsScreen",
                                 { idValve: sorties[sortie].id, nameValve: sorties[sortie].name,})}
                                 onDelete={() => deleteValve(sorties[sortie].id)} 
+                                updateValve = {updateValve}
+                                valveId = {sorties[sortie].id}
+                               
                         />
                     ))}
                 </View>
@@ -197,7 +204,8 @@ const ValvesSettingsScreen = () => {
                     visible={modalVisible}
 
                 >
-                    <ModalValveScreen setModalVisible={setModalVisible} setValveName={setValveName} valveName={valveName} setValvePinPosition={setValvePinPosition} valvePinPosition={valvePinPosition} addValve={addValve} updateValve={updateValve} />
+                    <ModalValveScreen setModalVisible={setModalVisible} setValveName={setValveName} valveName={valveName} setValvePinPosition={setValvePinPosition} valvePinPosition={valvePinPosition} addValve={addValve} />
+
                 </Modal>
                 </ScrollView>     
                    </ImageBackground>

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import AuthContext from "./services/AuthContext";
 import LocationContext from "./services/LocationContext";
 
@@ -30,9 +30,9 @@ const EditLocation = () => {
         selectedLocation={selectedLocation}
         setSelectedLocation={setSelectedLocation}
       />
-      <TouchableOpacity style={styles.button} onPress={handleLocationUpdate}>
+      <Pressable style={styles.button} onPress={handleLocationUpdate}>
         <Text style={styles.buttonText}>Mettre à jour la localisation</Text>
-      </TouchableOpacity>
+      </Pressable>
     </View>
   );
 };

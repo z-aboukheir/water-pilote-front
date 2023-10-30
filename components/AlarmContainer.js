@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     right: "0%",
     bottom: "0.35%",
     left: "-2.19%",
-    borderRadius: Border.br_xl,
+    borderRadius: Border.br_xl, 
     shadowColor: "rgba(255, 255, 255, 0.53)",
     shadowOffset: {
       width: -5,

@@ -3,7 +3,7 @@ import React from 'react';
 import HomeScreen from '../screens/HomeScreen';
 import StatsScreen from '../screens/StatsScreen';
 import ValvesSettingsScreen from '../screens/ValvesSettingsScreen';
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Pressable, View } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -32,7 +32,7 @@ const MainTab = () => {
                 <Tab.Screen name="Home" component={HomeScreen} options={{
                     headerShown: false,
                     tabBarButton: (props) => (
-                        <TouchableOpacity
+                        <Pressable
                             {...props}
                             style={styles.tabBarButton}>
                             <LinearGradient
@@ -40,7 +40,7 @@ const MainTab = () => {
                                 style={styles.gradient}>
                                 <Ionicons name="home" size={25} color="white" />
                             </LinearGradient>
-                        </TouchableOpacity>
+                        </Pressable>
                     )
                 }} />
                 <Tab.Screen name="Valve Settings" component={ValvesSettingsScreen} options={{

@@ -4,7 +4,7 @@ import {
   Text,
   Button,
   StyleSheet,
-  TouchableOpacity
+  Pressable
 } from 'react-native';
 import { AuthContext } from '../context/AuthContext';
 import {
@@ -28,10 +28,10 @@ const handleLogout = async () => {
 
 
 return(
-    <TouchableOpacity style={styles.button} onPress={handleLogout}>
+    <Pressable style={styles.button} onPress={handleLogout}>
       <Text style={styles.buttonText}>Log Out  </Text>
       <FontAwesome name="sign-out" style={styles.icon} />
-    </TouchableOpacity>
+    </Pressable>
 )
 }
 

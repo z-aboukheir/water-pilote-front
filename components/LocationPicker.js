@@ -4,7 +4,7 @@ import {
   View,
   Text,
   FlatList,
-  TouchableOpacity,
+  Pressable,
   TouchableWithoutFeedback,
   Keyboard, ScrollView
 } from "react-native";
@@ -34,7 +34,7 @@ const LocationPicker = ({ selectedLocation, setSelectedLocation }) => {
  };
 
   const renderLocation = ({ item }) => (
-    <TouchableOpacity
+    <Pressable
       style={{ paddingVertical: 8 }}
       onPress={() => handleLocationSelect(item)}
     >
@@ -42,7 +42,7 @@ const LocationPicker = ({ selectedLocation, setSelectedLocation }) => {
       {item.region && item.name ? (
         <Text style={{ color: "#666" }}>{item.region}</Text>
       ) : null}
-    </TouchableOpacity>
+    </Pressable>
   );
 
 
