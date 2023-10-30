@@ -1,10 +1,29 @@
 import React, { useEffect, useState } from "react";
-import { Image, Pressable, View, Text, StyleSheet, TextInput } from "react-native";
+import {
+  Image,
+  Pressable,
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Dimensions
+} from "react-native";
 import { Color, FontFamily, FontSize } from "../GlobalStyles";
 
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
+
 const ValveContainer = (props) => {
-  const { name, onPressWatering, onPressSchedule, isAutomatic, onDelete, updateValve, valveId} =
-    props;
+  const {
+    name,
+    onPressWatering,
+    onPressSchedule,
+    isAutomatic,
+    onDelete,
+    updateValve,
+    valveId,
+  } = props;
   const [mode, setMode] = useState(isAutomatic ? "auto" : "manual");
 
   const handlePressAuto = () => setMode("auto");
@@ -23,8 +42,7 @@ const ValveContainer = (props) => {
 
   function onPressSplash() {
     console.log("arrosage manuel en cours");
-  };
-
+  }
 
   // Fonction pour gérer le début de la modification du nom
   const handleEditName = () => {
@@ -34,30 +52,42 @@ const ValveContainer = (props) => {
   // Fonction pour gérer la validation de la modification du nom
   const handleValidateName = () => {
     setIsEditingName(false);
-    //  mettre à jour la nom dans votre base de données 
-    if (tempName !== name  )
-    updateValve(valveId, tempName)
- };
-
+    //  mettre à jour la nom dans votre base de données
+    if (tempName !== name) updateValve(valveId, tempName);
+  };
 
   return (
     <View style={styles.container}>
-<View style={{flexDirection: 'row', alignItems: 'center'}}>
-       {isEditingName ? (
-        <TextInput 
-          style={[styles.valveName, {   borderWidth: 1, borderRadius: 5, borderColor: '#ccc' }]}
-          value={tempName}
-          onChangeText={setTempName}
-        />
-      ) : (
-        <Text style={styles.valveName}>{name}</Text>
-      )}
-      <Pressable style={styles.updateButton} onPress={isEditingName ? handleValidateName : handleEditName}>
-        <Image
-          source={require(isEditingName ? "../assets/validate.png" : "../assets/crayon.png")}
-          style={styles.updateButtonText}
-        />
-      </Pressable>
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
+        {isEditingName ? (
+          <TextInput
+            style={[
+              styles.valveName,
+              { borderWidth: 1, borderRadius: 5, borderColor: "#ccc" },
+            ]}
+            value={tempName}
+            onChangeText={setTempName}
+          />
+        ) : (
+          <Text style={styles.valveName}>{name}</Text>
+        )}
+        <Pressable
+          style={styles.updateButton}
+          onPress={isEditingName ? handleValidateName : handleEditName}
+        >
+          <Image
+            source={require(isEditingName
+              ? "../assets/validate.png"
+              : "../assets/crayon.png")}
+            style={styles.updateButtonText}
+          />
+        </Pressable>
+        <Pressable
+          style={[styles.deleteButton]}
+          onPress={onDelete}
+        >
+          <Text style={styles.deleteButtonText}>X</Text>
+        </Pressable>
       </View>
       <View style={styles.outputContainer}>
         <Pressable style={styles.button} onPress={onPressWatering}>
@@ -108,7 +138,7 @@ const ValveContainer = (props) => {
             style={
               mode === "manual" ? styles.buttonActive : styles.buttonInactive
             }
-            onPress= {() => handlePressManual}
+            onPress={() => handlePressManual}
           >
             <Text
               style={
@@ -121,12 +151,7 @@ const ValveContainer = (props) => {
             </Text>
           </Pressable>
         </View>
-        <Pressable
-          style={[styles.button, styles.deleteButton]}
-          onPress={onDelete}
-        >
-          <Text style={styles.deleteButtonText}>X</Text>
-        </Pressable>
+       
       </View>
     </View>
   );
@@ -142,6 +167,8 @@ const styles = StyleSheet.create({
   },
   outputContainer: {
     flexDirection: "row",
+    flexWrap: "wrap",
+    rowGap: 10,
   },
   valveName: {
     fontSize: FontSize.size_lg,
@@ -149,20 +176,37 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.poppinsMedium,
     fontWeight: "500",
     marginVertical: 20,
+    marginLeft: 5,
   },
+
   button: {
     borderWidth: 2,
     borderRadius: 17,
     borderColor: Color.lightslategray,
     padding: 6,
-    width: 50,
-    height: 50,
+    // width: 50,
+    // height: 50,
     marginHorizontal: 5,
     backgroundColor: Color.whitesmoke_300,
+    alignItems: "center",
+    justifyContent: "center",
+    width:  windowWidth * 0.12,
+    height: windowHeight * 0.12,
+    maxWidth: 53,
+    minWidth: 43,
+    maxHeight: 55,
+    minHeight: 40,
   },
   icon: {
-    width: 34,
-    height: 34,
+    // minWidth: 14,
+    // maxWidth : 34,
+    // width: '100%',
+    width:  windowWidth * 0.8,
+    height: windowHeight * 0.7,
+    maxWidth: 36,
+    minWidth: 20,
+    maxHeight: 33,
+    minHeight: 20,
   },
   switchMode: {
     flexDirection: "row",
@@ -174,7 +218,16 @@ const styles = StyleSheet.create({
     width: 150,
     height: 50,
     backgroundColor: Color.whitesmoke_100,
-    marginLeft: 10,
+    marginLeft: 5,
+    marginRight: 5,
+    alignSelf: "center",
+    maxWidth: 164,
+    minWidth: 135,
+    maxHeight: 59,
+    minHeight: 46,
+    width:  windowWidth * 0.25,
+    // height: "6hw",
+    height: windowHeight * 0.10,
   },
   buttonActive: {
     backgroundColor: Color.steelblue_200,
@@ -206,8 +259,9 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     borderColor: Color.lightslategray,
     padding: 8,
-    width: 50,
-    height: 50,
+    width: 35,
+    height: 34,
+    marginLeft: 25,
     marginHorizontal: 5,
     backgroundColor: "red",
     justifyContent: "center",
@@ -220,7 +274,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.29,
     shadowRadius: 4.65,
     elevation: 7,
-    marginLeft: 10,
+    marginLeft: 5,
+    marginRight:15
   },
   deleteButtonText: {
     color: Color.white,
@@ -233,28 +288,27 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     borderColor: Color.lightslategray,
     padding: 8,
-    width: 30, 
+    width: 30,
     height: 30,
     marginHorizontal: 5,
     backgroundColor: Color.whitesmoke_100,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
-        width: 0,
-        height: 3,
+      width: 0,
+      height: 3,
     },
     shadowOpacity: 0.29,
     shadowRadius: 4.65,
     elevation: 7,
-    marginLeft : 15
-},
-updateButtonText: {
+    marginLeft: 15,
+  },
+  updateButtonText: {
     color: Color.white,
     fontSize: FontSize.size_base,
     fontFamily: FontFamily.poppinsMedium,
-    width : 15,
-    height: 15
-}
-
+    width: 15,
+    height: 15,
+  },
 });

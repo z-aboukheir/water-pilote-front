@@ -36,8 +36,10 @@ const StatsScreen = () => {
             const response = await fetchWithToken('http://127.0.0.1:3000/stats/irrigations', {
                 method: 'GET',
             });
+            console.log(response)
             if (response.ok) {
                 const responseData = await response.json();
+                console.log(responseData)
                 setIrrigationsData(responseData);
             } else {
                 console.log('Erreur lors de la requête');
@@ -49,7 +51,9 @@ const StatsScreen = () => {
 
     useEffect(() => {
         fetchData();
-    }, [fetchWithToken]);
+    }, 
+    [fetchWithToken]
+    );
 
     return (
         <ScrollView style={styles.mainContainer}>

@@ -166,10 +166,10 @@ const ValvesSettingsScreen = () => {
 
 
     return (
-        <ImageBackground
-            source={require("../assets/plante-1.png")}
-            style={{ width: "125%", height: "100%" }}
-            resizeMode="cover">
+        // <ImageBackground
+        //     source={require("../assets/plante-1.png")}
+        //     style={{ width: "125%", height: "100%" }}
+        //     resizeMode="cover">
             <ScrollView>
  
                 <View style={styles.titleContainer}>
@@ -208,7 +208,7 @@ const ValvesSettingsScreen = () => {
 
                 </Modal>
                 </ScrollView>     
-                   </ImageBackground>
+                //    </ImageBackground>
     );
 };
 
@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
     containerAddButton: {
         alignItems: 'center',
         justifyContent: 'center',
-        marginLeft: '-25%',
+        // marginLeft: '-25%',
         marginTop: 50,
         marginBottom: 150
 
