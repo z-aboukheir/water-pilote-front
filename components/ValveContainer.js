@@ -23,7 +23,7 @@ const ValveContainer = (props) => {
 
   function onPressSplash() {
     console.log("arrosage manuel en cours");
-  }
+  };
 
 
   // Fonction pour gérer le début de la modification du nom
@@ -35,6 +35,7 @@ const ValveContainer = (props) => {
   const handleValidateName = () => {
     setIsEditingName(false);
     //  mettre à jour la nom dans votre base de données 
+    if (tempName !== name  )
     updateValve(valveId, tempName)
  };
 

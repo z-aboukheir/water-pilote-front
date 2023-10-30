@@ -3,8 +3,6 @@ import {
     ScrollView,
     StyleSheet,
     View,
-    Pressable,
-    Image,
 } from "react-native";
 import {
     useContext,
@@ -13,9 +11,6 @@ import {
 } from "react";
 import Chart
     from "../components/Chart";
-import Svg, { Path } from 'react-native-svg';
-import BackButton
-    from "../components/BackButton";
 import * as React
     from "react";
 import {
@@ -26,9 +21,6 @@ import {
 import {
     useNavigation
 } from "@react-navigation/native";
-import {
-    fetchWithToken
-} from "../services/fetchService";
 import {
     AuthContext
 } from "../context/AuthContext";
@@ -62,10 +54,6 @@ const StatsScreen = () => {
     return (
         <ScrollView style={styles.mainContainer}>
             <View style={styles.titleContainer}>
-                {/* <Pressable
-                    onPress={() => navigation.goBack()}>
-                    <Image style={{ width: 95, height: 95 }} source={require("../assets/back.png")}/>
-                </Pressable> */}
                 <Text style={styles.title}>Statistiques</Text>
             </View>
 

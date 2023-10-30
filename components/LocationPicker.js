@@ -5,8 +5,6 @@ import {
   Text,
   FlatList,
   Pressable,
-  TouchableWithoutFeedback,
-  Keyboard, ScrollView
 } from "react-native";
 import InputForm from "./InputForm";
 import { fetchLocations } from "../services/locationServices";
