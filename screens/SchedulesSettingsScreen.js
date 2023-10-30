@@ -138,7 +138,6 @@ const SchedulesSettingsScreen = ({ route }) => {
           setPlannings("ajouter une plannification");
         }
 
-        // }
       } else {
         console.log("Erreur lors de la requête");
       }
@@ -201,10 +200,11 @@ const SchedulesSettingsScreen = ({ route }) => {
         const responseData = await response.json();
 
         if (typeof plannings !== "string") {
-          setPlannings([...plannings, responseData]);
+          setPlannings([...plannings, {id : responseData.id, hourStart: responseData.hourStart, hourEnd: responseData.hourEnd, days: responseData.days, idSettings: responseData.idSettings, isActivated :true}]);
         } else {
-          setPlannings([responseData]);
+          setPlannings([{id : responseData.id, hourStart: responseData.hourStart, hourEnd: responseData.hourEnd, days: responseData.days, idSettings: responseData.idSettings, isActivated :true}]);
         }
+        
 
         setShowAddPlanningSection(false);
       } else {
@@ -241,7 +241,7 @@ const SchedulesSettingsScreen = ({ route }) => {
     }
   };
 
-  // mettre en surbrillance les jours qui sont enregistrer dasn les schedules
+  // mettre en surbrillance les jours qui sont enregistrer dans les schedules
   const isDayInSchedule = (daysString, dayNumber) => {
     const daysArray = daysString.split(", ");
     return daysArray.includes(dayNumber.toString());
@@ -257,11 +257,12 @@ const SchedulesSettingsScreen = ({ route }) => {
 
   function getThumbColor(item) {
     return Platform.select({
-      ios: item.isActivated ? "#BCC604" : "#f4f3f4",
+      ios: item.isActivated ? "#BCC60:4" : "#f4f3f4",
       android: "desiredColorForAndroid",
     });
   }
 
+  
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>

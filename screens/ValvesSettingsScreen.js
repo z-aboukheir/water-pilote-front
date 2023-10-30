@@ -9,7 +9,6 @@ import {
     useEffect,
     useState
 } from "react";
-// import { fetchWithToken } from "../services/fetchService";
 import {
     AuthContext
 } from "../context/AuthContext";
@@ -27,7 +26,9 @@ const ValvesSettingsScreen = () => {
     const [valvePinPosition, setValvePinPosition] = useState('');
 
     const [sorties, setSorties] = useState([]);
-    
+    const [currentValveId, setCurrentValveId] = useState(null); //  pour gérer l'ID de la valve actuelle
+    const [mode, setMode] = useState('add'); //  pour gérer le mode (ajout ou mise à jour)
+
     useEffect(() => {
         if (modalVisible) {
             // Lorsque la modal s'ouvre, on réinitialise les champs
@@ -35,6 +36,40 @@ const ValvesSettingsScreen = () => {
             setValvePinPosition("");
         }
     }, [modalVisible]);
+
+   
+
+    const updateValve = async () => {
+        if (valveName === '' || valvePinPosition === '') {
+            Alert.alert("Veuillez remplir les deux champs");
+        } else {
+            const updatedValve = {
+                name: valveName,
+                pinPosition: valvePinPosition,
+            }
+            
+            try {
+                const response = await fetchWithToken(`http://localhost:3000/electrovalve/${currentValveId}`, {
+                    method: 'PUT', 
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(updatedValve)
+                });
+                
+                if (response.ok) {
+                    Alert.alert("La valve a été mise à jour avec succès!");
+                    // fetchData();  
+                } else {
+                    Alert.alert("Une erreur est survenue. Veuillez réessayer.");
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+            }
+            setModalVisible(false);
+        }
+    };
+    
 
     const addValve = async () => {
         if (valveName === '' || valvePinPosition === '') {
@@ -69,7 +104,7 @@ const ValvesSettingsScreen = () => {
                                     moistureThreshold: 0,
                                     rainThreshold: 0})
                             });
-                            await fetchData()        
+                            // setSorties(dataValve);      
                               
                 } else {
                     Alert.alert("Une erreur est survenue. Veuillez réessayer.");
@@ -101,20 +136,25 @@ const ValvesSettingsScreen = () => {
     };
 
 
-    const updateData = async () => {
+   
+    const deleteValve = async (id) => {
         try {
             const response = await fetchWithToken(`http://localhost:3000/electrovalve/${id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(sorties)
+                method: 'DELETE',
             });
+            if (response.ok) {
+                const responseData = response.json()
+                Alert.alert("La valve a été supprimée avec succès!");
+                setSorties(responseData);
+            } else {
+                Alert.alert("Une erreur est survenue. Veuillez réessayer.");
+            }
+        } catch (error) {
+            console.error('Erreur:', error);
         }
-        catch (error) {
-            console.log('Erreur de réseau:', error.message);
-        }
-    }
+    };
+    
+       
 
     useEffect(() => {
         fetchData();
@@ -141,6 +181,7 @@ const ValvesSettingsScreen = () => {
                                 { idValve: sorties[sortie].id, })}
                             onPressSchedule={() => navigation.navigate("SchedulesSettingsScreen",
                                 { idValve: sorties[sortie].id, nameValve: sorties[sortie].name,})}
+                                onDelete={() => deleteValve(sorties[sortie].id)} 
                         />
                     ))}
                 </View>
@@ -156,7 +197,7 @@ const ValvesSettingsScreen = () => {
                     visible={modalVisible}
 
                 >
-                    <ModalValveScreen setModalVisible={setModalVisible} setValveName={setValveName} valveName={valveName} setValvePinPosition={setValvePinPosition} valvePinPosition={valvePinPosition} addValve={addValve} />
+                    <ModalValveScreen setModalVisible={setModalVisible} setValveName={setValveName} valveName={valveName} setValvePinPosition={setValvePinPosition} valvePinPosition={valvePinPosition} addValve={addValve} updateValve={updateValve} />
                 </Modal>
                 </ScrollView>     
                    </ImageBackground>
