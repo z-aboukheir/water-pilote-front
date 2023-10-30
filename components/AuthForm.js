@@ -44,6 +44,11 @@ const AuthForm = ({
 const styles = StyleSheet.create({
   container: {
     padding: 40,
+   
+    // maxWidth : 750,
+    width : '100%',
+    justifyContent : 'center', 
+    alignItems : 'center'
   },
   containerTextAuth: {
     justifyContent: "flex-end",
@@ -71,6 +76,8 @@ const styles = StyleSheet.create({
   containerForm: {
     gap: 30,
     alignItems: "stretch",
+    width: '100%',
+    maxWidth : 600
   },
 
   imageRobot: {

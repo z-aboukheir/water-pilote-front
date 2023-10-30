@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
         elevation: 5,
         padding: 15,
         flexDirection: 'row',
-        alignItems: 'center'   
+        alignItems: 'center' ,  
     },
     icon: {
         marginRight: 10,
@@ -54,7 +54,8 @@ const styles = StyleSheet.create({
     ,
     textInput: {
         fontSize: 20,
-        flex: 1,      
+        flex: 1,   
+        overflow : 'hidden'   
     },
    
 
