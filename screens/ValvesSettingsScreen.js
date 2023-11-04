@@ -79,7 +79,7 @@ const ValvesSettingsScreen = () => {
             }
             
             try {
-                const responseVavle = await fetchWithToken('${API_URL}/electrovalve', {
+                const responseVavle = await fetchWithToken(`${API_URL}/electrovalve`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
