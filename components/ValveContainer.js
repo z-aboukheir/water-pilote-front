@@ -35,6 +35,9 @@ const ValveContainer = (props) => {
   // État pour stocker la valeur temporaire du nom pendant la modification
   const [tempName, setTempName] = useState(name);
 
+  const validateImage = require("../assets/validate.png");
+const crayonImage = require("../assets/crayon.png");
+
   // initialisation du mode auto ou manuel en fonction de la valeur de isAutomatic
   useEffect(() => {
     setMode(isAutomatic ? "auto" : "manual");
@@ -75,12 +78,10 @@ const ValveContainer = (props) => {
           style={styles.updateButton}
           onPress={isEditingName ? handleValidateName : handleEditName}
         >
-          <Image
-            source={require(isEditingName
-              ? "../assets/validate.png"
-              : "../assets/crayon.png")}
-            style={styles.updateButtonText}
-          />
+         <Image
+  source={isEditingName ? validateImage : crayonImage}
+  style={styles.updateButtonText}
+/>
         </Pressable>
         <Pressable
           style={[styles.deleteButton]}
@@ -305,9 +306,8 @@ const styles = StyleSheet.create({
     marginLeft: 15,
   },
   updateButtonText: {
-    color: Color.white,
-    fontSize: FontSize.size_base,
-    fontFamily: FontFamily.poppinsMedium,
+    // fontSize: FontSize.size_base,
+    // fontFamily: FontFamily.poppinsMedium,
     width: 15,
     height: 15,
   },

@@ -6,7 +6,6 @@ import {
   StyleSheet,
   Pressable
 } from 'react-native';
-import { AuthContext } from '../context/AuthContext';
 import {
   FontAwesome
 } from "@expo/vector-icons";
@@ -14,8 +13,7 @@ import {
   Color, FontSize
 } from "../GlobalStyles";
 
-const LogoutButton = () => {
-  const { signOut } = useContext(AuthContext);
+const LogoutButton = ({signOut}) => {
 
 const handleLogout = async () => {
   try {
@@ -28,7 +26,7 @@ const handleLogout = async () => {
 
 
 return(
-    <Pressable style={styles.button} onPress={handleLogout}>
+    <Pressable style={styles.button} onPress={() => handleLogout()}>
       <Text style={styles.buttonText}>Log Out  </Text>
       <FontAwesome name="sign-out" style={styles.icon} />
     </Pressable>

@@ -1,9 +1,10 @@
 import Constants from 'expo-constants';
+import { API_KEY } from "@env";
+
 
 export const fetchLocations = async (query) => {
   if (!query) return [];
 
-  const API_KEY = Constants.manifest.extra.METEO_APP_API_KEY;
 
   const url = `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(
     query

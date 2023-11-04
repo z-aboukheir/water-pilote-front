@@ -9,6 +9,8 @@ import {
     StyleSheet
 } from "react-native";
 import Constants from 'expo-constants';
+import { API_KEY } from "@env";
+
 
 
 
@@ -20,7 +22,7 @@ const CurrentWeather = () => {
     longitude: '4.850000'
   });
 
-   const API_KEY = Constants.manifest.extra.METEO_APP_API_KEY;
+
    const API_URL = `https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=${API_KEY}&units=metric`;
     const getCurrentWeather = async () => {
     const response = await fetch(API_URL);

@@ -3,13 +3,9 @@ import InputForm from "../components/InputForm";
 import AuthForm from "../components/AuthForm";
 import LocationPicker from "../components/LocationPicker";
 
-import {
-  Text,
-  ScrollView
-} from "react-native";
-import { AuthContext } from '../context/AuthContext';
-import { useNavigation } from '@react-navigation/native';
-
+import { Text, ScrollView } from "react-native";
+import { AuthContext } from "../context/AuthContext";
+import { useNavigation } from "@react-navigation/native";
 
 const SignupScreen = () => {
   const [username, setUsername] = useState("");
@@ -34,7 +30,7 @@ const SignupScreen = () => {
       areAllFieldsFilled()
     ) {
       try {
-        await signUp({
+        const response = await signUp({
           password: password,
           name: username,
           email: email,
@@ -42,11 +38,12 @@ const SignupScreen = () => {
           longitude: selectedLocation.longitude,
           latitude: selectedLocation.latitude,
         });
-
         navigation.navigate("SignIn");
       } catch (error) {
-        console.log(error);
-        setError(error.message);
+        // console.log(error);
+
+        setError("Une erreur est survenue lors de l'inscription");
+        return;
       }
     } else {
       validateUsername(username);
@@ -82,7 +79,7 @@ const SignupScreen = () => {
     setEmailError("");
     return true;
   };
-  
+
   const validateSelectedLocation = (location) => {
     if (!location) {
       setSelectedLocationError("Veuillez sélectionner une localisation");
@@ -100,16 +97,16 @@ const SignupScreen = () => {
     setUsernameError("");
     return true;
   };
-
+  console.log(error);
   return (
     <ScrollView>
       <AuthForm
         textAuth="Sign In"
         welcomeText="Je m'appelle Groot et toi"
-        handleSubmit={()=>handleSignUp()}
+        handleSubmit={() => handleSignUp()}
         textBouton="Register"
-        navigation ={navigation}
-  redirectScreen ="SignIn"
+        navigation={navigation}
+        redirectScreen="SignIn"
       >
         <InputForm
           icon="user"
@@ -170,9 +167,20 @@ const SignupScreen = () => {
           </Text>
         ) : null}
       </AuthForm>
-      {error ? (<Text style={{ color: "red", textAlign : 'center' , marginTop: 20 }}>{error}</Text>) : null}
-      </ScrollView>
-        );
+      {error ? (
+        <Text
+          style={{
+            color: "red",
+            textAlign: "center",
+            marginTop: 20,
+            marginBottom: 20,
+          }}
+        >
+          {error}
+        </Text>
+      ) : null}
+    </ScrollView>
+  );
 };
 
 export default SignupScreen;

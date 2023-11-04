@@ -1,19 +1,23 @@
-import * as React from "react";
+import  React, { useContext }  from "react";
 import { View, Image, StyleSheet, Text, ScrollView, Dimensions } from "react-native";
 import { Color, Border, FontFamily, FontSize } from "../GlobalStyles";
 
 import CurrentWeather from "../components/CurrentWeather";
 import { LogoutButton } from "../components/LogoutButton";
+import { AuthContext } from '../context/AuthContext';
+
 
 const { width } = Dimensions.get("window");
 const isTablet = width > 768; // Une tablette est généralement considérée comme ayant une largeur supérieure à 768 pixels.
 
 const HomeScreen = () => {
+  const { signOut } = useContext(AuthContext);
+
   return (
     <ScrollView style={styles.mainContainer}>
       <View style={styles.contentContainer}>
         <View style={styles.logoutButtonContainer}>
-          <LogoutButton />
+          <LogoutButton signOut = {signOut}/>
         </View>
         <CurrentWeather />
         <InfoBlock title="Humidité au sol" value="1%" />

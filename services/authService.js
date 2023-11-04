@@ -1,11 +1,9 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import HomeScreen from '../screens/HomeScreen';
+import {API_URL} from "@env"
 
-const API_URL = "http://localhost:3000/user";
 
 const login = async (password, email) => {
   try {
-    const response = await fetch(API_URL + "/login", {
+    const response = await fetch(`${API_URL}/user/login`, {
       method: "POST",
       body: JSON.stringify({password, email }),
       headers: { "Content-Type": "application/json" },
@@ -14,7 +12,7 @@ const login = async (password, email) => {
       const errorData = await response.json();
       throw new Error(
         errorData.message ||
-          "Une erreur est survenue lors de l'identification"
+          "la combinaison mot de passe/email est incorrect"
       );
     }
     const responseData = await response.json();
@@ -25,7 +23,7 @@ const login = async (password, email) => {
 }
  const register = async (userData) => {
   try {
-    const response = await fetch(API_URL + "/sign-up", {
+    const response = await fetch(`${API_URL}/user/sign-up`, {
       method: "POST",
       body: JSON.stringify(userData),
       headers: { "Content-Type": "application/json" },
@@ -38,7 +36,6 @@ const login = async (password, email) => {
       );
     }
     const responseData = await response.json();
-
     return responseData;
   } catch (error) {
     throw error;

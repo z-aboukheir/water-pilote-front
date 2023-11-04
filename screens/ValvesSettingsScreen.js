@@ -14,7 +14,7 @@ import {
 } from "../context/AuthContext";
 
 import ModalValveScreen from "../components/ModalValveScreen";
-
+import {API_URL} from "@env"
 
 const ValvesSettingsScreen = () => {
     const navigation = useNavigation();
@@ -47,7 +47,7 @@ const ValvesSettingsScreen = () => {
             }
             
             try {
-                const response = await fetchWithToken(`http://localhost:3000/electrovalve/${id}`, {
+                const response = await fetchWithToken(`${API_URL}/electrovalve/${id}`, {
                     method: 'PATCH', 
                     headers: {
                         'Content-Type': 'application/json'
@@ -79,7 +79,7 @@ const ValvesSettingsScreen = () => {
             }
             
             try {
-                const responseVavle = await fetchWithToken('http://localhost:3000/electrovalve', {
+                const responseVavle = await fetchWithToken('${API_URL}/electrovalve', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -92,7 +92,7 @@ const ValvesSettingsScreen = () => {
                     const dataValve =  await responseVavle.json()
                     Alert.alert("La valve a été ajoutée avec succès!");
                   
-                   await fetchWithToken(`http://localhost:3000/electrovalve/${dataValve.id}/valveSettings`, {
+                   await fetchWithToken(`${API_URL}/electrovalve/${dataValve.id}/valveSettings`, {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json'
@@ -117,7 +117,7 @@ const ValvesSettingsScreen = () => {
 
     const fetchData = async () => {
         try {
-            const response = await fetchWithToken('http://localhost:3000/electrovalve', {
+            const response = await fetchWithToken(`${API_URL}/electrovalve`, {
                 method: 'GET',
             });
             if (response.ok) {
@@ -138,7 +138,7 @@ const ValvesSettingsScreen = () => {
    
     const deleteValve = async (id) => {
         try {
-            const response = await fetchWithToken(`http://localhost:3000/electrovalve/${id}`, {
+            const response = await fetchWithToken(`${API_URL}/electrovalve/${id}`, {
                 method: 'DELETE',
             });
             if (response.ok) {

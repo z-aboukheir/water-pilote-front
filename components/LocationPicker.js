@@ -5,31 +5,50 @@ import {
   Text,
   FlatList,
   Pressable,
+  ScrollView,
 } from "react-native";
 import InputForm from "./InputForm";
 import { fetchLocations } from "../services/locationServices";
 import { Color } from "../GlobalStyles";
-
 
 const LocationPicker = ({ selectedLocation, setSelectedLocation }) => {
   const [query, setQuery] = useState("");
   const [locations, setLocations] = useState([]);
   const [showResults, setShowResults] = useState(false);
 
-
+  // const handleQueryChange = async (text) => {
+  //   setQuery(text);
+  //   setSelectedLocation(null);
+  //   const fetchedLocations = await fetchLocations(text);
+  //   setLocations(fetchedLocations);
+  //   setShowResults(fetchedLocations.length > 0);
+  // };
 
   const handleQueryChange = async (text) => {
     setQuery(text);
     setSelectedLocation(null);
-    const fetchedLocations = await fetchLocations(text);
-    setLocations(fetchedLocations);
-    setShowResults(fetchedLocations.length > 0);
+    try {
+      const fetchedLocations = await fetchLocations(text);
+      if (fetchedLocations) {
+        setLocations(fetchedLocations);
+        setShowResults(fetchedLocations.length > 0);
+      } else {
+        throw error;
+      }
+    } catch (error) {
+      console.error(
+        "Une erreur s'est produite lors de la récupération des emplacements :",
+        error
+      );
+      // Gérer l'erreur de manière appropriée, par exemple, afficher un message à l'utilisateur
+    }
   };
 
   const handleLocationSelect = (location) => {
     setSelectedLocation(location);
     setShowResults(false);
- };
+    // console.log("location failed");
+  };
 
   const renderLocation = ({ item }) => (
     <Pressable
@@ -42,7 +61,6 @@ const LocationPicker = ({ selectedLocation, setSelectedLocation }) => {
       ) : null}
     </Pressable>
   );
-
 
   return (
     <View>
@@ -57,34 +75,36 @@ const LocationPicker = ({ selectedLocation, setSelectedLocation }) => {
         }
         onFocus={() => setShowResults(true)}
       />
+
       {showResults && locations.length > 0 && (
+        <ScrollView
+          horizontal={true}
+          style={{
+            width: "100%",
+            backgroundColor: Color.white,
+            borderBottomLeftRadius: 36,
+            borderBottomRightRadius: 36,
+            marginTop: -30,
+            shadowColor: "#9f9f9f",
+            shadowOffset: { width: 0, height: 0 },
+            shadowOpacity: 1,
+            shadowRadius: 10,
+            elevation: 5,
+            padding: 15,
+            paddingTop: 45,
+            zIndex: -2,
+          }}
+        >
           <FlatList
             data={locations}
             renderItem={renderLocation}
             keyExtractor={(item, index) => index.toString()}
-            style={{            
-        backgroundColor: Color.white,
-        borderBottomLeftRadius: 36,
-        borderBottomRightRadius: 36,
-        marginTop: -30,
-        shadowColor: '#9f9f9f',
-        shadowOffset: { width: 0, height: 0 },
-        shadowOpacity: 1,
-        shadowRadius: 10,
-        elevation: 5,
-        padding: 15,
-        paddingTop:45,
-        zIndex: -2      
-            }}
-           keyboardShouldPersistTaps="handled"
-
+            keyboardShouldPersistTaps="handled"
           />
-          
+        </ScrollView>
       )}
     </View>
   );
 };
-
-
 
 export default LocationPicker;

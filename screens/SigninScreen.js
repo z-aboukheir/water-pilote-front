@@ -1,7 +1,8 @@
 import React, { useState, useContext } from "react";
 import InputForm from "../components/InputForm";
 import AuthForm from "../components/AuthForm";
-import { ScrollView, Text } from "react-native";
+import { ScrollView, Text, View } from "react-native";
+
 
 import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../context/AuthContext";
@@ -19,12 +20,12 @@ const SigninScreen = () => {
       await signIn(password, email);
     } catch (error) {
       console.log(error.message);
-      setError("Erreur d'autentification");
+      setError(error.message);
     }
   };
 
   return (
-    <ScrollView>
+    <View>
       <AuthForm
         textAuth="Sign Up"
         welcomeText="Heureux de vous revoir"
@@ -53,7 +54,7 @@ const SigninScreen = () => {
      </Text>
    ) : null}
 
-    </ScrollView>
+    </View>
   );
 };
 

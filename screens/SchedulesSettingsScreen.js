@@ -5,7 +5,6 @@ import {
   View,
   Text,
   Pressable,
-  Picker,
   Button,
   FlatList,
   Switch,
@@ -14,12 +13,14 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
+import {Picker} from '@react-native-picker/picker';
 
 import BackButton from "../components/BackButton";
 import { Color, FontFamily, FontSize } from "../GlobalStyles";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 import { AuthContext } from "../context/AuthContext";
+import {API_URL} from "@env"
 
 const SchedulesSettingsScreen = ({ route }) => {
   const { fetchWithToken } = useContext(AuthContext);
@@ -62,7 +63,7 @@ const SchedulesSettingsScreen = ({ route }) => {
     const valuesUpdate = plannings.filter((p) => p.id == planningId);
     try {
       const response = await fetchWithToken(
-        `http://localhost:3000/electrovalve/${idValve}/valveSettings/schedule/${planningId}`,
+        `${API_URL}/electrovalve/${idValve}/valveSettings/schedule/${planningId}`,
         {
           method: "PUT",
           headers: {
@@ -104,7 +105,7 @@ const SchedulesSettingsScreen = ({ route }) => {
   const fetchDatasettings = async () => {
     try {
       const response = await fetchWithToken(
-        `http://localhost:3000/electrovalve/${idValve}/valveSettings`,
+        `${API_URL}/electrovalve/${idValve}/valveSettings`,
         {
           method: "GET",
         }
@@ -124,7 +125,7 @@ const SchedulesSettingsScreen = ({ route }) => {
   const fetchDataschedules = async () => {
     try {
       const response = await fetchWithToken(
-        `http://localhost:3000/electrovalve/${idValve}/valveSettings/schedule`,
+        `${API_URL}/electrovalve/${idValve}/valveSettings/schedule`,
         {
           method: "GET",
         }
@@ -185,7 +186,7 @@ const SchedulesSettingsScreen = ({ route }) => {
 
     try {
       const response = await fetchWithToken(
-        `http://localhost:3000/electrovalve/${idValve}/valveSettings/schedule`,
+        `${API_URL}/electrovalve/${idValve}/valveSettings/schedule`,
         {
           method: "POST",
           headers: {
@@ -218,7 +219,7 @@ const SchedulesSettingsScreen = ({ route }) => {
   const deletePlanning = async (planningId) => {
     try {
       const response = await fetchWithToken(
-        `http://localhost:3000/electrovalve/${idValve}/valveSettings/schedule/${planningId}`,
+        `${API_URL}/electrovalve/${idValve}/valveSettings/schedule/${planningId}`,
         {
           method: "DELETE",
         }
@@ -457,7 +458,7 @@ const styles = StyleSheet.create({
   timeText: {
     fontFamily: FontFamily.primary,
     fontSize: FontSize.medium,
-    color: Color.darkPrimary,
+    color:"black",
     marginHorizontal: 10,
   },
 

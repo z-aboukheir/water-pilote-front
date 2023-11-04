@@ -17,6 +17,7 @@ import {
 import {
     useNavigation
 } from "@react-navigation/native";
+import {API_URL} from "@env"
 
 
 const WateringSettingsScreen = ({route}) => {
@@ -39,7 +40,7 @@ const WateringSettingsScreen = ({route}) => {
 
     const updateData = async () => {
         try {
-           await fetchWithToken(`http://localhost:3000/electrovalve/${idValve}/valveSettings`, {
+           await fetchWithToken(`${API_URL}/electrovalve/${idValve}/valveSettings`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -54,7 +55,7 @@ const WateringSettingsScreen = ({route}) => {
 
     const fetchData = async () => {
         try {
-            const response = await fetchWithToken(`http://localhost:3000/electrovalve/${idValve}/valveSettings`, {
+            const response = await fetchWithToken(`${API_URL}/electrovalve/${idValve}/valveSettings`, {
                 method: 'GET',
             });
 
