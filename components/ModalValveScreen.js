@@ -29,7 +29,7 @@ const ModalValveScreen = ({
 
    const  handleValidate= () => { 
         addValve() 
-        setModalVisible(false);
+        // setModalVisible(false);
     }
 
   return (

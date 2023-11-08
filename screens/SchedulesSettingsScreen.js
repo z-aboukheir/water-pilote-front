@@ -137,6 +137,8 @@ const SchedulesSettingsScreen = ({ route }) => {
           setPlannings(responseData);
         } else {
           setPlannings("ajouter une planification");
+          // setError("Erreur lors de la requête");
+          // setPlannings([])
         }
       } else {
         console.log("Erreur lors de la requête");
@@ -324,7 +326,7 @@ const SchedulesSettingsScreen = ({ route }) => {
                 <Switch
                   trackColor={{ false: "#767577", true: "#BCC604" }}
                   thumbColor={getThumbColor(item)}
-                  value={item.isActivated}
+                  value={item.isActivated== 1 ? true : false}
                   onValueChange={() =>
                     toggleActivation(item.id, item.isActivated)
                   }

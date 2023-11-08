@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   Image,
   Pressable,
@@ -6,7 +6,9 @@ import {
   Text,
   StyleSheet,
   TextInput,
-  useWindowDimensions
+  useWindowDimensions, 
+  TouchableWithoutFeedback,
+  Keyboard
 } from "react-native";
 import { Color, FontFamily, FontSize } from "../GlobalStyles";
 
@@ -51,6 +53,7 @@ const ValveContainer = (props) => {
 
   const validateImage = require("../assets/validate.png");
 const crayonImage = require("../assets/crayon.png");
+const inputRef = useRef(null);
 
   // initialisation du mode auto ou manuel en fonction de la valeur de isAutomatic
   useEffect(() => {
@@ -64,8 +67,12 @@ const crayonImage = require("../assets/crayon.png");
   // Fonction pour gérer le début de la modification du nom
   const handleEditName = () => {
     setIsEditingName(true);
+ // Donnez le focus au TextInput après avoir défini l'état
+    // Utilisez un setTimeout pour s'assurer que l'état est mis à jour avant de donner le focus
+    setTimeout(() => {
+      inputRef.current.focus();
+    }, 0);
   };
-
   // Fonction pour gérer la validation de la modification du nom
   const handleValidateName = () => {
     setIsEditingName(false);
@@ -73,18 +80,26 @@ const crayonImage = require("../assets/crayon.png");
     if (tempName !== name) updateValve(valveId, tempName);
   };
 
+    // Fonction pour fermer l'édition lorsque l'on clique en dehors
+    const closeEdit = () => {
+      setIsEditingName(false);
+      if (tempName !== name) updateValve(valveId, tempName);
+    };
+
   return (
     <View style={[styles.container]}>
       <View style={{ alignItems: "center", flexDirection: "row", width: "100%" }}>
         <View style={{flexDirection: "row", justifyContent:'flex-start' , alignItems: "center", flex: 1 , }}>
         {isEditingName ? (
           <TextInput
+          ref={inputRef}
             style={[
               styles.valveName,
               { borderWidth: 1, borderRadius: 5, borderColor: "#ccc" },
             ]}
             value={tempName}
             onChangeText={setTempName}
+            onBlur={closeEdit}
           />
         ) : (
           <Text style={styles.valveName}>{name}</Text>
@@ -172,6 +187,7 @@ const crayonImage = require("../assets/crayon.png");
        
       </View>
     </View>
+    
   );
 };
 
@@ -312,7 +328,7 @@ const styles = StyleSheet.create({
     marginLeft: 15,
   },
   updateButtonText: {
-    fontFamily: FontFamily.poppinsMedium,
+    // fontFamily: FontFamily.poppinsMedium,
     width: 15,
     height: 15,
   },

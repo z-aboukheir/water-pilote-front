@@ -38,7 +38,7 @@ const ValvesSettingsScreen = () => {
 
     const updateValve = async (id , valveName) => {
         if (valveName === '') {
-            Alert.alert("Veuillez remplir les deux champs");
+            Alert.alert("Veuillez donner un nom à votre valve");
 
         } else {
             const updatedValve = {
@@ -110,7 +110,7 @@ const ValvesSettingsScreen = () => {
             } catch (error) {
                 console.error('Erreur:', error);
             }
-            // setModalVisible(false);
+            setModalVisible(false);
         }
     };
 

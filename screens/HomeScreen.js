@@ -28,7 +28,7 @@ const HomeScreen = () => {
         <CurrentWeather />
         <InfoBlock
           title="Humidité au sol"
-          value="1%"
+          value="10%"
         />
       </View>
     </ScrollView>
