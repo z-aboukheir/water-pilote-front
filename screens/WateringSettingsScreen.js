@@ -8,6 +8,8 @@ import {
     StyleSheet,
     Pressable,
 } from 'react-native';
+import { FontSize, Color, FontFamily } from "../GlobalStyles";
+
 import SettingSlider from '../components/SettingSlider';
 import BackButton
     from "../components/BackButton";
@@ -140,9 +142,11 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         paddingTop: 12,
         borderRadius: 10,
+fontFamily: FontFamily.poppinsMedium
     },
     buttonContainer: {
         alignSelf: 'center',
+        marginTop: 50
     },
 });
 

@@ -6,7 +6,10 @@ import {
   View,
   Pressable,
   StyleSheet,
+  useWindowDimensions,
+
 } from "react-native";
+import { Color, FontFamily, FontSize } from "../GlobalStyles";
 
 const ModalValveScreen = ({
   setModalVisible,
@@ -17,7 +20,12 @@ const ModalValveScreen = ({
   addValve,
 }) => {
 
+  const windowWidth = useWindowDimensions().width;
+  const windowHeight = useWindowDimensions().height;
 
+  const screenWidth = windowWidth * 0.8; // 80% de la largeur de la fenêtre
+  const screenHeight = windowHeight * 0.5;
+  
 
    const  handleValidate= () => { 
         addValve() 
@@ -25,9 +33,10 @@ const ModalValveScreen = ({
     }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.modalContainer}>
-        <View style={styles.modalContent}>
+    <View style={[styles.container]}>
+          <View style={[styles.modalContainer]}>
+
+        <View style={[styles.modalContent, {width: screenWidth, height: screenHeight}]}>
           <Text style={styles.modalTitle}>Ajouter une Valve</Text>
           <TextInput
             placeholder="Nom de la valve"
@@ -56,13 +65,13 @@ const ModalValveScreen = ({
                 handleValidate()
               }}
             >
-              <Text style={styles.buttonText}>Valider</Text>
+              <Text style={styles.buttonText}>Enregistrer</Text>
             </Pressable>
 
             <Pressable
               style={[
                 styles.button,
-                { backgroundColor: "red", marginLeft: 10 },
+                { backgroundColor: Color.darkGrey, marginLeft: 10, opacity:0.8},
               ]}
               onPress={() => setModalVisible(false)}
             >
@@ -80,7 +89,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.4)", // fond semi-transparent
+    backgroundColor: 'rgba(52, 52, 52, 0.8)'
   },
   modalContainer: {
     justifyContent: "center",
@@ -95,12 +104,16 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     padding: 20,
     borderRadius: 20,
+   gap: 20  ,
+   maxWidth:700,
+  justifyContent : "center"
   },
   modalTitle: {
     marginBottom: 10,
     fontSize: 20,
-    fontWeight: "bold",
     textAlign: "center",
+    fontFamily : FontFamily.poppinsMedium,
+    color: Color.darkGrey
   },
   inputField: {
     height: 40,
@@ -109,6 +122,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 5,
     paddingLeft: 10,
+    fontFamily : FontFamily.poppinsRegular
   },
   buttonContainer: {
     flexDirection: "row",
@@ -123,6 +137,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     textAlign: "center",
+    fontFamily : FontFamily.poppinsMedium
   },
 });
 

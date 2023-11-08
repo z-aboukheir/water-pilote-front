@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import Constants from 'expo-constants';
 import { API_KEY } from "@env";
-
+import { Color, Border, FontFamily, FontSize } from "../GlobalStyles";
 
 
 
@@ -68,8 +68,12 @@ const styles = StyleSheet.create({
     city: {
         fontSize: 40,
         textTransform: 'uppercase',
+        fontFamily: FontFamily.poppinsMedium,
+
     },
     temp: {
         fontSize: 30,
+        fontFamily: FontFamily.poppinsMedium,
+
     },
 })

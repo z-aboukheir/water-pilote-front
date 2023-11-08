@@ -6,15 +6,29 @@ import {
   Text,
   StyleSheet,
   TextInput,
-  Dimensions
+  useWindowDimensions
 } from "react-native";
 import { Color, FontFamily, FontSize } from "../GlobalStyles";
 
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
-
 
 const ValveContainer = (props) => {
+  const {height, width, scale, fontScale} = useWindowDimensions();
+
+   // Creation d'un style conditionnel en fonction des dimensions de la fenêtre
+   const buttonStyle = {
+    ...styles.button,
+    width:  width * 0.12,
+    height: height * 0.12,
+  };
+
+  const iconStyle = {
+    ...styles.icon,
+    width:  width * 0.12,
+    height: height * 0.12,
+  };
+
+   // width:  width * 0.8,
+    // height: height * 0.7,
   const {
     name,
     onPressWatering,
@@ -60,8 +74,9 @@ const crayonImage = require("../assets/crayon.png");
   };
 
   return (
-    <View style={styles.container}>
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
+    <View style={[styles.container]}>
+      <View style={{ alignItems: "center", flexDirection: "row", width: "100%" }}>
+        <View style={{flexDirection: "row", justifyContent:'flex-start' , alignItems: "center", flex: 1 , }}>
         {isEditingName ? (
           <TextInput
             style={[
@@ -83,6 +98,8 @@ const crayonImage = require("../assets/crayon.png");
   style={styles.updateButtonText}
 />
         </Pressable>
+        </View>
+      
         <Pressable
           style={[styles.deleteButton]}
           onPress={onDelete}
@@ -91,30 +108,30 @@ const crayonImage = require("../assets/crayon.png");
         </Pressable>
       </View>
       <View style={styles.outputContainer}>
-        <Pressable style={styles.button} onPress={onPressWatering}>
+        <Pressable style={[buttonStyle]} onPress={onPressWatering}>
           <Image
-            style={styles.icon}
+            style={iconStyle}
             source={require("../assets/icone-reglage.png")}
           />
         </Pressable>
 
-        <Pressable style={styles.button} onPress={onPressSchedule}>
+        <Pressable style={buttonStyle} onPress={onPressSchedule}>
           <Image
-            style={styles.icon}
+            style={iconStyle}
             source={require("../assets/iconetime.png")}
           />
         </Pressable>
 
         <Pressable
           style={[
-            styles.button,
+            buttonStyle,
             isAutomatic === 1 ? styles.disabledButton : null,
           ]}
           onPress={onPressSplash}
           disabled={isAutomatic === 1}
         >
           <Image
-            style={styles.icon}
+            style={iconStyle}
             source={require("../assets/icon-splash.png")}
           />
         </Pressable>
@@ -162,9 +179,9 @@ export default ValveContainer;
 
 const styles = StyleSheet.create({
   container: {
-    // alignSelf: "left",
     paddingTop: 10,
     paddingRight: 10,
+    alignItems : "center"
   },
   outputContainer: {
     flexDirection: "row",
@@ -173,7 +190,6 @@ const styles = StyleSheet.create({
   },
   valveName: {
     fontSize: FontSize.size_lg,
-    color: Color.darkGrey,
     fontFamily: FontFamily.poppinsMedium,
     fontWeight: "500",
     marginVertical: 20,
@@ -185,25 +201,16 @@ const styles = StyleSheet.create({
     borderRadius: 17,
     borderColor: Color.lightslategray,
     padding: 6,
-    // width: 50,
-    // height: 50,
     marginHorizontal: 5,
-    backgroundColor: Color.whitesmoke_300,
+    backgroundColor: "v",
     alignItems: "center",
-    justifyContent: "center",
-    width:  windowWidth * 0.12,
-    height: windowHeight * 0.12,
+    justifyContent: "center",    
     maxWidth: 53,
     minWidth: 43,
     maxHeight: 55,
     minHeight: 40,
   },
   icon: {
-    // minWidth: 14,
-    // maxWidth : 34,
-    // width: '100%',
-    width:  windowWidth * 0.8,
-    height: windowHeight * 0.7,
     maxWidth: 36,
     minWidth: 20,
     maxHeight: 33,
@@ -226,12 +233,10 @@ const styles = StyleSheet.create({
     minWidth: 135,
     maxHeight: 59,
     minHeight: 46,
-    width:  windowWidth * 0.25,
-    // height: "6hw",
-    height: windowHeight * 0.10,
   },
   buttonActive: {
-    backgroundColor: Color.steelblue_200,
+    backgroundColor: '#6fa5d9ff',
+    // backgroundColor: Color.steelblue_200,
     borderRadius: 25,
     paddingHorizontal: 8,
     paddingVertical: 5,
@@ -239,7 +244,7 @@ const styles = StyleSheet.create({
   },
   buttonInactive: {
     marginHorizontal: 5,
-    color: Color.steelblue_200,
+    color: "Color.steelblue_200",
   },
   buttonText: {
     color: Color.white,
@@ -253,16 +258,17 @@ const styles = StyleSheet.create({
   },
   disabledButton: {
     backgroundColor: Color.darkGrey,
-    opacity: 0.7,
+    opacity:0.7,
   },
   deleteButton: {
-    borderWidth: 2,
+    borderWidth: 1,
     borderRadius: 25,
-    borderColor: Color.lightslategray,
-    padding: 8,
+    // borderColor: "transparent",
+    borderColor: Color.darkGrey,
+    // borderColor: Color.lightslategray,
     width: 35,
     height: 34,
-    marginLeft: 25,
+    // marginLeft: 25,
     marginHorizontal: 5,
     backgroundColor: "red",
     justifyContent: "center",
@@ -276,18 +282,18 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
     elevation: 7,
     marginLeft: 5,
-    marginRight:15
+    marginRight:15, 
   },
   deleteButtonText: {
     color: Color.white,
-    fontSize: FontSize.size_base + 2, // Augmentons légèrement la taille de la police
+    fontSize: 20,
     fontFamily: FontFamily.poppinsMedium,
     fontWeight: "bold",
   },
   updateButton: {
-    borderWidth: 2,
+    borderWidth: 1,
     borderRadius: 25,
-    borderColor: Color.lightslategray,
+    borderColor: Color.darkGrey,
     padding: 8,
     width: 30,
     height: 30,
@@ -306,8 +312,7 @@ const styles = StyleSheet.create({
     marginLeft: 15,
   },
   updateButtonText: {
-    // fontSize: FontSize.size_base,
-    // fontFamily: FontFamily.poppinsMedium,
+    fontFamily: FontFamily.poppinsMedium,
     width: 15,
     height: 15,
   },

@@ -5,24 +5,21 @@ import { getItemAsync, setItemAsync, deleteItemAsync, isAvailableAsync } from 'e
 
 // Stocker le token dans le secure store
 export const storeToken = async (token) => {
-  await setItemAsync("token", token);
-  // await SecureStore.setItemAsync("token", token);
-  // await AsyncStorage.setItem('token', token);
+  // await setItemAsync("token", token);
+  await AsyncStorage.setItem('token', token);
 };
 
 // Supprimer le token du secure store
 export const removeToken = async () => {
-  await deleteItemAsync("token");
-  // await SecureStore.deleteItemAsync("token");
-  // await AsyncStorage.removeItem('token');
+  // await deleteItemAsync("token");
+  await AsyncStorage.removeItem('token');
 };
 
 // Récupérer le token depuis le secure store
 export const getToken = async () => {
   try {
-    const token = await getItemAsync("token");
-    // const token = await SecureStore.getItemAsync("token");
-    // const token = await AsyncStorage.getItem('token');
+    // const token = await getItemAsync("token");
+    const token = await AsyncStorage.getItem('token');
     if (token && !isTokenExpired(token)) {
       return token;
     } else {

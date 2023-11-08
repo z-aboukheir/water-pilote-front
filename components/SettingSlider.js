@@ -7,12 +7,17 @@ import {
 } from "react-native";
 import Slider
     from "@react-native-community/slider";
+    import {
+        Color,
+        FontFamily,
+        FontSize
+    } from "../GlobalStyles";
 
 const SettingSlider = (props) => {
     const {name, setValue, value, unit} = props;
   return (
     <>
-        <Text>{name}</Text>
+        <Text style={{fontFamily: FontFamily.poppinsMedium}}>{name}</Text>
         <View style={styles.infoContainer}>
             <View>
                 <Slider
@@ -26,9 +31,9 @@ const SettingSlider = (props) => {
                     value={Math.round(value)}
                 />
             </View>
-            <View style={{flexDirection: "row", marginLeft:20}}>
+            <View style={{flexDirection: "row", marginLeft:8, alignItems:'center'}}>
                 <TextInput
-                    style={styles.textInput}
+                    style={[styles.textInputValue]}
                     onChangeText={(newValue) => {
                         const parsedValue = parseInt(newValue);
                         if (!isNaN(parsedValue)) {
@@ -56,4 +61,16 @@ const styles = StyleSheet.create({
         marginBottom: 30,
         alignItems: 'center',
     }
+,
+textInputValue : {
+    width : 25,
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: Color.darkGrey,
+    backgroundColor: "white",
+    padding : 8
+}
+
 })
+
+

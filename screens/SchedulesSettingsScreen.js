@@ -13,14 +13,15 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
-import {Picker} from '@react-native-picker/picker';
+import { Picker } from "@react-native-picker/picker";
 
 import BackButton from "../components/BackButton";
 import { Color, FontFamily, FontSize } from "../GlobalStyles";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 import { AuthContext } from "../context/AuthContext";
-import {API_URL} from "@env"
+import { API_URL } from "@env";
+import { ScrollView } from "react-native-virtualized-view";
 
 const SchedulesSettingsScreen = ({ route }) => {
   const { fetchWithToken } = useContext(AuthContext);
@@ -135,9 +136,8 @@ const SchedulesSettingsScreen = ({ route }) => {
         if (responseData && responseData.length > 0) {
           setPlannings(responseData);
         } else {
-          setPlannings("ajouter une plannification");
+          setPlannings("ajouter une planification");
         }
-
       } else {
         console.log("Erreur lors de la requête");
       }
@@ -200,11 +200,29 @@ const SchedulesSettingsScreen = ({ route }) => {
         const responseData = await response.json();
 
         if (typeof plannings !== "string") {
-          setPlannings([...plannings, {id : responseData.id, hourStart: responseData.hourStart, hourEnd: responseData.hourEnd, days: responseData.days, idSettings: responseData.idSettings, isActivated :true}]);
+          setPlannings([
+            ...plannings,
+            {
+              id: responseData.id,
+              hourStart: responseData.hourStart,
+              hourEnd: responseData.hourEnd,
+              days: responseData.days,
+              idSettings: responseData.idSettings,
+              isActivated: true,
+            },
+          ]);
         } else {
-          setPlannings([{id : responseData.id, hourStart: responseData.hourStart, hourEnd: responseData.hourEnd, days: responseData.days, idSettings: responseData.idSettings, isActivated :true}]);
+          setPlannings([
+            {
+              id: responseData.id,
+              hourStart: responseData.hourStart,
+              hourEnd: responseData.hourEnd,
+              days: responseData.days,
+              idSettings: responseData.idSettings,
+              isActivated: true,
+            },
+          ]);
         }
-        
 
         setShowAddPlanningSection(false);
       } else {
@@ -231,7 +249,7 @@ const SchedulesSettingsScreen = ({ route }) => {
         if (planningDelete.length > 0) {
           setPlannings(planningDelete);
         } else {
-          setPlannings("ajouter une plannification");
+          setPlannings("ajouter une tion");
         }
       } else {
         console.error("Erreur lors de la suppression du planning");
@@ -262,8 +280,8 @@ const SchedulesSettingsScreen = ({ route }) => {
     });
   }
 
-  
   return (
+    <ScrollView>
     <View style={styles.container}>
       <View style={styles.titleContainer}>
         <Pressable onPress={() => navigation.goBack()}>
@@ -285,12 +303,19 @@ const SchedulesSettingsScreen = ({ route }) => {
 
         {/* Si plannings est une chaîne de caractères, affichez un message sinon  Afficher la liste des plannings */}
         {plannings && typeof plannings === "string" ? (
-          <Text style={{ textAlign: "center", marginTop: 20 , marginBottom: 10}}>
+          <Text
+            style={{ textAlign: "center", marginTop: 20, marginBottom: 10 }}
+          >
             {plannings}
           </Text>
         ) : (
           <FlatList
-            style={{ maxWidth: 500, minWidth: 300, width: "100%", marginBottom: 40 }}
+            style={{
+              maxWidth: 500,
+              minWidth: 300,
+              width: "100%",
+              marginBottom: 40,
+            }}
             data={plannings}
             keyExtractor={(item) => item && item.id && item.id.toString()}
             renderItem={({ item }) => (
@@ -328,11 +353,14 @@ const SchedulesSettingsScreen = ({ route }) => {
                   })}
                 </View>
                 <Pressable
-                  style={styles.buttonDelete}
+                  style={styles.deleteButton}
                   onPress={() => deletePlanning(item.id)}
                 >
-                  <Text style={styles.textDelete}>✖</Text>
+                  <Text style={styles.deleteButtonText}>X</Text>
                 </Pressable>
+
+
+        
               </View>
             )}
           />
@@ -340,20 +368,23 @@ const SchedulesSettingsScreen = ({ route }) => {
 
         {/* Bouton pour montrer/cacher la section d'ajout de planification */}
         {!showAddPlanningSection && (
-          <Button
-            color="#BCC604"
-            title={"Ajouter"}
-            onPress={() => setShowAddPlanningSection(!showAddPlanningSection)}
-          />
+         <Pressable
+         onPress={() => setShowAddPlanningSection(!showAddPlanningSection)}
+         style={[styles.pressableButton]}
+       >
+         <Text style={styles.pressableButtonText}>Ajouter</Text>
+       </Pressable>
+       
         )}
 
         {showAddPlanningSection && (
           <>
             <View style={{ flexDirection: "row" }}>
-              <View style={{ marginRight: 10 }}>
-                <Text>Début</Text>
+              <View style={{marginRight : 20 }}>
+                <Text style={{marginLeft : 10, marginBottom:5, fontFamily: FontFamily.poppinsRegular}}>Début</Text>
                 {/* Sélecteur pour l'heure de début */}
                 <Picker
+                  style={{ height: 50, width: 150 , backgroundColor: "white"}}
                   selectedValue={newStartTime}
                   onValueChange={(itemValue) => setNewStartTime(itemValue)}
                 >
@@ -365,8 +396,9 @@ const SchedulesSettingsScreen = ({ route }) => {
 
               {/* Sélecteur pour l'heure de fin */}
               <View>
-                <Text>Fin</Text>
+                <Text style={{marginLeft : 10, marginBottom:5, fontFamily: FontFamily.poppinsRegular }}>Fin</Text>
                 <Picker
+                  style={{ height: 50, width: 150 ,backgroundColor: "white", }}
                   selectedValue={newEndTime}
                   onValueChange={(itemValue) => setNewEndTime(itemValue)}
                 >
@@ -391,30 +423,38 @@ const SchedulesSettingsScreen = ({ route }) => {
                 </Pressable>
               ))}
             </View>
-            <View style={{flexDirection : "row", gap: 5}}>
-              <Button color="#BCC604" title="confirmer" onPress={addPlanning} />
-              <Button
-                color="red"
-                title="annuler"
-                onPress={() => setShowAddPlanningSection(false)}
-              />
+            <View style={{ flexDirection: "row", gap: 5 }}>
+
+            <Pressable
+         onPress={addPlanning}
+         style={[styles.pressableButton,  {backgroundColor: '#BCC604'}]}
+       >
+         <Text style={styles.pressableButtonText}>Enregistrer</Text>
+       </Pressable>
+
+       <Pressable
+         onPress={() => setShowAddPlanningSection(false)}
+         style={[styles.pressableButton,  {backgroundColor: Color.darkGrey}]}
+       >
+         <Text style={styles.pressableButtonText}>Annuler</Text>
+       </Pressable>
+
             </View>
           </>
         )}
       </View>
     </View>
+    </ScrollView>
   );
 };
 
-// Styles du composant
 const styles = StyleSheet.create({
-
   container: {
     flex: 1,
     padding: 10, // Pour ajouter un peu d'espace autour du contenu
-  paddingBottom : 50
+    paddingBottom: 50,
   },
-  
+
   titleContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -429,11 +469,9 @@ const styles = StyleSheet.create({
 
   titleValve: {
     fontSize: FontSize.size_lg,
-    color: Color.darkGrey,
     fontFamily: FontFamily.poppinsMedium,
     fontWeight: "500",
     marginVertical: 20,
-
   },
 
   planningItemContainer: {
@@ -456,9 +494,9 @@ const styles = StyleSheet.create({
   },
 
   timeText: {
-    fontFamily: FontFamily.primary,
+    fontFamily: FontFamily.poppinsMedium,
     fontSize: FontSize.medium,
-    color:"black",
+    // color: Color.darkGrey,
     marginHorizontal: 10,
   },
 
@@ -466,6 +504,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     marginVertical: 10,
+    // fontFamily: FontFamily.poppinsRegular
   },
 
   dayListContainer: {
@@ -473,15 +512,15 @@ const styles = StyleSheet.create({
   },
 
   dayLabel: {
-    fontFamily: FontFamily.primaryBold,
+    fontFamily: FontFamily.poppinsMedium,
     fontSize: FontSize.small,
-    color: "#C0C0C0",
+    color:Color.darkGrey,
+    opacity : 0.8,
     marginHorizontal: 5, // Pour espacer les jours
   },
 
   selectedDay: {
     backgroundColor: "#BCC604",
-
   },
 
   selectedDayText: {
@@ -489,17 +528,33 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 
-
-  buttonDelete: {
-    backgroundColor: "#ff6b6b",
-    borderRadius: 15,
-    padding: 10,
-    marginLeft: 15,
+  deleteButton: {
+    borderWidth: 0.5,
+    borderRadius: 25,
+    // borderColor: "transparent",
+    borderColor: Color.darkGrey,
+    width: 30,
+    height: 29,
+    marginLeft: 5,
+    // marginHorizontal: 5,
+    backgroundColor: "red",
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 4.65,
+    elevation: 7,
+    marginRight:15, 
   },
-  textDelete: {
-    color: "white",
-    fontFamily: FontFamily.primaryBold,
-    fontSize: FontSize.medium,
+  deleteButtonText: {
+    color: Color.white,
+    fontSize: 15,
+    fontFamily: FontFamily.poppinsMedium,
+    fontWeight: "bold",
   },
 
   dayButton: {
@@ -526,11 +581,24 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   addButtonText: {
-    fontFamily: FontFamily.primaryBold,
+    fontFamily: FontFamily.poppinsMedium,
     fontSize: FontSize.medium,
     color: "white",
+
   },
-  
+
+  pressableButton: {
+    padding: 10, 
+    borderRadius: 5,
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    backgroundColor: '#BCC604'
+    },
+  pressableButtonText: {
+    fontFamily : FontFamily.poppinsMedium,
+    color: 'white', 
+  }
+
 });
 
 export default SchedulesSettingsScreen;

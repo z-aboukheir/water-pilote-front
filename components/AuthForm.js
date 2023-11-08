@@ -7,7 +7,7 @@ import {
   Image,
   Pressable,
 } from "react-native";
-import { Color, FontSize } from "../GlobalStyles";
+import { Color, FontSize, FontFamily } from "../GlobalStyles";
 
 const AuthForm = ({
   textAuth,
@@ -24,7 +24,6 @@ const AuthForm = ({
       <Pressable onPress={() => navigation.navigate(redirectScreen)}>
         <Text style={styles.textAuth}>{textAuth}</Text>
         </Pressable>
-        <Image source={require("../assets/On.png")} style={styles.imageOn} />
       </View>
       <Image
         source={require("../assets/robot.png")}
@@ -51,9 +50,10 @@ const styles = StyleSheet.create({
     alignItems : 'center'
   },
   containerTextAuth: {
-    justifyContent: "flex-end",
+    justifyContentsel: "flex-end",
     marginBottom: 50,
     flexDirection: "row",
+    alignSelf : "flex-end",
   },
   textAuth: {
     textDecorationLine: "underline",
@@ -65,6 +65,8 @@ const styles = StyleSheet.create({
       height: 4,
     },
     textShadowRadius: 5,
+    fontFamily: FontFamily.poppinsMedium
+   
   },
 
   imageOn: {
@@ -93,9 +95,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 20,
     marginTop: 20,
+    fontFamily: FontFamily.poppinsRegular
+
   },
   button: {
-    backgroundColor:Color.darkturquoise,
+    backgroundColor:'#6fa5d9ff',
     borderRadius: 36,
     shadowColor: "#9f9f9f",
     shadowOffset: { width: 0, height: 2 },
@@ -111,6 +115,7 @@ const styles = StyleSheet.create({
     color: Color.white,
     textAlign: "center",
     flex: 1,
+    fontFamily: FontFamily.poppinsMedium
   },
 });
 

@@ -4,6 +4,7 @@ import { LinearGradient } from "expo-linear-gradient";
 //import DSwitch from "./DSwitch";
 import { FontFamily, FontSize, Color, Border } from "../GlobalStyles";
 
+
 const AlarmContainer = () => {
   return (
     <View style={styles.alarm1}>

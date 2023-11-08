@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import InputForm from "../components/InputForm";
 import AuthForm from "../components/AuthForm";
 import { ScrollView, Text, View } from "react-native";
-
+import { Color, Border, FontFamily, FontSize } from "../GlobalStyles";
 
 import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../context/AuthContext";
@@ -27,10 +27,10 @@ const SigninScreen = () => {
   return (
     <View>
       <AuthForm
-        textAuth="Sign Up"
+        textAuth="S'incrire"
         welcomeText="Heureux de vous revoir"
         handleSubmit={() => handleSignIn()}
-        textBouton="Sign In"
+        textBouton="Se connecter"
         navigation={navigation}
         redirectScreen="SignUp"
       >
@@ -47,13 +47,23 @@ const SigninScreen = () => {
           value={password}
           secureText
         />
+        <Text style={{ color: "black", textAlign: "center", marginTop: 10, fontFamily: FontFamily.poppinsRegular }}>
+          Mot de passe oublié ?
+        </Text>
       </AuthForm>
       {error ? (
-     <Text style={{ color: "red", textAlign: "center", marginTop: 20 }}>
-       {error}
-     </Text>
-   ) : null}
-
+        <Text
+          style={{
+            color: "red",
+            textAlign: "center",
+            marginTop: -20,
+            marginHorizontal: 20,
+            marginBottom: 50,
+          }}
+        >
+          {error}
+        </Text>
+      ) : null}
     </View>
   );
 };

@@ -11,18 +11,11 @@ import InputForm from "./InputForm";
 import { fetchLocations } from "../services/locationServices";
 import { Color } from "../GlobalStyles";
 
-const LocationPicker = ({ selectedLocation, setSelectedLocation }) => {
+const LocationPicker = ({ selectedLocation, setSelectedLocation}) => {
   const [query, setQuery] = useState("");
   const [locations, setLocations] = useState([]);
   const [showResults, setShowResults] = useState(false);
 
-  // const handleQueryChange = async (text) => {
-  //   setQuery(text);
-  //   setSelectedLocation(null);
-  //   const fetchedLocations = await fetchLocations(text);
-  //   setLocations(fetchedLocations);
-  //   setShowResults(fetchedLocations.length > 0);
-  // };
 
   const handleQueryChange = async (text) => {
     setQuery(text);
@@ -40,7 +33,6 @@ const LocationPicker = ({ selectedLocation, setSelectedLocation }) => {
         "Une erreur s'est produite lors de la récupération des emplacements :",
         error
       );
-      // Gérer l'erreur de manière appropriée, par exemple, afficher un message à l'utilisateur
     }
   };
 
@@ -73,7 +65,9 @@ const LocationPicker = ({ selectedLocation, setSelectedLocation }) => {
             ? `${selectedLocation.name}, ${selectedLocation.region}`
             : query
         }
-        onFocus={() => setShowResults(true)}
+        // onBlur={() => {
+        //   validateSelectedLocation(location);
+        // }} 
       />
 
       {showResults && locations.length > 0 && (

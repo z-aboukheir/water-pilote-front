@@ -1,4 +1,3 @@
-
 import * as React from "react";
 import { Image, StyleSheet, Text, Pressable, View, ImageBackground, Modal, Alert, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -166,10 +165,6 @@ const ValvesSettingsScreen = () => {
 
 
     return (
-        // <ImageBackground
-        //     source={require("../assets/plante-1.png")}
-        //     style={{ width: "125%", height: "100%" }}
-        //     resizeMode="cover">
             <ScrollView>
  
                 <View style={styles.titleContainer}>
@@ -200,7 +195,7 @@ const ValvesSettingsScreen = () => {
                 </View>
                 <Modal
                     animationType="slide"
-                    transparent={false}
+                    transparent={true}
                     visible={modalVisible}
 
                 >
@@ -208,26 +203,30 @@ const ValvesSettingsScreen = () => {
 
                 </Modal>
                 </ScrollView>     
-                //    </ImageBackground>
     );
 };
 
 const styles = StyleSheet.create({
 
     titleContainer: {
-        flexDirection: "row",
-        alignItems: "center",
-        paddingTop: 45,
-        marginLeft : 25
+        // flexDirection: "row",
+        // alignItems: "center",
+        paddingTop: 70,
+        marginLeft : 35,
+       
     },
     title: {
         fontSize: FontSize.size_13xl,
         color: Color.darkGrey,
         fontFamily: FontFamily.poppinsMedium,
-        marginTop: -20,
+        // marginTop: -20,
     },
     outputContainer: {
         paddingLeft: 30,
+        alignItems: "center",
+        gap :50, 
+        maxWidth: 700,
+        alignSelf: "center"
        
     },
     containerAddButton: {
@@ -242,7 +241,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         height: 50,
-        backgroundColor: Color.lightslategray,
+        backgroundColor: '#6fa5d9ff',
         borderRadius: 10,
         paddingLeft: 10,
         paddingRight: 10
@@ -250,6 +249,7 @@ const styles = StyleSheet.create({
     addButtonText: {
         color: 'white',
         fontSize: 16,
+        fontFamily: FontFamily.poppinsMedium
     }
 });
 export default ValvesSettingsScreen;
