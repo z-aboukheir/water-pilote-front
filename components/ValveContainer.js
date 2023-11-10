@@ -29,36 +29,35 @@ const ValveContainer = (props) => {
     height: height * 0.12,
   };
 
-   // width:  width * 0.8,
-    // height: height * 0.7,
+ 
   const {
-    name,
+    nameValve,
     onPressWatering,
     onPressSchedule,
     isAutomatic,
     onDelete,
-    updateValve,
+    updateValveName,
+    updateValveIsAutomatic,
     valveId,
   } = props;
-  const [mode, setMode] = useState(isAutomatic ? "auto" : "manual");
 
-  const handlePressAuto = () => setMode("auto");
-  const handlePressManual = () => setMode("manual");
+
+
+
+  const handlePressAuto  = async () => await updateValveIsAutomatic(valveId, "isAutomatic",  'true')
+  const handlePressManual =async () => await updateValveIsAutomatic(valveId, "isAutomatic",  'false')
 
   // État pour savoir si le nom est en cours de modification
   const [isEditingName, setIsEditingName] = useState(false);
 
   // État pour stocker la valeur temporaire du nom pendant la modification
-  const [tempName, setTempName] = useState(name);
+  const [tempName, setTempName] = useState(nameValve);
 
   const validateImage = require("../assets/validate.png");
 const crayonImage = require("../assets/crayon.png");
 const inputRef = useRef(null);
 
-  // initialisation du mode auto ou manuel en fonction de la valeur de isAutomatic
-  useEffect(() => {
-    setMode(isAutomatic ? "auto" : "manual");
-  }, [isAutomatic]);
+
 
   function onPressSplash() {
     console.log("arrosage manuel en cours");
@@ -74,17 +73,19 @@ const inputRef = useRef(null);
     }, 0);
   };
   // Fonction pour gérer la validation de la modification du nom
-  const handleValidateName = () => {
+  const handleValidateName = async () => {
     setIsEditingName(false);
     //  mettre à jour la nom dans votre base de données
-    if (tempName !== name) updateValve(valveId, tempName);
+    if (tempName !== nameValve) await updateValveName(valveId, "name",  tempName);
   };
 
     // Fonction pour fermer l'édition lorsque l'on clique en dehors
-    const closeEdit = () => {
+    const closeEdit = async () => {
       setIsEditingName(false);
-      if (tempName !== name) updateValve(valveId, tempName);
+      if (tempName !== nameValve) await updateValveName(valveId, "name", tempName);
     };
+
+    console.log(isAutomatic)
 
   return (
     <View style={[styles.container]}>
@@ -102,7 +103,7 @@ const inputRef = useRef(null);
             onBlur={closeEdit}
           />
         ) : (
-          <Text style={styles.valveName}>{name}</Text>
+          <Text style={styles.valveName}>{nameValve}</Text>
         )}
         <Pressable
           style={styles.updateButton}
@@ -154,13 +155,13 @@ const inputRef = useRef(null);
         <View style={styles.switchMode}>
           <Pressable
             style={
-              mode === "auto" ? styles.buttonActive : styles.buttonInactive
+              isAutomatic === 1 ? styles.buttonActive : styles.buttonInactive
             }
-            onPress={() => handlePressAuto}
+            onPress={() => handlePressAuto()}
           >
             <Text
               style={
-                mode === "auto" ? styles.buttonText : styles.buttonTextInactive
+                isAutomatic === 1 ? styles.buttonText : styles.buttonTextInactive
               }
             >
               Auto
@@ -169,13 +170,13 @@ const inputRef = useRef(null);
 
           <Pressable
             style={
-              mode === "manual" ? styles.buttonActive : styles.buttonInactive
+              isAutomatic !== 1 ? styles.buttonActive : styles.buttonInactive
             }
-            onPress={() => handlePressManual}
+            onPress={() => handlePressManual()}
           >
             <Text
               style={
-                mode === "manual"
+                isAutomatic !== 1
                   ? styles.buttonText
                   : styles.buttonTextInactive
               }
@@ -227,7 +228,7 @@ const styles = StyleSheet.create({
     minHeight: 40,
   },
   icon: {
-    maxWidth: 36,
+    maxWidth: 34,
     minWidth: 20,
     maxHeight: 33,
     minHeight: 20,
@@ -328,7 +329,6 @@ const styles = StyleSheet.create({
     marginLeft: 15,
   },
   updateButtonText: {
-    // fontFamily: FontFamily.poppinsMedium,
     width: 15,
     height: 15,
   },

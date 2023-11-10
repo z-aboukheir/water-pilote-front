@@ -11,6 +11,7 @@ import {
 import {
     AuthContext
 } from "../context/AuthContext";
+import updateValve from "../services/settingsService"
 
 import ModalValveScreen from "../components/ModalValveScreen";
 import {API_URL} from "@env"
@@ -36,37 +37,31 @@ const ValvesSettingsScreen = () => {
 
    
 
-    const updateValve = async (id , valveName) => {
-        if (valveName === '') {
+    const updateValveName = async (id , param, attribute) => {
+        if (attribute === '') {
             Alert.alert("Veuillez donner un nom à votre valve");
-
         } else {
-            const updatedValve = {
-                name: valveName,
-            }
-            
-            try {
-                const response = await fetchWithToken(`${API_URL}/electrovalve/${id}`, {
-                    method: 'PATCH', 
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(updatedValve)
-                });
-                
-                if (response.ok) {
-                    Alert.alert("La valve a été mise à jour avec succès!");
-                    fetchData();  
-                } else {
-                    Alert.alert("Une erreur est survenue. Veuillez réessayer.");
-                }
-            } catch (error) {
-                console.error('Erreur:', error);
-            }
-            // setModalVisible(false);
+        console.log("valve mis a jour")
+       const response = await updateValve(id , param, attribute, fetchWithToken)
+          if (response.ok) {
+            Alert.alert("La valve a été mise à jour avec succès!");
+            fetchData();  
+        } else {
+            Alert.alert("Une erreur est survenue. Veuillez réessayer.");
         }
     };
-    
+}
+
+
+const updateValveIsAutomatic = async (id , param, attribute) => {  
+    console.log("isautomatic")
+   const response = await updateValve(id , param, attribute, fetchWithToken)
+      if (response.ok) {
+        fetchData();  
+    } else {   
+};
+}
+
 
     const addValve = async () => {
         if (valveName === '' || valvePinPosition === '') {
@@ -158,7 +153,6 @@ const ValvesSettingsScreen = () => {
     useEffect(() => {
         fetchData();
     }
-    // , [fetchWithToken]
     );
 
     // console.log(sorties.map(sortie => sortie.id));
@@ -174,14 +168,15 @@ const ValvesSettingsScreen = () => {
                     {Object.keys(sorties).map((sortie) => (
                         <ValveContainer
                             key={sorties[sortie].id}
-                            name={sorties[sortie].name}
+                            nameValve={sorties[sortie].name}
                             isAutomatic={sorties[sortie].isAutomatic}
                             onPressWatering={() => navigation.navigate("WateringSettingsScreen",
                                 { idValve: sorties[sortie].id, })}
                             onPressSchedule={() => navigation.navigate("SchedulesSettingsScreen",
                                 { idValve: sorties[sortie].id, nameValve: sorties[sortie].name,})}
                                 onDelete={() => deleteValve(sorties[sortie].id)} 
-                                updateValve = {updateValve}
+                                updateValveName = {updateValveName}
+                                updateValveIsAutomatic = {updateValveIsAutomatic}
                                 valveId = {sorties[sortie].id}
                                
                         />
