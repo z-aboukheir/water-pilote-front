@@ -133,7 +133,7 @@ const SignupScreen = () => {
     <ScrollView>
       <AuthForm
         textAuth="Se connecter"
-        welcomeText="Je m'appelle Groot et toi"
+        welcomeText="Je m'appelle Waterpilot et toi ?"
         handleSubmit={() => handleSignUp()}
         textBouton="S'incrire"
         navigation={navigation}

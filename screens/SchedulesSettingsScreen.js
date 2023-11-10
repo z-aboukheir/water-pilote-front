@@ -136,7 +136,7 @@ const SchedulesSettingsScreen = ({ route }) => {
         if (responseData && responseData.length > 0) {
           setPlannings(responseData);
         } else {
-          setPlannings("ajouter une planification");
+          setPlannings("Ajouter une planification");
           // setError("Erreur lors de la requête");
           // setPlannings([])
         }
@@ -251,7 +251,7 @@ const SchedulesSettingsScreen = ({ route }) => {
         if (planningDelete.length > 0) {
           setPlannings(planningDelete);
         } else {
-          setPlannings("ajouter une tion");
+          setPlannings("Ajouter une planification");
         }
       } else {
         console.error("Erreur lors de la suppression du planning");

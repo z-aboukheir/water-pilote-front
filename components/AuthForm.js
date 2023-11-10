@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   textAuth: {
     textDecorationLine: "underline",
     fontSize: 25,
-    color: Color.dimgray_100,
+    color: Color.darkGrey,
     textShadowColor: "#00000040",
     textShadowOffset: {
       width: 0,
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
 
   welcomeText: {
     fontSize: 20,
-    color: "#7A7272",
+    // color: Color.darkGrey,
     textAlign: "center",
     marginBottom: 20,
     marginTop: 20,

@@ -28,7 +28,7 @@ const SigninScreen = () => {
     <View>
       <AuthForm
         textAuth="S'incrire"
-        welcomeText="Heureux de vous revoir"
+        welcomeText="Heureux de vous revoir !"
         handleSubmit={() => handleSignIn()}
         textBouton="Se connecter"
         navigation={navigation}

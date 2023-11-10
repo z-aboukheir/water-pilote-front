@@ -53,8 +53,7 @@ const ValvesSettingsScreen = () => {
 }
 
 
-const updateValveIsAutomatic = async (id , param, attribute) => {  
-    console.log("isautomatic")
+const updateValveIsAutomaticOrIsOn = async (id , param, attribute) => {  
    const response = await updateValve(id , param, attribute, fetchWithToken)
       if (response.ok) {
         fetchData();  
@@ -170,13 +169,14 @@ const updateValveIsAutomatic = async (id , param, attribute) => {
                             key={sorties[sortie].id}
                             nameValve={sorties[sortie].name}
                             isAutomatic={sorties[sortie].isAutomatic}
+                            isOn={sorties[sortie].isOn}
                             onPressWatering={() => navigation.navigate("WateringSettingsScreen",
                                 { idValve: sorties[sortie].id, })}
                             onPressSchedule={() => navigation.navigate("SchedulesSettingsScreen",
                                 { idValve: sorties[sortie].id, nameValve: sorties[sortie].name,})}
                                 onDelete={() => deleteValve(sorties[sortie].id)} 
                                 updateValveName = {updateValveName}
-                                updateValveIsAutomatic = {updateValveIsAutomatic}
+                                updateValveIsAutomaticOrIsOn = {updateValveIsAutomaticOrIsOn}
                                 valveId = {sorties[sortie].id}
                                
                         />
