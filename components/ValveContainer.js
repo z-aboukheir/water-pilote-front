@@ -69,7 +69,6 @@ async function  onPressSplash () {
    await updateValveIsAutomaticOrIsOn(valveId, "isOn",  isOn === 1 ? "false" : "true")
    if(isOn === 0 ){
     Alert.alert("L'arrosage est activé");  
-    // console.log("arrosage manuel en cours");
   }
   }
 

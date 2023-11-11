@@ -40,14 +40,18 @@ const ValvesSettingsScreen = () => {
     const updateValveName = async (id , param, attribute) => {
         if (attribute === '') {
             Alert.alert("Veuillez donner un nom à votre valve");
+            return
         } else {
-        console.log("valve mis a jour")
+        // console.log("valve mis a jour")
+        try{ 
        const response = await updateValve(id , param, attribute, fetchWithToken)
           if (response.ok) {
-            Alert.alert("La valve a été mise à jour avec succès!");
-            fetchData();  
-        } else {
-            Alert.alert("Une erreur est survenue. Veuillez réessayer.");
+            // Alert.alert("La valve a été mise à jour avec succès!");
+            fetchData(); 
+         
+        }} catch(error) {
+            // console(response)
+            Alert.alert(error.message);
         }
     };
 }
@@ -98,10 +102,11 @@ const updateValveIsAutomaticOrIsOn = async (id , param, attribute) => {
                             // setSorties(dataValve);
                             fetchData();       
                               
-                } else {
-                    Alert.alert("Une erreur est survenue. Veuillez réessayer.");
+                // } else {
+                //     Alert.alert("Une erreur est survenue. Veuillez réessayer.");
                 }
             } catch (error) {
+                Alert.alert(error.message);
                 console.error('Erreur:', error);
             }
             setModalVisible(false);
@@ -135,8 +140,8 @@ const updateValveIsAutomaticOrIsOn = async (id , param, attribute) => {
                 method: 'DELETE',
             });
             if (response.ok) {
-                const responseData = response.json()
-                Alert.alert("La valve a été supprimée avec succès!");
+                // const responseData = response.json()
+                // Alert.alert("La valve a été supprimée avec succès!");
                 // setSorties(responseData);
                 fetchData();       
             } else {
