@@ -80,7 +80,7 @@ const SchedulesSettingsScreen = ({ route }) => {
         }
       );
 
-      if (response.ok) {
+      // if (response.ok) {
         // Mettez à jour l'état local pour refléter le changement d'activation
         const updatedPlannings = plannings.map((planning) => {
           if (planning.id === planningId) {
@@ -89,11 +89,11 @@ const SchedulesSettingsScreen = ({ route }) => {
           return planning;
         });
         setPlannings(updatedPlannings);
-      } else {
-        console.error(
-          "Erreur lors de la mise à jour de l'activation du planning"
-        );
-      }
+      // } else {
+      //   console.error(
+      //     "Erreur lors de la mise à jour de l'activation du planning"
+      //   );
+      // }
     } catch (error) {
       console.error(
         "Erreur lors de la mise à jour de l'activation du planning:",
@@ -159,6 +159,7 @@ const SchedulesSettingsScreen = ({ route }) => {
     const startIndex = hours.indexOf(newStartTime);
     const availableEndTimes = hours.slice(startIndex + 1);
     setEndTimes(availableEndTimes);
+    setNewEndTime(availableEndTimes[0])
   }, [newStartTime]);
 
   // Gestion de la sélection et désélection des jours

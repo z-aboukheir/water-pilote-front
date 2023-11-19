@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Waterpilot-app",
-    "slug": "Waterpilot-app",
+    "slug": "waterpilot",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -25,7 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }     
-    
+    },
+    "extra": {
+      "eas": {
+        "projectId": "5ba80be0-5980-432e-a92f-811b168ec21a"
+      }
+    },
+    "owner": "waterpilote"
   }
 }

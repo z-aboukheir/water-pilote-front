@@ -27,7 +27,7 @@ const handleLogout = async () => {
 
 return(
     <Pressable style={styles.button} onPress={() => handleLogout()}>
-      <Text style={styles.buttonText}>Log Out  </Text>
+      <Text style={styles.buttonText}>Déconnexion</Text>
       <FontAwesome name="sign-out" style={styles.icon} />
     </Pressable>
 )
@@ -35,7 +35,7 @@ return(
 
 const styles = StyleSheet.create({
   button: {
-    width: 150,
+    width: '100%',
     flexDirection: 'row',
     paddingVertical: 10,
     paddingHorizontal: 30,
@@ -50,7 +50,8 @@ const styles = StyleSheet.create({
   buttonText: {
     color: Color.darkGrey,
     fontSize: FontSize.size_base,
-    fontWeight: 'bold',
+    fontWeight: 'bold',  
+    marginRight : 10 
   },
 });
 

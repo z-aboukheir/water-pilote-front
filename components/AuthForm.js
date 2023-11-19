@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   },
 
   welcomeText: {
-    fontSize: 20,
+    fontSize: 19,
     // color: Color.darkGrey,
     textAlign: "center",
     marginBottom: 20,
