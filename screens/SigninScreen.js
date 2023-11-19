@@ -25,7 +25,7 @@ const SigninScreen = () => {
   };
 
   return (
-    <View>
+    <ScrollView>
       <AuthForm
         textAuth="S'incrire"
         welcomeText="Heureux de vous revoir !"
@@ -64,7 +64,7 @@ const SigninScreen = () => {
           {error}
         </Text>
       ) : null}
-    </View>
+    </ScrollView>
   );
 };
 
